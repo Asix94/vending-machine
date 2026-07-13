@@ -22,7 +22,6 @@ docker compose ps
 # Ver logs de un servicio
 docker compose logs -f nginx
 docker compose logs -f php
-docker compose logs -f mysql
 
 # Ejecutar comandos de Symfony
 docker compose exec php php bin/console about
@@ -45,7 +44,3 @@ Respuesta esperada:
 ```json
 {"status":"ok"}
 ```
-
-## Variables Docker
-
-Las variables de MySQL para Docker estan en `.env.docker`.
