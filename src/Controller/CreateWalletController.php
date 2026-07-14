@@ -23,7 +23,10 @@ final readonly class CreateWalletController
         $response = ($this->createWalletUseCase)();
 
         $jsonResponse = new JsonResponse(
-            null,
+            [
+                'wallet_id' => $response->walletId,
+                'inserted_balance' => $response->insertedBalance,
+            ],
             Response::HTTP_CREATED,
             [
                 'Location' => sprintf('/wallets/%s', $response->walletId),
@@ -31,7 +34,6 @@ final readonly class CreateWalletController
         );
 
         $jsonResponse->setEncodingOptions($jsonResponse->getEncodingOptions() | JSON_PRESERVE_ZERO_FRACTION);
-        $jsonResponse->setData($response->toArray());
 
         return $jsonResponse;
     }

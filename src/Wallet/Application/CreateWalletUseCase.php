@@ -23,11 +23,11 @@ final readonly class CreateWalletUseCase
             new Balance(0),
         );
 
-        $createdWallet = $this->walletRepository->create($wallet);
+        $this->walletRepository->create($wallet);
 
         return new CreateWalletResponse(
-            (string) $createdWallet->walletId(),
-            $createdWallet->balance()->toDecimal(),
+            (string) $wallet->walletId(),
+            $wallet->balance()->toDecimal(),
         );
     }
 }

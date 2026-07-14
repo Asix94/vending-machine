@@ -12,11 +12,4 @@ final readonly class CreateWalletResponse
     ) {
     }
 
-    public function toArray(): array
-    {
-        return [
-            'wallet_id' => $this->walletId,
-            'inserted_balance' => $this->insertedBalance,
-        ];
-    }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Wallet\Domain\ValueObject;
 
 use Ramsey\Uuid\Uuid;
+use InvalidArgumentException;
 
 final class WalletId
 {
@@ -12,6 +13,10 @@ final class WalletId
 
     public function __construct(string $value)
     {
+        if (!Uuid::isValid($value)) {
+            throw new InvalidArgumentException('Wallet ID must be a valid UUID.');
+        }
+
         $this->value = $value;
     }
 

@@ -46,7 +46,7 @@ final readonly class DoctrineWalletRepository implements WalletRepositoryInterfa
         );
     }
 
-    public function create(Wallet $wallet): Wallet
+    public function create(Wallet $wallet): void
     {
         $now = (new DateTimeImmutable())->format('Y-m-d H:i:s');
 
@@ -57,7 +57,6 @@ final readonly class DoctrineWalletRepository implements WalletRepositoryInterfa
             'updated_at' => $now,
         ]);
 
-        return $wallet;
     }
 
     public function update(Wallet $wallet): void
