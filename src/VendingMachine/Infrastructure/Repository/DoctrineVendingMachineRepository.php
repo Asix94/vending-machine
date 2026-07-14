@@ -58,39 +58,30 @@ final readonly class DoctrineVendingMachineRepository implements VendingMachineR
      */
     public function updateMachineState(string $selector, int $newStock, array $machineCoins): void
     {
-        $this->connection->beginTransaction();
+        $updatedRows = $this->connection->update(
+            'machine_products',
+            [
+                'stock' => $newStock,
+                'updated_at' => (new DateTimeImmutable())->format('Y-m-d H:i:s'),
+            ],
+            ['selector' => strtoupper($selector)],
+        );
 
-        try {
-            $updatedRows = $this->connection->update(
-                'machine_products',
+        if ($updatedRows === 0) {
+            throw new ProductNotFoundException($selector);
+        }
+
+        foreach ($machineCoins as $coinCents => $coinCount) {
+            $this->connection->update(
+                'machine_coins',
                 [
-                    'stock' => $newStock,
+                    'coin_count' => $coinCount,
                     'updated_at' => (new DateTimeImmutable())->format('Y-m-d H:i:s'),
                 ],
-                ['selector' => strtoupper($selector)],
+                [
+                    'coin_cents' => $coinCents,
+                ],
             );
-
-            if ($updatedRows === 0) {
-                throw new ProductNotFoundException($selector);
-            }
-
-            foreach ($machineCoins as $coinCents => $coinCount) {
-                $this->connection->update(
-                    'machine_coins',
-                    [
-                        'coin_count' => $coinCount,
-                        'updated_at' => (new DateTimeImmutable())->format('Y-m-d H:i:s'),
-                    ],
-                    [
-                        'coin_cents' => $coinCents,
-                    ],
-                );
-            }
-
-            $this->connection->commit();
-        } catch (\Throwable $exception) {
-            $this->connection->rollBack();
-            throw $exception;
         }
     }
 }

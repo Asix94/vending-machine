@@ -13,5 +13,8 @@ services:
     App\VendingMachine\Domain\Repository\VendingMachineRepositoryInterface:
         alias: App\VendingMachine\Infrastructure\Repository\DoctrineVendingMachineRepository
 
+    App\Shared\Application\TransactionManagerInterface:
+        alias: App\Shared\Infrastructure\Database\DbalTransactionManager
+
     App\:
         resource: '../src/'

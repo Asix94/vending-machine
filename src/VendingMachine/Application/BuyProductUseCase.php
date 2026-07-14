@@ -10,50 +10,60 @@ use App\VendingMachine\Domain\Exception\CannotMakeExactChangeException;
 use App\VendingMachine\Domain\Exception\InsufficientFundsException;
 use App\VendingMachine\Domain\Exception\OutOfStockException;
 use App\VendingMachine\Domain\Repository\VendingMachineRepositoryInterface;
+use App\Shared\Application\TransactionManagerInterface;
 use App\Wallet\Domain\Repository\WalletRepositoryInterface;
 use App\Wallet\Domain\ValueObject\Money;
 use App\Wallet\Domain\ValueObject\WalletId;
 
 final readonly class BuyProductUseCase
 {
+    private const ALLOWED_SELECTORS = ['WATER', 'JUICE', 'SODA'];
+
     public function __construct(
         private WalletRepositoryInterface $walletRepository,
         private VendingMachineRepositoryInterface $vendingMachineRepository,
+        private TransactionManagerInterface $transactionManager,
     ) {
     }
 
     public function __invoke(BuyProductRequest $request): BuyProductResponse
     {
         $selector = strtoupper($request->selector);
-        $wallet = $this->walletRepository->findById(new WalletId($request->walletId));
-        $product = $this->vendingMachineRepository->findProductBySelector($selector);
-
-        if ($product->stock <= 0) {
-            throw new OutOfStockException($selector);
+        if (!in_array($selector, self::ALLOWED_SELECTORS, true)) {
+            throw new \InvalidArgumentException('Invalid selector. Allowed values are WATER, JUICE, SODA.');
         }
 
-        $walletBalance = $wallet->balance()->cents();
-        if ($walletBalance < $product->priceCents) {
-            throw new InsufficientFundsException($product->priceCents, $walletBalance);
-        }
+        return $this->transactionManager->run(function () use ($request, $selector): BuyProductResponse {
+            $wallet = $this->walletRepository->findById(new WalletId($request->walletId));
+            $product = $this->vendingMachineRepository->findProductBySelector($selector);
 
-        $machineCoins = $this->vendingMachineRepository->getMachineCoins();
-        $machineCoinsAfterWalletTransfer = $this->addWalletCoinsToMachine($machineCoins, $wallet->insertedCoins());
-        $changeCents = $walletBalance - $product->priceCents;
-        $changeCoins = $this->calculateExactChange($changeCents, $machineCoinsAfterWalletTransfer);
+            if ($product->stock <= 0) {
+                throw new OutOfStockException($selector);
+            }
 
-        $machineCoinsAfterChange = $this->subtractMachineCoins($machineCoinsAfterWalletTransfer, $changeCoins);
-        $walletAfterPurchase = $wallet->withdrawAll();
+            $walletBalance = $wallet->balance()->cents();
+            if ($walletBalance < $product->priceCents) {
+                throw new InsufficientFundsException($product->priceCents, $walletBalance);
+            }
 
-        $this->vendingMachineRepository->updateMachineState($selector, $product->stock - 1, $machineCoinsAfterChange);
-        $this->walletRepository->update($walletAfterPurchase);
+            $machineCoins = $this->vendingMachineRepository->getMachineCoins();
+            $machineCoinsAfterWalletTransfer = $this->addWalletCoinsToMachine($machineCoins, $wallet->insertedCoins());
+            $changeCents = $walletBalance - $product->priceCents;
+            $changeCoins = $this->calculateExactChange($changeCents, $machineCoinsAfterWalletTransfer);
 
-        return new BuyProductResponse(
-            $selector,
-            $product->priceCents / 100,
-            $this->expandCoinsForApi($changeCoins),
-            $walletAfterPurchase->balance()->toDecimal(),
-        );
+            $machineCoinsAfterChange = $this->subtractMachineCoins($machineCoinsAfterWalletTransfer, $changeCoins);
+            $walletAfterPurchase = $wallet->withdrawAll();
+
+            $this->vendingMachineRepository->updateMachineState($selector, $product->stock - 1, $machineCoinsAfterChange);
+            $this->walletRepository->update($walletAfterPurchase);
+
+            return new BuyProductResponse(
+                $selector,
+                $product->priceCents / 100,
+                $this->expandCoinsForApi($changeCoins),
+                $walletAfterPurchase->balance()->toDecimal(),
+            );
+        });
     }
 
     /**
