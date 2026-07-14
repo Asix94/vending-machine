@@ -58,6 +58,29 @@ final class Wallet
     }
 
     /**
+     * @return list<float>
+     */
+    public function returnAllCoins(): array
+    {
+        $returnedCoins = [];
+
+        foreach (Money::ACCEPTED_VALUES as $coin) {
+            $count = $this->insertedCoins[$coin] ?? 0;
+
+            for ($index = 0; $index < $count; $index++) {
+                $returnedCoins[] = $coin / 100;
+            }
+        }
+
+        rsort($returnedCoins);
+
+        $this->balance = new Balance(0);
+        $this->insertedCoins = array_fill_keys(Money::ACCEPTED_VALUES, 0);
+
+        return $returnedCoins;
+    }
+
+    /**
      * @param array<int, int> $insertedCoins
      *
      * @return array<int, int>

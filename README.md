@@ -121,3 +121,37 @@ curl -X POST http://localhost:8080/wallets/<wallet_id>/insert-money \
   -H "Content-Type: application/json" \
   -d '{"coins":[0.25,1.0,0.1]}'
 ```
+
+## API Contract (Paso 3 - Return Coin)
+
+### `POST /wallets/{walletId}/return-coin`
+
+Devuelve todas las monedas insertadas en la wallet y la deja en saldo cero.
+
+- Request body: vacio
+- Response: `200 OK`
+
+```json
+{
+  "wallet_id": "6b50cf5f-3d66-43dd-90f3-2bd03555c877",
+  "returned_coins": [1.0, 0.25, 0.1],
+  "returned_total": 1.35,
+  "wallet_balance_after": 0.0
+}
+```
+
+Notas de contrato:
+
+- La wallet no se elimina, solo se resetea su estado (`balance = 0`, sin monedas insertadas).
+- Si la wallet no tenia monedas, devuelve `returned_coins: []` y `returned_total: 0.0`.
+
+Errores esperados:
+
+- `404 Not Found`: wallet no existe.
+- `500 Internal Server Error`: error inesperado de persistencia.
+
+Ejemplo de llamada:
+
+```bash
+curl -X POST http://localhost:8080/wallets/<wallet_id>/return-coin
+```
