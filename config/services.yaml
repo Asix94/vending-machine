@@ -10,5 +10,8 @@ services:
     App\Wallet\Domain\Repository\WalletRepositoryInterface:
         alias: App\Wallet\Infrastructure\Repository\DoctrineWalletRepository
 
+    App\VendingMachine\Domain\Repository\VendingMachineRepositoryInterface:
+        alias: App\VendingMachine\Infrastructure\Repository\DoctrineVendingMachineRepository
+
     App\:
         resource: '../src/'
