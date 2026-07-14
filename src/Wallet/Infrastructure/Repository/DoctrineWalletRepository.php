@@ -1,0 +1,69 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Wallet\Infrastructure\Repository;
+
+use App\Wallet\Domain\Entity\Wallet;
+use App\Wallet\Domain\Exception\WalletNotFoundException;
+use App\Wallet\Domain\Repository\WalletRepositoryInterface;
+use App\Wallet\Domain\ValueObject\Balance;
+use App\Wallet\Domain\ValueObject\WalletId;
+use DateTimeImmutable;
+use Doctrine\DBAL\Connection;
+
+final readonly class DoctrineWalletRepository implements WalletRepositoryInterface
+{
+    public function __construct(private Connection $connection)
+    {
+    }
+
+    public function findById(WalletId $walletId): Wallet
+    {
+        $row = $this->connection->fetchAssociative(
+            'SELECT id, inserted_balance_cents FROM wallets WHERE id = :id',
+            ['id' => $walletId->value()],
+        );
+
+        if ($row === false) {
+            throw new WalletNotFoundException($walletId->value());
+        }
+
+        return new Wallet(
+            new WalletId((string) $row['id']),
+            new Balance((int) $row['inserted_balance_cents']),
+        );
+    }
+
+    public function create(Wallet $wallet): Wallet
+    {
+        $now = (new DateTimeImmutable())->format('Y-m-d H:i:s');
+
+        $this->connection->insert('wallets', [
+            'id' => $wallet->walletId()->value(),
+            'inserted_balance_cents' => $wallet->balance()->cents(),
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        return $wallet;
+    }
+
+    public function update(Wallet $wallet): void
+    {
+        $updatedRows = $this->connection->update(
+            'wallets',
+            [
+                'inserted_balance_cents' => $wallet->balance()->cents(),
+                'updated_at' => (new DateTimeImmutable())->format('Y-m-d H:i:s'),
+            ],
+            [
+                'id' => $wallet->walletId()->value(),
+            ],
+        );
+
+        if ($updatedRows === 0) {
+            throw new WalletNotFoundException($wallet->walletId()->value());
+        }
+    }
+}

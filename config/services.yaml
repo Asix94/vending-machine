@@ -7,5 +7,8 @@ services:
         autowire: true
         autoconfigure: true
 
+    App\Wallet\Domain\Repository\WalletRepositoryInterface:
+        alias: App\Wallet\Infrastructure\Repository\DoctrineWalletRepository
+
     App\:
         resource: '../src/'
