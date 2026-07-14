@@ -8,8 +8,10 @@ RUN apt-get update \
         unzip \
         libicu-dev \
         libzip-dev \
+        libpq-dev \
     && docker-php-ext-install \
         intl \
+        pdo_pgsql \
         zip \
     && rm -rf /var/lib/apt/lists/*
 
