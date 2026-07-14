@@ -155,3 +155,71 @@ Ejemplo de llamada:
 ```bash
 curl -X POST http://localhost:8080/wallets/<wallet_id>/return-coin
 ```
+
+## API Contract (Paso 4 - Service Vending Machine)
+
+### `POST /vending-machine/service`
+
+Configura el estado global de la maquina: stock de productos y monedas disponibles para cambio.
+
+- Request body: obligatorio
+- Response: `200 OK`
+
+```json
+{
+  "products": [
+    {"selector": "WATER", "stock": 2},
+    {"selector": "JUICE", "stock": 1},
+    {"selector": "SODA", "stock": 1}
+  ],
+  "coins": {
+    "0.05": 10,
+    "0.10": 10,
+    "0.25": 10,
+    "1.00": 5
+  }
+}
+```
+
+```json
+{
+  "products": [
+    {"selector": "WATER", "price": 0.65, "stock": 2},
+    {"selector": "JUICE", "price": 1.00, "stock": 1},
+    {"selector": "SODA", "price": 1.50, "stock": 1}
+  ],
+  "machine_coins": {
+    "0.05": 10,
+    "0.10": 10,
+    "0.25": 10,
+    "1.00": 5
+  }
+}
+```
+
+Notas de contrato:
+
+- La maquina es unica y global para toda la aplicacion.
+- `selector` permitido: `WATER`, `JUICE`, `SODA`.
+- `stock` y `coin_count` deben ser enteros mayores o iguales a `0`.
+- Los precios de producto se mantienen en la maquina (`WATER=0.65`, `JUICE=1.00`, `SODA=1.50`).
+
+Errores esperados:
+
+- `400 Bad Request`: payload invalido, selector invalido o cantidades negativas.
+- `500 Internal Server Error`: error inesperado de persistencia.
+
+Ejemplo de llamada:
+
+```bash
+curl -X POST http://localhost:8080/vending-machine/service \
+  -H "Content-Type: application/json" \
+  -d '{
+    "products":[
+      {"selector":"WATER","stock":2},
+      {"selector":"JUICE","stock":1},
+      {"selector":"SODA","stock":1}
+    ],
+    "coins":{"0.05":10,"0.10":10,"0.25":10,"1.00":5}
+  }'
+```
