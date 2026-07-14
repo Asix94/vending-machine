@@ -44,3 +44,31 @@ Respuesta esperada:
 ```json
 {"status":"ok"}
 ```
+
+## API Contract (Paso 1 - Create Wallet)
+
+### `POST /wallets`
+
+Crea una wallet vacia para la sesion del usuario.
+
+- Request body: vacio
+- Response: `201 Created`
+
+```json
+{
+  "wallet_id": "6b50cf5f-3d66-43dd-90f3-2bd03555c877",
+  "inserted_balance": 0.0
+}
+```
+
+Notas de contrato:
+
+- `wallet_id`: UUID generado por backend.
+- `inserted_balance`: saldo actual insertado (en API decimal, internamente en centimos).
+- Error minimo esperado: `500 Internal Server Error` si falla persistencia.
+
+Ejemplo de llamada:
+
+```bash
+curl -X POST http://localhost:8080/wallets
+```
