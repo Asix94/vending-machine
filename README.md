@@ -2,6 +2,19 @@
 
 Backend API con Symfony + Docker.
 
+## Reglas de negocio clave
+
+- La maquina es unica y global.
+- El usuario inserta monedas en su wallet (sesion actual).
+- En una compra exitosa:
+  - el stock del producto baja en 1,
+  - las monedas de la wallet pasan al inventario de la maquina,
+  - si hay sobrante, la maquina devuelve cambio exacto,
+  - la wallet queda a `0` y sin monedas insertadas.
+- Si no hay cambio exacto disponible, la compra se rechaza con `409` y no cambia estado (rollback).
+- Monedas permitidas: `0.05`, `0.10`, `0.25`, `1.00`.
+- Productos soportados: `WATER` (`0.65`), `JUICE` (`1.00`), `SODA` (`1.50`).
+
 ## Requisitos
 
 - Docker Desktop
@@ -265,4 +278,45 @@ Ejemplo de llamada:
 
 ```bash
 curl -X POST http://localhost:8080/wallets/<wallet_id>/buy/WATER
+```
+
+## Flujo end-to-end (manual)
+
+```bash
+# 1) Configurar maquina (stock + monedas)
+curl -X POST http://localhost:8080/vending-machine/service \
+  -H "Content-Type: application/json" \
+  -d '{
+    "products":[
+      {"selector":"WATER","stock":2},
+      {"selector":"JUICE","stock":1},
+      {"selector":"SODA","stock":1}
+    ],
+    "coins":{"0.05":10,"0.10":10,"0.25":10,"1.00":5}
+  }'
+
+# 2) Crear wallet
+curl -X POST http://localhost:8080/wallets
+
+# 3) Insertar dinero (reemplaza <wallet_id>)
+curl -X POST http://localhost:8080/wallets/<wallet_id>/insert-money \
+  -H "Content-Type: application/json" \
+  -d '{"coins":[1.0]}'
+
+# 4) Comprar producto
+curl -X POST http://localhost:8080/wallets/<wallet_id>/buy/WATER
+
+# 5) Devolver monedas (si no compraste o insertaste mas dinero)
+curl -X POST http://localhost:8080/wallets/<wallet_id>/return-coin
+```
+
+## Tests
+
+```bash
+# Crear y preparar base de datos de test
+docker compose exec php php bin/console doctrine:database:create --env=test --if-not-exists
+docker compose exec php php bin/console doctrine:migrations:migrate --env=test --no-interaction
+
+# Ejecutar suite completa
+docker compose exec php php bin/phpunit
 ```
