@@ -29,9 +29,20 @@ final readonly class DoctrineWalletRepository implements WalletRepositoryInterfa
             throw new WalletNotFoundException($walletId->value());
         }
 
+        $coinRows = $this->connection->fetchAllAssociative(
+            'SELECT coin_cents, coin_count FROM wallet_inserted_coins WHERE wallet_id = :wallet_id',
+            ['wallet_id' => $walletId->value()],
+        );
+
+        $insertedCoins = [];
+        foreach ($coinRows as $coinRow) {
+            $insertedCoins[(int) $coinRow['coin_cents']] = (int) $coinRow['coin_count'];
+        }
+
         return new Wallet(
             new WalletId((string) $row['id']),
             new Balance((int) $row['inserted_balance_cents']),
+            $insertedCoins,
         );
     }
 
@@ -51,19 +62,45 @@ final readonly class DoctrineWalletRepository implements WalletRepositoryInterfa
 
     public function update(Wallet $wallet): void
     {
-        $updatedRows = $this->connection->update(
-            'wallets',
-            [
-                'inserted_balance_cents' => $wallet->balance()->cents(),
-                'updated_at' => (new DateTimeImmutable())->format('Y-m-d H:i:s'),
-            ],
-            [
-                'id' => $wallet->walletId()->value(),
-            ],
-        );
+        $this->connection->beginTransaction();
 
-        if ($updatedRows === 0) {
-            throw new WalletNotFoundException($wallet->walletId()->value());
+        try {
+            $updatedRows = $this->connection->update(
+                'wallets',
+                [
+                    'inserted_balance_cents' => $wallet->balance()->cents(),
+                    'updated_at' => (new DateTimeImmutable())->format('Y-m-d H:i:s'),
+                ],
+                [
+                    'id' => $wallet->walletId()->value(),
+                ],
+            );
+
+            if ($updatedRows === 0) {
+                throw new WalletNotFoundException($wallet->walletId()->value());
+            }
+
+            $this->connection->executeStatement(
+                'DELETE FROM wallet_inserted_coins WHERE wallet_id = :wallet_id',
+                ['wallet_id' => $wallet->walletId()->value()],
+            );
+
+            foreach ($wallet->insertedCoins() as $coinCents => $count) {
+                if ($count <= 0) {
+                    continue;
+                }
+
+                $this->connection->insert('wallet_inserted_coins', [
+                    'wallet_id' => $wallet->walletId()->value(),
+                    'coin_cents' => $coinCents,
+                    'coin_count' => $count,
+                ]);
+            }
+
+            $this->connection->commit();
+        } catch (\Throwable $exception) {
+            $this->connection->rollBack();
+            throw $exception;
         }
     }
 }

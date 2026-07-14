@@ -72,3 +72,52 @@ Ejemplo de llamada:
 ```bash
 curl -X POST http://localhost:8080/wallets
 ```
+
+## API Contract (Paso 2 - Insert Money)
+
+### `POST /wallets/{walletId}/insert-money`
+
+Inserta una o varias monedas en la wallet del usuario y acumula el saldo.
+
+- Request body: obligatorio
+- Response: `200 OK`
+
+```json
+{
+  "coins": [0.25, 1.0, 0.1]
+}
+```
+
+```json
+{
+  "wallet_id": "6b50cf5f-3d66-43dd-90f3-2bd03555c877",
+  "inserted_balance": 1.35,
+  "inserted_coins": {
+    "0.05": 0,
+    "0.10": 1,
+    "0.25": 1,
+    "1.00": 1
+  }
+}
+```
+
+Notas de contrato:
+
+- `walletId`: UUID de la wallet.
+- `coins` debe ser un array no vacio.
+- Monedas permitidas: `0.05`, `0.10`, `0.25`, `1.00`.
+- El API trabaja con decimales y la logica/persistencia con centimos.
+
+Errores esperados:
+
+- `400 Bad Request`: payload invalido, `coins` vacio o moneda invalida.
+- `404 Not Found`: wallet no existe.
+- `500 Internal Server Error`: error inesperado de persistencia.
+
+Ejemplo de llamada:
+
+```bash
+curl -X POST http://localhost:8080/wallets/<wallet_id>/insert-money \
+  -H "Content-Type: application/json" \
+  -d '{"coins":[0.25,1.0,0.1]}'
+```
