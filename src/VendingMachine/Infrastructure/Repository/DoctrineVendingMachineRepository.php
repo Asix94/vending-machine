@@ -36,6 +36,25 @@ final readonly class DoctrineVendingMachineRepository implements VendingMachineR
     }
 
     /**
+     * @return list<array{selector:string, price_cents:int, stock:int}>
+     */
+    public function getAllProducts(): array
+    {
+        $rows = $this->connection->fetchAllAssociative(
+            'SELECT selector, price_cents, stock FROM machine_products ORDER BY selector ASC',
+        );
+
+        return array_map(
+            static fn (array $row): array => [
+                'selector' => (string) $row['selector'],
+                'price_cents' => (int) $row['price_cents'],
+                'stock' => (int) $row['stock'],
+            ],
+            $rows,
+        );
+    }
+
+    /**
      * @return array<int, int>
      */
     public function getMachineCoins(): array
@@ -81,6 +100,41 @@ final readonly class DoctrineVendingMachineRepository implements VendingMachineR
                 [
                     'coin_cents' => $coinCents,
                 ],
+            );
+        }
+    }
+
+    /**
+     * @param array<string, int> $productStocks
+     * @param array<int, int> $machineCoins
+     */
+    public function replaceServiceState(array $productStocks, array $machineCoins): void
+    {
+        $now = (new DateTimeImmutable())->format('Y-m-d H:i:s');
+
+        foreach ($productStocks as $selector => $stock) {
+            $updatedRows = $this->connection->update(
+                'machine_products',
+                [
+                    'stock' => $stock,
+                    'updated_at' => $now,
+                ],
+                ['selector' => strtoupper($selector)],
+            );
+
+            if ($updatedRows === 0) {
+                throw new ProductNotFoundException($selector);
+            }
+        }
+
+        foreach ($machineCoins as $coinCents => $coinCount) {
+            $this->connection->update(
+                'machine_coins',
+                [
+                    'coin_count' => $coinCount,
+                    'updated_at' => $now,
+                ],
+                ['coin_cents' => $coinCents],
             );
         }
     }
