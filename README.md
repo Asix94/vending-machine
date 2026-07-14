@@ -223,3 +223,46 @@ curl -X POST http://localhost:8080/vending-machine/service \
     "coins":{"0.05":10,"0.10":10,"0.25":10,"1.00":5}
   }'
 ```
+
+## API Contract (Paso 5 - Buy Product)
+
+### `POST /wallets/{walletId}/buy/{selector}`
+
+Compra un producto usando el dinero insertado en la wallet y devuelve cambio exacto cuando aplique.
+
+- Request body: vacio
+- Response: `200 OK`
+
+```json
+{
+  "item": {
+    "selector": "WATER",
+    "price": 0.65
+  },
+  "change": [0.25, 0.1],
+  "wallet_balance_after": 0.0
+}
+```
+
+Notas de contrato:
+
+- La compra es transaccional: si falla cualquier validacion, no se cambia estado.
+- El dinero de la wallet se transfiere a la maquina cuando la compra es exitosa.
+- El cambio se calcula con el inventario de monedas de la maquina.
+- Si no hay cambio exacto, se rechaza la compra.
+
+Errores esperados:
+
+- `404 Not Found`: wallet no existe o producto no existe.
+- `409 Conflict`:
+  - `out_of_stock`
+  - `insufficient_funds`
+  - `cannot_make_exact_change`
+- `400 Bad Request`: selector invalido o formato invalido.
+- `500 Internal Server Error`: error inesperado de persistencia.
+
+Ejemplo de llamada:
+
+```bash
+curl -X POST http://localhost:8080/wallets/<wallet_id>/buy/WATER
+```
