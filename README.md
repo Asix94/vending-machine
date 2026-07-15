@@ -1,6 +1,6 @@
 # vending-machine
 
-Backend API con Symfony + Docker.
+Backend API built with Symfony + Docker.
 
 ## Reglas de negocio clave
 
@@ -10,7 +10,7 @@ Backend API con Symfony + Docker.
   - el stock del producto baja en 1,
   - las monedas de la wallet pasan al inventario de la maquina,
   - si hay sobrante, la maquina devuelve cambio exacto,
-  - el cambio tambien queda acreditado en la wallet.
+  - la wallet queda en `0.0` despues de la compra (el cambio lo entrega la maquina).
 - Si no hay cambio exacto disponible, la compra se rechaza con `409` y no cambia estado (rollback).
 - Monedas permitidas: `0.05`, `0.10`, `0.25`, `1.00`.
 - Productos soportados: `WATER` (`0.65`), `JUICE` (`1.00`), `SODA` (`1.50`).
@@ -281,7 +281,7 @@ Compra un producto usando el dinero insertado en la wallet y devuelve cambio exa
     "price": 0.65
   },
   "change": [0.25, 0.1],
-  "wallet_balance_after": 0.35
+  "wallet_balance_after": 0.0
 }
 ```
 
@@ -291,6 +291,7 @@ Notas de contrato:
 - El dinero de la wallet se transfiere a la maquina cuando la compra es exitosa.
 - El cambio se calcula con el inventario de monedas de la maquina y se informa en `change`.
 - La wallet queda en `0.0` despues de la compra exitosa (el cambio lo entrega la maquina).
+- `machineId` se valida como UUID y hoy se usa a nivel de contrato HTTP (la maquina sigue siendo global internamente).
 - Si no hay cambio exacto, se rechaza la compra.
 
 Errores esperados:
@@ -302,7 +303,10 @@ Errores esperados:
   - `out_of_stock`
   - `insufficient_funds`
   - `cannot_make_exact_change`
-- `400 Bad Request`: `machineId` invalido, payload invalido o producto invalido.
+- `400 Bad Request`:
+  - `invalid_machine_id`
+  - `invalid_payload` (JSON invalido, falta `wallet_id`, falta `product`)
+  - `invalid_selector` (producto invalido)
 - `500 Internal Server Error`: error inesperado de persistencia.
 
 Ejemplo de llamada:
@@ -365,4 +369,88 @@ docker compose exec php php bin/console doctrine:migrations:migrate --env=test -
 
 # Ejecutar suite completa
 docker compose exec php php bin/phpunit
+```
+
+## English Guide
+
+### Core business rules
+
+- The vending machine is currently a single global machine.
+- The user inserts coins into a session wallet.
+- On a successful purchase:
+  - product stock is reduced by 1,
+  - wallet coins are transferred to machine coins,
+  - exact change is calculated and reported,
+  - wallet balance is reset to `0.0` after the purchase.
+- If exact change cannot be made, the purchase fails with `409` and all DB state is rolled back.
+- Allowed coins: `0.05`, `0.10`, `0.25`, `1.00`.
+- Supported products: `WATER` (`0.65`), `JUICE` (`1.00`), `SODA` (`1.50`).
+
+### Quick start
+
+```bash
+docker compose up -d --build
+curl http://localhost:8080/health
+```
+
+Expected response:
+
+```json
+{"status":"ok"}
+```
+
+### API endpoints
+
+- `POST /wallets`
+- `POST /wallets/{walletId}/insert-money`
+- `POST /wallets/{walletId}/return-coin`
+- `POST /vending-machine/service/products`
+- `POST /vending-machine/service/coins`
+- `POST /vending-machine/{machineId}/buy`
+
+### Buy endpoint contract
+
+`POST /vending-machine/{machineId}/buy`
+
+Request:
+
+```json
+{
+  "wallet_id": "fc599d0c-dc16-4c7b-bc39-ef67b8edbfd7",
+  "product": "water"
+}
+```
+
+Response:
+
+```json
+{
+  "item": {
+    "selector": "WATER",
+    "price": 0.65
+  },
+  "change": [0.25, 0.1],
+  "wallet_balance_after": 0.0
+}
+```
+
+Notes:
+
+- `machineId` must be a valid UUID.
+- `wallet_id` and `product` are required in the JSON body.
+- `product` is case-insensitive (`water` and `WATER` are both accepted).
+- `machineId` is currently validated at HTTP contract level; internally the machine state is global.
+
+Expected buy errors:
+
+- `404 Not Found`: `wallet_not_found`, `product_not_found`
+- `409 Conflict`: `out_of_stock`, `insufficient_funds`, `cannot_make_exact_change`
+- `400 Bad Request`: `invalid_machine_id`, `invalid_payload`, `invalid_selector`
+
+Buy example:
+
+```bash
+curl -X POST http://localhost:8080/vending-machine/8cf752a6-6e5f-4b88-a531-d0e57dda61b3/buy \
+  -H "Content-Type: application/json" \
+  -d '{"wallet_id":"fc599d0c-dc16-4c7b-bc39-ef67b8edbfd7","product":"water"}'
 ```
