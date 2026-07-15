@@ -101,6 +101,17 @@ final class ReturnCoinControllerTest extends WebTestCase
         );
     }
 
+    public function testReturnCoinReturns400WhenWalletIdIsInvalid(): void
+    {
+        $this->client->request('POST', '/wallets/not-a-uuid/return-coin');
+
+        self::assertResponseStatusCodeSame(400);
+        self::assertSame(
+            ['error' => 'invalid_wallet_id', 'message' => 'Wallet ID must be a valid UUID.'],
+            json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR),
+        );
+    }
+
     private function createWallet(): string
     {
         $this->client->request('POST', '/wallets');

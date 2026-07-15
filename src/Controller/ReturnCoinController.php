@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Wallet\Application\Dto\ReturnCoinRequest;
 use App\Wallet\Application\ReturnCoinUseCase;
 use App\Wallet\Domain\Exception\WalletNotFoundException;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -25,6 +26,8 @@ final readonly class ReturnCoinController
             $response = ($this->returnCoinUseCase)(new ReturnCoinRequest($walletId));
         } catch (WalletNotFoundException) {
             return $this->errorResponse('wallet_not_found', 'Wallet not found.', 404);
+        } catch (InvalidArgumentException) {
+            return $this->errorResponse('invalid_wallet_id', 'Wallet ID must be a valid UUID.', 400);
         }
 
         $jsonResponse = new JsonResponse();
