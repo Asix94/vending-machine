@@ -12,13 +12,6 @@ use App\Wallet\Domain\ValueObject\Money;
 
 final readonly class ServiceVendingMachineUseCase
 {
-    private const ALLOWED_SELECTORS = ['WATER', 'JUICE', 'SODA'];
-    private const SELECTOR_PRICES = [
-        'WATER' => 65,
-        'JUICE' => 100,
-        'SODA' => 150,
-    ];
-
     public function __construct(
         private VendingMachineRepositoryInterface $vendingMachineRepository,
         private TransactionManagerInterface $transactionManager,
@@ -27,7 +20,8 @@ final readonly class ServiceVendingMachineUseCase
 
     public function __invoke(ServiceMachineRequest $request): ServiceMachineResponse
     {
-        $normalizedProductStocks = $this->normalizeProductStocks($request->products);
+        $productCatalog = $this->getProductCatalog();
+        $normalizedProductStocks = $this->normalizeProductStocks($request->products, array_keys($productCatalog));
         $normalizedCoins = $this->normalizeCoins($request->coins);
 
         return $this->transactionManager->run(function () use ($normalizedProductStocks, $normalizedCoins): ServiceMachineResponse {
@@ -45,19 +39,20 @@ final readonly class ServiceVendingMachineUseCase
 
     /**
      * @param list<array{selector:string, stock:int}> $products
+     * @param list<string> $allowedSelectors
      *
      * @return array<string, int>
      */
-    private function normalizeProductStocks(array $products): array
+    private function normalizeProductStocks(array $products, array $allowedSelectors): array
     {
-        $normalized = array_fill_keys(self::ALLOWED_SELECTORS, 0);
+        $normalized = array_fill_keys($allowedSelectors, 0);
 
         foreach ($products as $product) {
             $selector = strtoupper($product['selector'] ?? '');
             $stock = $product['stock'] ?? null;
 
-            if (!in_array($selector, self::ALLOWED_SELECTORS, true)) {
-                throw new \InvalidArgumentException('Invalid selector. Allowed values are WATER, JUICE, SODA.');
+            if (!in_array($selector, $allowedSelectors, true)) {
+                throw new \InvalidArgumentException(sprintf('Invalid selector. Allowed values are %s.', implode(', ', $allowedSelectors)));
             }
 
             if (!is_int($stock) || $stock < 0) {
@@ -110,16 +105,30 @@ final readonly class ServiceVendingMachineUseCase
         $formatted = [];
 
         foreach ($products as $product) {
-            $selector = $product['selector'];
-
             $formatted[] = [
-                'selector' => $selector,
-                'price' => (self::SELECTOR_PRICES[$selector] ?? $product['price_cents']) / 100,
+                'selector' => $product['selector'],
+                'price' => $product['price_cents'] / 100,
                 'stock' => $product['stock'],
             ];
         }
 
         return $formatted;
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    private function getProductCatalog(): array
+    {
+        $catalog = [];
+
+        foreach ($this->vendingMachineRepository->getAllProducts() as $product) {
+            $catalog[$product['selector']] = (int) $product['price_cents'];
+        }
+
+        ksort($catalog);
+
+        return $catalog;
     }
 
     /**

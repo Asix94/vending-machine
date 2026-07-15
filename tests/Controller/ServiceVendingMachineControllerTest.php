@@ -20,6 +20,7 @@ final class ServiceVendingMachineControllerTest extends WebTestCase
         $this->connection = static::getContainer()->get(Connection::class);
 
         $this->connection->executeStatement('UPDATE machine_products SET stock = 0');
+        $this->connection->executeStatement("UPDATE machine_products SET price_cents = CASE selector WHEN 'WATER' THEN 65 WHEN 'JUICE' THEN 100 WHEN 'SODA' THEN 150 END");
         $this->connection->executeStatement('UPDATE machine_coins SET coin_count = 0');
     }
 
@@ -140,6 +141,47 @@ final class ServiceVendingMachineControllerTest extends WebTestCase
 
         self::assertResponseStatusCodeSame(400);
         self::assertSame('invalid_payload', $this->errorCode());
+    }
+
+    public function testServiceResponseUsesPricesFromDatabaseCatalog(): void
+    {
+        $this->connection->update('machine_products', ['price_cents' => 170], ['selector' => 'SODA']);
+
+        $this->client->request(
+            'POST',
+            '/vending-machine/service',
+            server: ['CONTENT_TYPE' => 'application/json'],
+            content: json_encode([
+                'products' => [
+                    ['selector' => 'WATER', 'stock' => 0],
+                    ['selector' => 'JUICE', 'stock' => 0],
+                    ['selector' => 'SODA', 'stock' => 1],
+                ],
+                'coins' => [
+                    '0.05' => 0,
+                    '0.10' => 0,
+                    '0.25' => 0,
+                    '1.00' => 0,
+                ],
+            ], JSON_THROW_ON_ERROR),
+        );
+
+        self::assertResponseStatusCodeSame(200);
+
+        $payload = json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $soda = null;
+
+        foreach ($payload['products'] as $product) {
+            if ($product['selector'] === 'SODA') {
+                $soda = $product;
+
+                break;
+            }
+        }
+
+        self::assertNotNull($soda);
+        self::assertSame(1.7, (float) $soda['price']);
+        self::assertSame(1, $soda['stock']);
     }
 
     private function productStock(string $selector): int
