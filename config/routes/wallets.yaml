@@ -1,0 +1,14 @@
+wallet_create:
+    path: /wallets
+    controller: App\Controller\CreateWalletController
+    methods: [POST]
+
+wallet_insert_money:
+    path: /wallets/{walletId}/insert-money
+    controller: App\Controller\InsertMoneyController
+    methods: [POST]
+
+wallet_return_coin:
+    path: /wallets/{walletId}/return-coin
+    controller: App\Controller\ReturnCoinController
+    methods: [POST]

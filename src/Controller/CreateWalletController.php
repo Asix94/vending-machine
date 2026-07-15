@@ -7,7 +7,6 @@ namespace App\Controller;
 use App\Wallet\Application\CreateWalletUseCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 
 use const JSON_PRESERVE_ZERO_FRACTION;
 
@@ -17,7 +16,6 @@ final readonly class CreateWalletController
     {
     }
 
-    #[Route('/wallets', name: 'wallet_create', methods: ['POST'])]
     public function __invoke(): JsonResponse
     {
         $response = ($this->createWalletUseCase)();

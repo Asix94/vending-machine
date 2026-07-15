@@ -9,7 +9,6 @@ use App\Wallet\Application\ReturnCoinUseCase;
 use App\Wallet\Domain\Exception\WalletNotFoundException;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Attribute\Route;
 
 use const JSON_PRESERVE_ZERO_FRACTION;
 
@@ -19,7 +18,6 @@ final readonly class ReturnCoinController
     {
     }
 
-    #[Route('/wallets/{walletId}/return-coin', name: 'wallet_return_coin', methods: ['POST'])]
     public function __invoke(string $walletId): JsonResponse
     {
         try {

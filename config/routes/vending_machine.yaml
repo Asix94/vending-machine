@@ -1,0 +1,19 @@
+vending_machine_buy_product:
+    path: /vending-machine/{machineId}/buy
+    controller: App\Controller\BuyProductController
+    methods: [POST]
+
+vending_machine_service_products:
+    path: /vending-machine/service/products
+    controller: App\Controller\ServiceProductsController
+    methods: [POST]
+
+vending_machine_service_coins:
+    path: /vending-machine/service/coins
+    controller: App\Controller\ServiceCoinsController
+    methods: [POST]
+
+health_check:
+    path: /health
+    controller: App\Controller\HealthController
+    methods: [GET]

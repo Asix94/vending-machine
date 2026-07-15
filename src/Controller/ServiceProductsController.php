@@ -9,7 +9,6 @@ use App\VendingMachine\Application\ServiceProductsUseCase;
 use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
 
 use const JSON_PRESERVE_ZERO_FRACTION;
 
@@ -19,7 +18,6 @@ final readonly class ServiceProductsController
     {
     }
 
-    #[Route('/vending-machine/service/products', name: 'vending_machine_service_products', methods: ['POST'])]
     public function __invoke(Request $request): JsonResponse
     {
         try {

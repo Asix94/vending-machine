@@ -16,7 +16,6 @@ use JsonException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
 
 use const JSON_PRESERVE_ZERO_FRACTION;
 
@@ -26,7 +25,6 @@ final readonly class BuyProductController
     {
     }
 
-    #[Route('/vending-machine/{machineId}/buy', name: 'vending_machine_buy_product', methods: ['POST'])]
     public function __invoke(string $machineId, Request $request): JsonResponse
     {
         if (!Uuid::isValid($machineId)) {

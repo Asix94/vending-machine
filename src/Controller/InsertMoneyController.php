@@ -12,7 +12,6 @@ use InvalidArgumentException;
 use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
 
 use const JSON_PRESERVE_ZERO_FRACTION;
 
@@ -22,7 +21,6 @@ final readonly class InsertMoneyController
     {
     }
 
-    #[Route('/wallets/{walletId}/insert-money', name: 'wallet_insert_money', methods: ['POST'])]
     public function __invoke(string $walletId, Request $request): JsonResponse
     {
         try {
