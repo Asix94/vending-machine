@@ -138,4 +138,54 @@ final readonly class DoctrineVendingMachineRepository implements VendingMachineR
             );
         }
     }
+
+    /**
+     * @param array<string, int> $productIncrements
+     */
+    public function incrementProductStocks(array $productIncrements): void
+    {
+        if ($productIncrements === []) {
+            return;
+        }
+
+        $now = (new DateTimeImmutable())->format('Y-m-d H:i:s');
+
+        foreach ($productIncrements as $selector => $increment) {
+            $updatedRows = $this->connection->executeStatement(
+                'UPDATE machine_products SET stock = stock + :increment, updated_at = :updated_at WHERE selector = :selector',
+                [
+                    'increment' => $increment,
+                    'updated_at' => $now,
+                    'selector' => strtoupper($selector),
+                ],
+            );
+
+            if ($updatedRows === 0) {
+                throw new ProductNotFoundException($selector);
+            }
+        }
+    }
+
+    /**
+     * @param array<int, int> $coinIncrements
+     */
+    public function incrementMachineCoins(array $coinIncrements): void
+    {
+        if ($coinIncrements === []) {
+            return;
+        }
+
+        $now = (new DateTimeImmutable())->format('Y-m-d H:i:s');
+
+        foreach ($coinIncrements as $coinCents => $increment) {
+            $this->connection->executeStatement(
+                'UPDATE machine_coins SET coin_count = coin_count + :increment, updated_at = :updated_at WHERE coin_cents = :coin_cents',
+                [
+                    'increment' => $increment,
+                    'updated_at' => $now,
+                    'coin_cents' => $coinCents,
+                ],
+            );
+        }
+    }
 }

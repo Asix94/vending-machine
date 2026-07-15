@@ -153,15 +153,15 @@ final class ServiceVendingMachineControllerTest extends WebTestCase
             server: ['CONTENT_TYPE' => 'application/json'],
             content: json_encode([
                 'products' => [
-                    ['selector' => 'WATER', 'stock' => 0],
-                    ['selector' => 'JUICE', 'stock' => 0],
+                    ['selector' => 'WATER', 'stock' => 1],
+                    ['selector' => 'JUICE', 'stock' => 1],
                     ['selector' => 'SODA', 'stock' => 1],
                 ],
                 'coins' => [
-                    '0.05' => 0,
-                    '0.10' => 0,
-                    '0.25' => 0,
-                    '1.00' => 0,
+                    '0.05' => 1,
+                    '0.10' => 1,
+                    '0.25' => 1,
+                    '1.00' => 1,
                 ],
             ], JSON_THROW_ON_ERROR),
         );

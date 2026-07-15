@@ -30,4 +30,14 @@ interface VendingMachineRepositoryInterface
      * @param array<int, int> $machineCoins
      */
     public function replaceServiceState(array $productStocks, array $machineCoins): void;
+
+    /**
+     * @param array<string, int> $productIncrements
+     */
+    public function incrementProductStocks(array $productIncrements): void;
+
+    /**
+     * @param array<int, int> $coinIncrements
+     */
+    public function incrementMachineCoins(array $coinIncrements): void;
 }
