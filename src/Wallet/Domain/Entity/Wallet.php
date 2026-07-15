@@ -58,6 +58,20 @@ final class Wallet
     }
 
     /**
+     * @param array<int, int> $coins
+     */
+    public function withCoins(array $coins): self
+    {
+        $normalizedCoins = $this->normalizeInsertedCoins($coins);
+
+        return new self(
+            $this->walletId,
+            new Balance($this->calculateBalanceFromCoins($normalizedCoins)),
+            $normalizedCoins,
+        );
+    }
+
+    /**
      * @return list<float>
      */
     public function returnAllCoins(): array
@@ -105,5 +119,19 @@ final class Wallet
         }
 
         return $normalized;
+    }
+
+    /**
+     * @param array<int, int> $coins
+     */
+    private function calculateBalanceFromCoins(array $coins): int
+    {
+        $balance = 0;
+
+        foreach ($coins as $coin => $count) {
+            $balance += $coin * $count;
+        }
+
+        return $balance;
     }
 }

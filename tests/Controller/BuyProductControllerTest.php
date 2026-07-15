@@ -65,12 +65,13 @@ final class BuyProductControllerTest extends WebTestCase
         $payload = json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
         self::assertSame('WATER', $payload['item']['selector']);
         self::assertSame([0.25, 0.1], array_map('floatval', $payload['change']));
-        self::assertSame(0.0, (float) $payload['wallet_balance_after']);
+        self::assertSame(0.35, (float) $payload['wallet_balance_after']);
 
         self::assertSame(1, $this->productStock('WATER'));
         self::assertSame(0, $this->coinCount(25));
         self::assertSame(0, $this->coinCount(10));
         self::assertSame(1, $this->coinCount(100));
+        self::assertSame(35, $this->walletBalance($walletId));
     }
 
     public function testBuyProductReturns409WhenInsufficientFunds(): void

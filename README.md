@@ -10,7 +10,7 @@ Backend API con Symfony + Docker.
   - el stock del producto baja en 1,
   - las monedas de la wallet pasan al inventario de la maquina,
   - si hay sobrante, la maquina devuelve cambio exacto,
-  - la wallet queda a `0` y sin monedas insertadas.
+  - el cambio tambien queda acreditado en la wallet.
 - Si no hay cambio exacto disponible, la compra se rechaza con `409` y no cambia estado (rollback).
 - Monedas permitidas: `0.05`, `0.10`, `0.25`, `1.00`.
 - Productos soportados: `WATER` (`0.65`), `JUICE` (`1.00`), `SODA` (`1.50`).
@@ -274,7 +274,7 @@ Compra un producto usando el dinero insertado en la wallet y devuelve cambio exa
     "price": 0.65
   },
   "change": [0.25, 0.1],
-  "wallet_balance_after": 0.0
+  "wallet_balance_after": 0.35
 }
 ```
 
@@ -282,7 +282,7 @@ Notas de contrato:
 
 - La compra es transaccional: si falla cualquier validacion, no se cambia estado.
 - El dinero de la wallet se transfiere a la maquina cuando la compra es exitosa.
-- El cambio se calcula con el inventario de monedas de la maquina.
+- El cambio se calcula con el inventario de monedas de la maquina y se acredita en la wallet.
 - Si no hay cambio exacto, se rechaza la compra.
 
 Errores esperados:

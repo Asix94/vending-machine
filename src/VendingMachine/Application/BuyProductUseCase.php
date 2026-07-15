@@ -52,7 +52,7 @@ final readonly class BuyProductUseCase
             $changeCoins = $this->calculateExactChange($changeCents, $machineCoinsAfterWalletTransfer);
 
             $machineCoinsAfterChange = $this->subtractMachineCoins($machineCoinsAfterWalletTransfer, $changeCoins);
-            $walletAfterPurchase = $wallet->withdrawAll();
+            $walletAfterPurchase = $wallet->withCoins($changeCoins);
 
             $this->vendingMachineRepository->updateMachineState($selector, $product->stock - 1, $machineCoinsAfterChange);
             $this->walletRepository->update($walletAfterPurchase);
