@@ -18,6 +18,7 @@ final readonly class ReturnCoinUseCase
     public function __invoke(ReturnCoinRequest $request): ReturnCoinResponse
     {
         $wallet = $this->walletRepository->findById(new WalletId($request->walletId));
+        $returnedTotal = $wallet->balance()->toDecimal();
         $returnedCoins = $wallet->returnAllCoins();
 
         $this->walletRepository->update($wallet);
@@ -25,7 +26,7 @@ final readonly class ReturnCoinUseCase
         return new ReturnCoinResponse(
             (string) $wallet->walletId(),
             $returnedCoins,
-            array_sum($returnedCoins),
+            $returnedTotal,
             $wallet->balance()->toDecimal(),
         );
     }

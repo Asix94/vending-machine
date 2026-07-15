@@ -71,6 +71,25 @@ final class ReturnCoinControllerTest extends WebTestCase
         self::assertSame(0.0, (float) $payload['wallet_balance_after']);
     }
 
+    public function testReturnCoinIsIdempotentAfterWalletHasBeenReset(): void
+    {
+        $walletId = $this->createWallet();
+        $this->insertCoins($walletId, [1.0, 0.25]);
+
+        $this->client->request('POST', '/wallets/'.$walletId.'/return-coin');
+        self::assertResponseStatusCodeSame(200);
+
+        $this->client->request('POST', '/wallets/'.$walletId.'/return-coin');
+        self::assertResponseStatusCodeSame(200);
+
+        $payload = json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
+
+        self::assertSame($walletId, $payload['wallet_id']);
+        self::assertSame([], $payload['returned_coins']);
+        self::assertSame(0.0, (float) $payload['returned_total']);
+        self::assertSame(0.0, (float) $payload['wallet_balance_after']);
+    }
+
     public function testReturnCoinReturns404WhenWalletDoesNotExist(): void
     {
         $this->client->request('POST', '/wallets/00000000-0000-4000-8000-000000000000/return-coin');
