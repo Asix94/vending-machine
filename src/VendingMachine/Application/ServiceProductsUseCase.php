@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\VendingMachine\Application;
 
-use App\Shared\Application\TransactionManagerInterface;
 use App\VendingMachine\Application\Dto\ServiceMachineResponse;
 use App\VendingMachine\Application\Dto\ServiceProductsRequest;
 use App\VendingMachine\Domain\Repository\VendingMachineRepositoryInterface;
@@ -12,25 +11,20 @@ use InvalidArgumentException;
 
 final readonly class ServiceProductsUseCase
 {
-    public function __construct(
-        private VendingMachineRepositoryInterface $vendingMachineRepository,
-        private TransactionManagerInterface $transactionManager,
-    ) {
+    public function __construct(private VendingMachineRepositoryInterface $vendingMachineRepository)
+    {
     }
 
     public function __invoke(ServiceProductsRequest $request): ServiceMachineResponse
     {
         $catalog = $this->getProductCatalog();
         $increments = $this->normalizeProductIncrements($request->products, array_keys($catalog));
+        $this->vendingMachineRepository->incrementProductStocks($increments);
 
-        return $this->transactionManager->run(function () use ($increments): ServiceMachineResponse {
-            $this->vendingMachineRepository->incrementProductStocks($increments);
-
-            return new ServiceMachineResponse(
-                $this->formatProductsForApi($this->vendingMachineRepository->getAllProducts()),
-                []
-            );
-        });
+        return new ServiceMachineResponse(
+            $this->formatProductsForApi($this->vendingMachineRepository->getAllProducts()),
+            []
+        );
     }
 
     /**

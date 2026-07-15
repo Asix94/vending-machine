@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\VendingMachine\Application;
 
-use App\Shared\Application\TransactionManagerInterface;
 use App\VendingMachine\Application\Dto\ServiceCoinsRequest;
 use App\VendingMachine\Application\Dto\ServiceMachineResponse;
 use App\VendingMachine\Domain\Repository\VendingMachineRepositoryInterface;
@@ -13,24 +12,19 @@ use InvalidArgumentException;
 
 final readonly class ServiceCoinsUseCase
 {
-    public function __construct(
-        private VendingMachineRepositoryInterface $vendingMachineRepository,
-        private TransactionManagerInterface $transactionManager,
-    ) {
+    public function __construct(private VendingMachineRepositoryInterface $vendingMachineRepository)
+    {
     }
 
     public function __invoke(ServiceCoinsRequest $request): ServiceMachineResponse
     {
         $increments = $this->normalizeCoinIncrements($request->coins);
+        $this->vendingMachineRepository->incrementMachineCoins($increments);
 
-        return $this->transactionManager->run(function () use ($increments): ServiceMachineResponse {
-            $this->vendingMachineRepository->incrementMachineCoins($increments);
-
-            return new ServiceMachineResponse(
-                [],
-                $this->formatCoinsForApi($this->vendingMachineRepository->getMachineCoins()),
-            );
-        });
+        return new ServiceMachineResponse(
+            [],
+            $this->formatCoinsForApi($this->vendingMachineRepository->getMachineCoins()),
+        );
     }
 
     /**
