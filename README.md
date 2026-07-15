@@ -171,9 +171,9 @@ curl -X POST http://localhost:8080/wallets/<wallet_id>/return-coin
 
 ## API Contract (Paso 4 - Service Vending Machine)
 
-### `POST /vending-machine/service`
+### `POST /vending-machine/service/products`
 
-Configura el estado global de la maquina: stock de productos y monedas disponibles para cambio.
+Suma stock a productos existentes de la maquina global.
 
 - Request body: obligatorio
 - Response: `200 OK`
@@ -181,16 +181,9 @@ Configura el estado global de la maquina: stock de productos y monedas disponibl
 ```json
 {
   "products": [
-    {"selector": "WATER", "stock": 2},
-    {"selector": "JUICE", "stock": 1},
-    {"selector": "SODA", "stock": 1}
-  ],
-  "coins": {
-    "0.05": 10,
-    "0.10": 10,
-    "0.25": 10,
-    "1.00": 5
-  }
+    {"selector": "WATER", "quantity_to_add": 2},
+    {"selector": "JUICE", "quantity_to_add": 1}
+  ]
 }
 ```
 
@@ -199,13 +192,34 @@ Configura el estado global de la maquina: stock de productos y monedas disponibl
   "products": [
     {"selector": "WATER", "price": 0.65, "stock": 2},
     {"selector": "JUICE", "price": 1.00, "stock": 1},
-    {"selector": "SODA", "price": 1.50, "stock": 1}
-  ],
+    {"selector": "SODA", "price": 1.50, "stock": 0}
+  ]
+}
+```
+
+### `POST /vending-machine/service/coins`
+
+Suma monedas al inventario de cambio de la maquina global.
+
+- Request body: obligatorio
+- Response: `200 OK`
+
+```json
+{
+  "coins": [
+    {"coin": "0.25", "quantity_to_add": 4},
+    {"coin": "1.00", "quantity_to_add": 1}
+  ]
+}
+```
+
+```json
+{
   "machine_coins": {
-    "0.05": 10,
-    "0.10": 10,
-    "0.25": 10,
-    "1.00": 5
+    "0.05": 0,
+    "0.10": 0,
+    "0.25": 4,
+    "1.00": 1
   }
 }
 ```
@@ -213,27 +227,34 @@ Configura el estado global de la maquina: stock de productos y monedas disponibl
 Notas de contrato:
 
 - La maquina es unica y global para toda la aplicacion.
+- `quantity_to_add` debe ser entero positivo (`> 0`).
 - `selector` permitido: `WATER`, `JUICE`, `SODA`.
-- `stock` y `coin_count` deben ser enteros mayores o iguales a `0`.
-- Los precios de producto se mantienen en la maquina (`WATER=0.65`, `JUICE=1.00`, `SODA=1.50`).
+- `coin` permitido: `0.05`, `0.10`, `0.25`, `1.00`.
 
 Errores esperados:
 
-- `400 Bad Request`: payload invalido, selector invalido o cantidades negativas.
+- `400 Bad Request`: payload invalido, selector/coin invalido o `quantity_to_add` invalido.
 - `500 Internal Server Error`: error inesperado de persistencia.
 
-Ejemplo de llamada:
+Ejemplos de llamada:
 
 ```bash
-curl -X POST http://localhost:8080/vending-machine/service \
+curl -X POST http://localhost:8080/vending-machine/service/products \
   -H "Content-Type: application/json" \
   -d '{
     "products":[
-      {"selector":"WATER","stock":2},
-      {"selector":"JUICE","stock":1},
-      {"selector":"SODA","stock":1}
-    ],
-    "coins":{"0.05":10,"0.10":10,"0.25":10,"1.00":5}
+      {"selector":"WATER","quantity_to_add":2},
+      {"selector":"JUICE","quantity_to_add":1}
+    ]
+  }'
+
+curl -X POST http://localhost:8080/vending-machine/service/coins \
+  -H "Content-Type: application/json" \
+  -d '{
+    "coins":[
+      {"coin":"0.25","quantity_to_add":4},
+      {"coin":"1.00","quantity_to_add":1}
+    ]
   }'
 ```
 
@@ -283,16 +304,27 @@ curl -X POST http://localhost:8080/wallets/<wallet_id>/buy/WATER
 ## Flujo end-to-end (manual)
 
 ```bash
-# 1) Configurar maquina (stock + monedas)
-curl -X POST http://localhost:8080/vending-machine/service \
+# 1) Sumar stock a productos
+curl -X POST http://localhost:8080/vending-machine/service/products \
   -H "Content-Type: application/json" \
   -d '{
     "products":[
-      {"selector":"WATER","stock":2},
-      {"selector":"JUICE","stock":1},
-      {"selector":"SODA","stock":1}
-    ],
-    "coins":{"0.05":10,"0.10":10,"0.25":10,"1.00":5}
+      {"selector":"WATER","quantity_to_add":2},
+      {"selector":"JUICE","quantity_to_add":1},
+      {"selector":"SODA","quantity_to_add":1}
+    ]
+  }'
+
+# 1.1) Sumar monedas para cambio
+curl -X POST http://localhost:8080/vending-machine/service/coins \
+  -H "Content-Type: application/json" \
+  -d '{
+    "coins":[
+      {"coin":"0.05","quantity_to_add":10},
+      {"coin":"0.10","quantity_to_add":10},
+      {"coin":"0.25","quantity_to_add":10},
+      {"coin":"1.00","quantity_to_add":5}
+    ]
   }'
 
 # 2) Crear wallet

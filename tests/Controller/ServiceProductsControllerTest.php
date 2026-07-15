@@ -39,6 +39,9 @@ final class ServiceProductsControllerTest extends WebTestCase
         );
 
         self::assertResponseStatusCodeSame(200);
+        $payload = json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        self::assertArrayHasKey('products', $payload);
+        self::assertArrayNotHasKey('machine_coins', $payload);
         self::assertSame(3, $this->productStock('WATER'));
         self::assertSame(3, $this->productStock('JUICE'));
         self::assertSame(0, $this->productStock('SODA'));

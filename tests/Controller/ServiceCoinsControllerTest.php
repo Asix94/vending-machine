@@ -39,6 +39,9 @@ final class ServiceCoinsControllerTest extends WebTestCase
         );
 
         self::assertResponseStatusCodeSame(200);
+        $payload = json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        self::assertArrayHasKey('machine_coins', $payload);
+        self::assertArrayNotHasKey('products', $payload);
         self::assertSame(3, $this->coinCount(25));
         self::assertSame(3, $this->coinCount(100));
         self::assertSame(0, $this->coinCount(5));

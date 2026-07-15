@@ -40,7 +40,10 @@ final readonly class ServiceProductsController
 
         $jsonResponse = new JsonResponse();
         $jsonResponse->setEncodingOptions($jsonResponse->getEncodingOptions() | JSON_PRESERVE_ZERO_FRACTION);
-        $jsonResponse->setData($response->toArray());
+        $payload = $response->toArray();
+        $jsonResponse->setData([
+            'products' => $payload['products'],
+        ]);
 
         return $jsonResponse;
     }

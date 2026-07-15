@@ -40,7 +40,10 @@ final readonly class ServiceCoinsController
 
         $jsonResponse = new JsonResponse();
         $jsonResponse->setEncodingOptions($jsonResponse->getEncodingOptions() | JSON_PRESERVE_ZERO_FRACTION);
-        $jsonResponse->setData($response->toArray());
+        $payload = $response->toArray();
+        $jsonResponse->setData([
+            'machine_coins' => $payload['machine_coins'],
+        ]);
 
         return $jsonResponse;
     }
