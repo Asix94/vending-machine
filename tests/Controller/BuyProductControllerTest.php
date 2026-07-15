@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class BuyProductControllerTest extends WebTestCase
 {
+    private const MACHINE_ID = '8cf752a6-6e5f-4b88-a531-d0e57dda61b3';
+
     private Connection $connection;
     private KernelBrowser $client;
 
@@ -32,7 +34,7 @@ final class BuyProductControllerTest extends WebTestCase
         $walletId = $this->createWallet();
         $this->insertMoney($walletId, [1.0]);
 
-        $this->client->request('POST', '/wallets/'.$walletId.'/buy/JUICE');
+        $this->buy(self::MACHINE_ID, $walletId, 'JUICE');
 
         self::assertResponseStatusCodeSame(200);
 
@@ -58,20 +60,20 @@ final class BuyProductControllerTest extends WebTestCase
         $walletId = $this->createWallet();
         $this->insertMoney($walletId, [1.0]);
 
-        $this->client->request('POST', '/wallets/'.$walletId.'/buy/WATER');
+        $this->buy(self::MACHINE_ID, $walletId, 'WATER');
 
         self::assertResponseStatusCodeSame(200);
 
         $payload = json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
         self::assertSame('WATER', $payload['item']['selector']);
         self::assertSame([0.25, 0.1], array_map('floatval', $payload['change']));
-        self::assertSame(0.35, (float) $payload['wallet_balance_after']);
+        self::assertSame(0.0, (float) $payload['wallet_balance_after']);
 
         self::assertSame(1, $this->productStock('WATER'));
         self::assertSame(0, $this->coinCount(25));
         self::assertSame(0, $this->coinCount(10));
         self::assertSame(1, $this->coinCount(100));
-        self::assertSame(35, $this->walletBalance($walletId));
+        self::assertSame(0, $this->walletBalance($walletId));
     }
 
     public function testBuyProductReturns409WhenInsufficientFunds(): void
@@ -80,7 +82,7 @@ final class BuyProductControllerTest extends WebTestCase
         $walletId = $this->createWallet();
         $this->insertMoney($walletId, [0.25]);
 
-        $this->client->request('POST', '/wallets/'.$walletId.'/buy/SODA');
+        $this->buy(self::MACHINE_ID, $walletId, 'SODA');
 
         self::assertResponseStatusCodeSame(409);
         self::assertSame(
@@ -95,7 +97,7 @@ final class BuyProductControllerTest extends WebTestCase
         $walletId = $this->createWallet();
         $this->insertMoney($walletId, [1.0, 1.0]);
 
-        $this->client->request('POST', '/wallets/'.$walletId.'/buy/SODA');
+        $this->buy(self::MACHINE_ID, $walletId, 'SODA');
 
         self::assertResponseStatusCodeSame(409);
         self::assertSame(
@@ -111,7 +113,7 @@ final class BuyProductControllerTest extends WebTestCase
         $walletId = $this->createWallet();
         $this->insertMoney($walletId, [1.0]);
 
-        $this->client->request('POST', '/wallets/'.$walletId.'/buy/WATER');
+        $this->buy(self::MACHINE_ID, $walletId, 'WATER');
 
         self::assertResponseStatusCodeSame(409);
         self::assertSame(
@@ -155,6 +157,19 @@ final class BuyProductControllerTest extends WebTestCase
     private function setProductStock(string $selector, int $stock): void
     {
         $this->connection->update('machine_products', ['stock' => $stock], ['selector' => $selector]);
+    }
+
+    private function buy(string $machineId, string $walletId, string $product): void
+    {
+        $this->client->request(
+            'POST',
+            '/vending-machine/'.$machineId.'/buy',
+            server: ['CONTENT_TYPE' => 'application/json'],
+            content: json_encode([
+                'wallet_id' => $walletId,
+                'product' => $product,
+            ], JSON_THROW_ON_ERROR),
+        );
     }
 
     /**

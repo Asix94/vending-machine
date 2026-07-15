@@ -260,12 +260,19 @@ curl -X POST http://localhost:8080/vending-machine/service/coins \
 
 ## API Contract (Paso 5 - Buy Product)
 
-### `POST /wallets/{walletId}/buy/{selector}`
+### `POST /vending-machine/{machineId}/buy`
 
 Compra un producto usando el dinero insertado en la wallet y devuelve cambio exacto cuando aplique.
 
-- Request body: vacio
+- Request body: obligatorio
 - Response: `200 OK`
+
+```json
+{
+  "wallet_id": "6b50cf5f-3d66-43dd-90f3-2bd03555c877",
+  "product": "water"
+}
+```
 
 ```json
 {
@@ -282,23 +289,28 @@ Notas de contrato:
 
 - La compra es transaccional: si falla cualquier validacion, no se cambia estado.
 - El dinero de la wallet se transfiere a la maquina cuando la compra es exitosa.
-- El cambio se calcula con el inventario de monedas de la maquina y se acredita en la wallet.
+- El cambio se calcula con el inventario de monedas de la maquina y se informa en `change`.
+- La wallet queda en `0.0` despues de la compra exitosa (el cambio lo entrega la maquina).
 - Si no hay cambio exacto, se rechaza la compra.
 
 Errores esperados:
 
-- `404 Not Found`: wallet no existe o producto no existe.
+- `404 Not Found`:
+  - `wallet_not_found`
+  - `product_not_found`
 - `409 Conflict`:
   - `out_of_stock`
   - `insufficient_funds`
   - `cannot_make_exact_change`
-- `400 Bad Request`: selector invalido o formato invalido.
+- `400 Bad Request`: `machineId` invalido, payload invalido o producto invalido.
 - `500 Internal Server Error`: error inesperado de persistencia.
 
 Ejemplo de llamada:
 
 ```bash
-curl -X POST http://localhost:8080/wallets/<wallet_id>/buy/WATER
+curl -X POST http://localhost:8080/vending-machine/<machine_id>/buy \
+  -H "Content-Type: application/json" \
+  -d '{"wallet_id":"<wallet_id>","product":"water"}'
 ```
 
 ## Flujo end-to-end (manual)
@@ -336,7 +348,9 @@ curl -X POST http://localhost:8080/wallets/<wallet_id>/insert-money \
   -d '{"coins":[1.0]}'
 
 # 4) Comprar producto
-curl -X POST http://localhost:8080/wallets/<wallet_id>/buy/WATER
+curl -X POST http://localhost:8080/vending-machine/<machine_id>/buy \
+  -H "Content-Type: application/json" \
+  -d '{"wallet_id":"<wallet_id>","product":"water"}'
 
 # 5) Devolver monedas (si no compraste o insertaste mas dinero)
 curl -X POST http://localhost:8080/wallets/<wallet_id>/return-coin

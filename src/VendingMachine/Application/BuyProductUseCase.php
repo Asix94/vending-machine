@@ -28,7 +28,7 @@ final readonly class BuyProductUseCase
 
     public function __invoke(BuyProductRequest $request): BuyProductResponse
     {
-        $selector = strtoupper($request->selector);
+        $selector = strtoupper($request->product);
         if (!in_array($selector, self::ALLOWED_SELECTORS, true)) {
             throw new \InvalidArgumentException('Invalid selector. Allowed values are WATER, JUICE, SODA.');
         }
@@ -52,7 +52,7 @@ final readonly class BuyProductUseCase
             $changeCoins = $this->calculateExactChange($changeCents, $machineCoinsAfterWalletTransfer);
 
             $machineCoinsAfterChange = $this->subtractMachineCoins($machineCoinsAfterWalletTransfer, $changeCoins);
-            $walletAfterPurchase = $wallet->withCoins($changeCoins);
+            $walletAfterPurchase = $wallet->withdrawAll();
 
             $this->vendingMachineRepository->updateMachineState($selector, $product->stock - 1, $machineCoinsAfterChange);
             $this->walletRepository->update($walletAfterPurchase);
