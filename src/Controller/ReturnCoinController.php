@@ -25,7 +25,8 @@ final readonly class ReturnCoinController
             $response = ($this->returnCoinUseCase)(new ReturnCoinRequest($walletId));
         } catch (WalletNotFoundException) {
             return new JsonResponse([
-                'error' => 'Wallet not found.',
+                'error' => 'wallet_not_found',
+                'message' => 'Wallet not found.',
             ], 404);
         }
 

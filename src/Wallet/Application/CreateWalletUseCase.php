@@ -26,7 +26,7 @@ final readonly class CreateWalletUseCase
         $this->walletRepository->create($wallet);
 
         return new CreateWalletResponse(
-            (string) $wallet->walletId(),
+            $wallet->walletId()->value(),
             $wallet->balance()->toDecimal(),
         );
     }

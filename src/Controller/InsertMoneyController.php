@@ -28,17 +28,17 @@ final readonly class InsertMoneyController
         try {
             $payload = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException) {
-            return $this->errorResponse('Invalid JSON payload.', 400);
+            return $this->errorResponse('invalid_payload', 'Invalid JSON payload.', 400);
         }
 
         if (!is_array($payload) || !array_key_exists('coins', $payload) || !is_array($payload['coins']) || $payload['coins'] === []) {
-            return $this->errorResponse('Field "coins" is required and must be a non-empty array.', 400);
+            return $this->errorResponse('invalid_payload', 'Field "coins" is required and must be a non-empty array.', 400);
         }
 
         $coins = [];
         foreach ($payload['coins'] as $coin) {
             if (!is_int($coin) && !is_float($coin)) {
-                return $this->errorResponse('Each coin value must be numeric.', 400);
+                return $this->errorResponse('invalid_payload', 'Each coin value must be numeric.', 400);
             }
 
             $coins[] = (float) $coin;
@@ -47,9 +47,9 @@ final readonly class InsertMoneyController
         try {
             $response = ($this->addMoneyUseCase)(new AddMoneyRequest($walletId, $coins));
         } catch (WalletNotFoundException) {
-            return $this->errorResponse('Wallet not found.', 404);
+            return $this->errorResponse('wallet_not_found', 'Wallet not found.', 404);
         } catch (InvalidMoneyAmountException|InvalidArgumentException $exception) {
-            return $this->errorResponse($exception->getMessage(), 400);
+            return $this->errorResponse('invalid_money_amount', $exception->getMessage(), 400);
         }
 
         $jsonResponse = new JsonResponse();
@@ -59,10 +59,11 @@ final readonly class InsertMoneyController
         return $jsonResponse;
     }
 
-    private function errorResponse(string $message, int $statusCode): JsonResponse
+    private function errorResponse(string $error, string $message, int $statusCode): JsonResponse
     {
         return new JsonResponse([
-            'error' => $message,
+            'error' => $error,
+            'message' => $message,
         ], $statusCode);
     }
 }

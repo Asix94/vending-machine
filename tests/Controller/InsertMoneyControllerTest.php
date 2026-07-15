@@ -84,7 +84,7 @@ final class InsertMoneyControllerTest extends WebTestCase
 
         self::assertResponseStatusCodeSame(404);
         self::assertSame(
-            ['error' => 'Wallet not found.'],
+            ['error' => 'wallet_not_found', 'message' => 'Wallet not found.'],
             json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR),
         );
     }
@@ -102,7 +102,7 @@ final class InsertMoneyControllerTest extends WebTestCase
 
         self::assertResponseStatusCodeSame(400);
         self::assertSame(
-            ['error' => 'Field "coins" is required and must be a non-empty array.'],
+            ['error' => 'invalid_payload', 'message' => 'Field "coins" is required and must be a non-empty array.'],
             json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR),
         );
     }
@@ -120,7 +120,7 @@ final class InsertMoneyControllerTest extends WebTestCase
 
         self::assertResponseStatusCodeSame(400);
         self::assertSame(
-            ['error' => 'Invalid coin amount. Accepted values are 5, 10, 25, 100 cents.'],
+            ['error' => 'invalid_money_amount', 'message' => 'Invalid coin amount. Accepted values are 5, 10, 25, 100 cents.'],
             json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR),
         );
     }

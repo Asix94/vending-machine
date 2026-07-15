@@ -77,7 +77,7 @@ final class ReturnCoinControllerTest extends WebTestCase
 
         self::assertResponseStatusCodeSame(404);
         self::assertSame(
-            ['error' => 'Wallet not found.'],
+            ['error' => 'wallet_not_found', 'message' => 'Wallet not found.'],
             json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR),
         );
     }
