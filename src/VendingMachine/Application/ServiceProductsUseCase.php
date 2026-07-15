@@ -28,13 +28,13 @@ final readonly class ServiceProductsUseCase
 
             return new ServiceMachineResponse(
                 $this->formatProductsForApi($this->vendingMachineRepository->getAllProducts()),
-                $this->formatCoinsForApi($this->vendingMachineRepository->getMachineCoins()),
+                []
             );
         });
     }
 
     /**
-     * @param list<array{selector:string, quantity_to_add:int}> $products
+     * @param list<array{product:string, quantity_to_add:int}> $products
      * @param list<string> $allowedSelectors
      *
      * @return array<string, int>
@@ -48,7 +48,7 @@ final readonly class ServiceProductsUseCase
         $increments = [];
 
         foreach ($products as $product) {
-            $selector = strtoupper((string) ($product['selector'] ?? ''));
+            $selector = strtoupper((string) ($product['product'] ?? ''));
             $quantityToAdd = $product['quantity_to_add'] ?? null;
 
             if (!in_array($selector, $allowedSelectors, true)) {
@@ -96,22 +96,6 @@ final readonly class ServiceProductsUseCase
                 'price' => $product['price_cents'] / 100,
                 'stock' => $product['stock'],
             ];
-        }
-
-        return $formatted;
-    }
-
-    /**
-     * @param array<int, int> $coins
-     *
-     * @return array<string, int>
-     */
-    private function formatCoinsForApi(array $coins): array
-    {
-        $formatted = [];
-
-        foreach ([5, 10, 25, 100] as $coin) {
-            $formatted[sprintf('%.2f', $coin / 100)] = $coins[$coin] ?? 0;
         }
 
         return $formatted;

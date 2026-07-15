@@ -181,8 +181,8 @@ Suma stock a productos existentes de la maquina global.
 ```json
 {
   "products": [
-    {"selector": "WATER", "quantity_to_add": 2},
-    {"selector": "JUICE", "quantity_to_add": 1}
+    {"product": "WATER", "quantity_to_add": 2},
+    {"product": "JUICE", "quantity_to_add": 1}
   ]
 }
 ```
@@ -228,7 +228,7 @@ Notas de contrato:
 
 - La maquina es unica y global para toda la aplicacion.
 - `quantity_to_add` debe ser entero positivo (`> 0`).
-- `selector` permitido: `WATER`, `JUICE`, `SODA`.
+- `product` permitido: `WATER`, `JUICE`, `SODA`.
 - `coin` permitido: `0.05`, `0.10`, `0.25`, `1.00`.
 
 Errores esperados:
@@ -243,8 +243,8 @@ curl -X POST http://localhost:8080/vending-machine/service/products \
   -H "Content-Type: application/json" \
   -d '{
     "products":[
-      {"selector":"WATER","quantity_to_add":2},
-      {"selector":"JUICE","quantity_to_add":1}
+      {"product":"WATER","quantity_to_add":2},
+      {"product":"JUICE","quantity_to_add":1}
     ]
   }'
 
@@ -309,9 +309,9 @@ curl -X POST http://localhost:8080/vending-machine/service/products \
   -H "Content-Type: application/json" \
   -d '{
     "products":[
-      {"selector":"WATER","quantity_to_add":2},
-      {"selector":"JUICE","quantity_to_add":1},
-      {"selector":"SODA","quantity_to_add":1}
+      {"product":"WATER","quantity_to_add":2},
+      {"product":"JUICE","quantity_to_add":1},
+      {"product":"SODA","quantity_to_add":1}
     ]
   }'
 

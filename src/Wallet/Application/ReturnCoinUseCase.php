@@ -24,7 +24,7 @@ final readonly class ReturnCoinUseCase
         $this->walletRepository->update($wallet);
 
         return new ReturnCoinResponse(
-            (string) $wallet->walletId(),
+            $wallet->walletId()->value(),
             $returnedCoins,
             $returnedTotal,
             $wallet->balance()->toDecimal(),

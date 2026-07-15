@@ -31,9 +31,9 @@ final class ServiceProductsControllerTest extends WebTestCase
             server: ['CONTENT_TYPE' => 'application/json'],
             content: json_encode([
                 'products' => [
-                    ['selector' => 'WATER', 'quantity_to_add' => 2],
-                    ['selector' => 'WATER', 'quantity_to_add' => 1],
-                    ['selector' => 'JUICE', 'quantity_to_add' => 3],
+                    ['product' => 'WATER', 'quantity_to_add' => 2],
+                    ['product' => 'WATER', 'quantity_to_add' => 1],
+                    ['product' => 'JUICE', 'quantity_to_add' => 3],
                 ],
             ], JSON_THROW_ON_ERROR),
         );
@@ -55,7 +55,7 @@ final class ServiceProductsControllerTest extends WebTestCase
             server: ['CONTENT_TYPE' => 'application/json'],
             content: json_encode([
                 'products' => [
-                    ['selector' => 'TEA', 'quantity_to_add' => 1],
+                    ['product' => 'TEA', 'quantity_to_add' => 1],
                 ],
             ], JSON_THROW_ON_ERROR),
         );
@@ -72,7 +72,7 @@ final class ServiceProductsControllerTest extends WebTestCase
             server: ['CONTENT_TYPE' => 'application/json'],
             content: json_encode([
                 'products' => [
-                    ['selector' => 'WATER', 'quantity_to_add' => 0],
+                    ['product' => 'WATER', 'quantity_to_add' => 0],
                 ],
             ], JSON_THROW_ON_ERROR),
         );

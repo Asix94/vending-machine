@@ -27,7 +27,7 @@ final readonly class ServiceCoinsUseCase
             $this->vendingMachineRepository->incrementMachineCoins($increments);
 
             return new ServiceMachineResponse(
-                $this->formatProductsForApi($this->vendingMachineRepository->getAllProducts()),
+                [],
                 $this->formatCoinsForApi($this->vendingMachineRepository->getMachineCoins()),
             );
         });
@@ -67,26 +67,6 @@ final readonly class ServiceCoinsUseCase
         }
 
         return $increments;
-    }
-
-    /**
-     * @param list<array{selector:string, price_cents:int, stock:int}> $products
-     *
-     * @return list<array{selector:string, price:float, stock:int}>
-     */
-    private function formatProductsForApi(array $products): array
-    {
-        $formatted = [];
-
-        foreach ($products as $product) {
-            $formatted[] = [
-                'selector' => $product['selector'],
-                'price' => $product['price_cents'] / 100,
-                'stock' => $product['stock'],
-            ];
-        }
-
-        return $formatted;
     }
 
     /**

@@ -27,7 +27,7 @@ final readonly class AddMoneyUseCase
         $this->walletRepository->update($wallet);
 
         return new AddMoneyResponse(
-            (string) $wallet->walletId(),
+            $wallet->walletId()->value(),
             $wallet->balance()->toDecimal(),
             $this->formatCoinsForApi($wallet->insertedCoins()),
         );
