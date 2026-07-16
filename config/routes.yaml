@@ -5,3 +5,6 @@ wallet_routes:
 
 vending_machine_routes:
     resource: routes/vending_machine.yaml
+
+test_routes:
+    resource: routes/test.yaml

@@ -61,6 +61,7 @@ final class ServiceProductsControllerTest extends WebTestCase
         );
 
         self::assertResponseStatusCodeSame(400);
+        self::assertResponseHeaderSame('content-type', 'application/json');
         self::assertSame('invalid_payload', $this->errorCode());
     }
 

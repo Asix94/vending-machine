@@ -1,0 +1,5 @@
+when@test:
+    test_runtime_exception:
+        path: /_test/runtime-exception
+        controller: App\Controller\TestRuntimeExceptionController
+        methods: [GET]

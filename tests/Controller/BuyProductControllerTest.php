@@ -98,6 +98,7 @@ final class BuyProductControllerTest extends WebTestCase
         $this->buy($walletId, 'SODA');
 
         self::assertResponseStatusCodeSame(409);
+        self::assertResponseHeaderSame('content-type', 'application/json');
         self::assertSame(
             ['error' => 'out_of_stock', 'message' => 'Selected product is out of stock.'],
             json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR),

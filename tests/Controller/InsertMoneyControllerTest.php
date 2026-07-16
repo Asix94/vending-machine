@@ -101,6 +101,7 @@ final class InsertMoneyControllerTest extends WebTestCase
         );
 
         self::assertResponseStatusCodeSame(400);
+        self::assertResponseHeaderSame('content-type', 'application/json');
         self::assertSame(
             ['error' => 'invalid_payload', 'message' => 'Field "coins" is required and must be a non-empty array.'],
             json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR),
