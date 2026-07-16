@@ -6,10 +6,10 @@ namespace App\VendingMachine\Application;
 
 use App\VendingMachine\Application\Dto\BuyProductRequest;
 use App\VendingMachine\Application\Dto\BuyProductResponse;
-use App\VendingMachine\Domain\Exception\CannotMakeExactChangeException;
 use App\VendingMachine\Domain\Exception\InsufficientFundsException;
 use App\VendingMachine\Domain\Exception\OutOfStockException;
 use App\VendingMachine\Domain\Repository\VendingMachineRepositoryInterface;
+use App\VendingMachine\Domain\Service\ExactChangeCalculator;
 use App\Shared\Application\TransactionManagerInterface;
 use App\Wallet\Domain\Repository\WalletRepositoryInterface;
 use App\Wallet\Domain\ValueObject\Money;
@@ -23,6 +23,7 @@ final readonly class BuyProductUseCase
         private WalletRepositoryInterface $walletRepository,
         private VendingMachineRepositoryInterface $vendingMachineRepository,
         private TransactionManagerInterface $transactionManager,
+        private ExactChangeCalculator $exactChangeCalculator,
     ) {
     }
 
@@ -49,7 +50,7 @@ final readonly class BuyProductUseCase
             $machineCoins = $this->vendingMachineRepository->getMachineCoins();
             $machineCoinsAfterWalletTransfer = $this->addWalletCoinsToMachine($machineCoins, $wallet->insertedCoins());
             $changeCents = $walletBalance - $product->priceCents;
-            $changeCoins = $this->calculateExactChange($changeCents, $machineCoinsAfterWalletTransfer);
+            $changeCoins = $this->exactChangeCalculator->calculate($changeCents, $machineCoinsAfterWalletTransfer);
 
             $machineCoinsAfterChange = $this->subtractMachineCoins($machineCoinsAfterWalletTransfer, $changeCoins);
             $walletAfterPurchase = $wallet->withdrawAll();
@@ -81,45 +82,6 @@ final readonly class BuyProductUseCase
         }
 
         return $result;
-    }
-
-    /**
-     * @param array<int, int> $availableCoins
-     *
-     * @return array<int, int>
-     */
-    private function calculateExactChange(int $changeCents, array $availableCoins): array
-    {
-        $remaining = $changeCents;
-        $usedCoins = array_fill_keys(Money::ACCEPTED_VALUES, 0);
-
-        if ($remaining === 0) {
-            return $usedCoins;
-        }
-
-        $orderedCoins = Money::ACCEPTED_VALUES;
-        rsort($orderedCoins);
-
-        foreach ($orderedCoins as $coin) {
-            if ($remaining <= 0) {
-                break;
-            }
-
-            $maxNeeded = intdiv($remaining, $coin);
-            $available = $availableCoins[$coin] ?? 0;
-            $take = min($maxNeeded, $available);
-
-            if ($take > 0) {
-                $usedCoins[$coin] = $take;
-                $remaining -= $take * $coin;
-            }
-        }
-
-        if ($remaining !== 0) {
-            throw new CannotMakeExactChangeException($changeCents);
-        }
-
-        return $usedCoins;
     }
 
     /**
