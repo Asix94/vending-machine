@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Wallet\Application;
 
+use App\Shared\Application\TransactionManagerInterface;
 use App\Wallet\Application\Dto\ReturnCoinRequest;
 use App\Wallet\Application\ReturnCoinUseCase;
 use App\Wallet\Domain\Entity\Wallet;
@@ -30,7 +31,7 @@ final class ReturnCoinUseCaseTest extends TestCase
         $walletRepository = $this->createMock(WalletRepositoryInterface::class);
         $walletRepository
             ->expects(self::once())
-            ->method('findById')
+            ->method('findByIdForUpdate')
             ->with(self::callback(static fn (WalletId $id): bool => $id->value() === $walletId))
             ->willReturn($wallet);
 
@@ -39,7 +40,13 @@ final class ReturnCoinUseCaseTest extends TestCase
             ->method('update')
             ->with(self::callback(static fn (Wallet $updatedWallet): bool => $updatedWallet->balance()->cents() === 0));
 
-        $useCase = new ReturnCoinUseCase($walletRepository);
+        $transactionManager = $this->createMock(TransactionManagerInterface::class);
+        $transactionManager
+            ->expects(self::once())
+            ->method('run')
+            ->willReturnCallback(static fn (callable $callback): mixed => $callback());
+
+        $useCase = new ReturnCoinUseCase($walletRepository, $transactionManager);
 
         $response = $useCase(new ReturnCoinRequest($walletId));
 

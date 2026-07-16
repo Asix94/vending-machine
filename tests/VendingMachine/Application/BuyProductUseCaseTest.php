@@ -29,7 +29,7 @@ final class BuyProductUseCaseTest extends TestCase
         $walletRepository = $this->createMock(WalletRepositoryInterface::class);
         $walletRepository
             ->expects(self::once())
-            ->method('findById')
+            ->method('findByIdForUpdate')
             ->willReturn($wallet);
 
         $walletRepository
@@ -40,13 +40,13 @@ final class BuyProductUseCaseTest extends TestCase
         $machineRepository = $this->createMock(VendingMachineRepositoryInterface::class);
         $machineRepository
             ->expects(self::once())
-            ->method('findProductBySelector')
+            ->method('findProductBySelectorForUpdate')
             ->with('WATER')
             ->willReturn(new Product('WATER', 65, 2));
 
         $machineRepository
             ->expects(self::once())
-            ->method('getMachineCoins')
+            ->method('getMachineCoinsForUpdate')
             ->willReturn([
                 5 => 0,
                 10 => 1,
@@ -96,17 +96,17 @@ final class BuyProductUseCaseTest extends TestCase
         $walletRepository = $this->createMock(WalletRepositoryInterface::class);
         $walletRepository
             ->expects(self::once())
-            ->method('findById')
+            ->method('findByIdForUpdate')
             ->willReturn($wallet);
         $walletRepository->expects(self::never())->method('update');
 
         $machineRepository = $this->createMock(VendingMachineRepositoryInterface::class);
         $machineRepository
             ->expects(self::once())
-            ->method('findProductBySelector')
+            ->method('findProductBySelectorForUpdate')
             ->with('SODA')
             ->willReturn(new Product('SODA', 150, 1));
-        $machineRepository->expects(self::never())->method('getMachineCoins');
+        $machineRepository->expects(self::never())->method('getMachineCoinsForUpdate');
         $machineRepository->expects(self::never())->method('updateMachineState');
 
         $transactionManager = $this->createMock(TransactionManagerInterface::class);
@@ -133,17 +133,17 @@ final class BuyProductUseCaseTest extends TestCase
         $walletRepository = $this->createMock(WalletRepositoryInterface::class);
         $walletRepository
             ->expects(self::once())
-            ->method('findById')
+            ->method('findByIdForUpdate')
             ->willReturn($wallet);
         $walletRepository->expects(self::never())->method('update');
 
         $machineRepository = $this->createMock(VendingMachineRepositoryInterface::class);
         $machineRepository
             ->expects(self::once())
-            ->method('findProductBySelector')
+            ->method('findProductBySelectorForUpdate')
             ->with('WATER')
             ->willReturn(new Product('WATER', 65, 0));
-        $machineRepository->expects(self::never())->method('getMachineCoins');
+        $machineRepository->expects(self::never())->method('getMachineCoinsForUpdate');
         $machineRepository->expects(self::never())->method('updateMachineState');
 
         $transactionManager = $this->createMock(TransactionManagerInterface::class);
@@ -170,20 +170,20 @@ final class BuyProductUseCaseTest extends TestCase
         $walletRepository = $this->createMock(WalletRepositoryInterface::class);
         $walletRepository
             ->expects(self::once())
-            ->method('findById')
+            ->method('findByIdForUpdate')
             ->willReturn($wallet);
         $walletRepository->expects(self::never())->method('update');
 
         $machineRepository = $this->createMock(VendingMachineRepositoryInterface::class);
         $machineRepository
             ->expects(self::once())
-            ->method('findProductBySelector')
+            ->method('findProductBySelectorForUpdate')
             ->with('WATER')
             ->willReturn(new Product('WATER', 65, 1));
 
         $machineRepository
             ->expects(self::once())
-            ->method('getMachineCoins')
+            ->method('getMachineCoinsForUpdate')
             ->willReturn([
                 5 => 0,
                 10 => 0,
@@ -217,7 +217,7 @@ final class BuyProductUseCaseTest extends TestCase
         $walletRepository = $this->createMock(WalletRepositoryInterface::class);
         $walletRepository
             ->expects(self::once())
-            ->method('findById')
+            ->method('findByIdForUpdate')
             ->willReturn($wallet);
 
         $walletRepository
@@ -228,13 +228,13 @@ final class BuyProductUseCaseTest extends TestCase
         $machineRepository = $this->createMock(VendingMachineRepositoryInterface::class);
         $machineRepository
             ->expects(self::once())
-            ->method('findProductBySelector')
+            ->method('findProductBySelectorForUpdate')
             ->with('WATER')
             ->willReturn(new Product('WATER', 70, 2));
 
         $machineRepository
             ->expects(self::once())
-            ->method('getMachineCoins')
+            ->method('getMachineCoinsForUpdate')
             ->willReturn([
                 5 => 0,
                 10 => 3,

@@ -35,8 +35,8 @@ final readonly class BuyProductUseCase
         }
 
         return $this->transactionManager->run(function () use ($request, $selector): BuyProductResponse {
-            $wallet = $this->walletRepository->findById(new WalletId($request->walletId));
-            $product = $this->vendingMachineRepository->findProductBySelector($selector);
+            $wallet = $this->walletRepository->findByIdForUpdate(new WalletId($request->walletId));
+            $product = $this->vendingMachineRepository->findProductBySelectorForUpdate($selector);
 
             if ($product->stock <= 0) {
                 throw new OutOfStockException($selector);
@@ -47,7 +47,7 @@ final readonly class BuyProductUseCase
                 throw new InsufficientFundsException($product->priceCents, $walletBalance);
             }
 
-            $machineCoins = $this->vendingMachineRepository->getMachineCoins();
+            $machineCoins = $this->vendingMachineRepository->getMachineCoinsForUpdate();
             $machineCoinsAfterWalletTransfer = $this->addWalletCoinsToMachine($machineCoins, $wallet->insertedCoins());
             $changeCents = $walletBalance - $product->priceCents;
             $changeCoins = $this->exactChangeCalculator->calculate($changeCents, $machineCoinsAfterWalletTransfer);

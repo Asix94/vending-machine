@@ -10,6 +10,8 @@ interface VendingMachineRepositoryInterface
 {
     public function findProductBySelector(string $selector): Product;
 
+    public function findProductBySelectorForUpdate(string $selector): Product;
+
     /**
      * @return list<array{selector:string, price_cents:int, stock:int}>
      */
@@ -19,6 +21,11 @@ interface VendingMachineRepositoryInterface
      * @return array<int, int>
      */
     public function getMachineCoins(): array;
+
+    /**
+     * @return array<int, int>
+     */
+    public function getMachineCoinsForUpdate(): array;
 
     /**
      * @param array<int, int> $machineCoins

@@ -11,6 +11,8 @@ interface WalletRepositoryInterface
 {
     public function findById(WalletId $walletId): Wallet;
 
+    public function findByIdForUpdate(WalletId $walletId): Wallet;
+
     public function create(Wallet $wallet): void;
 
     public function update(Wallet $wallet): void;

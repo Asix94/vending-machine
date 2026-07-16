@@ -19,8 +19,20 @@ final readonly class DoctrineVendingMachineRepository implements VendingMachineR
 
     public function findProductBySelector(string $selector): Product
     {
+        return $this->findProductRowBySelector($selector, false);
+    }
+
+    public function findProductBySelectorForUpdate(string $selector): Product
+    {
+        return $this->findProductRowBySelector($selector, true);
+    }
+
+    private function findProductRowBySelector(string $selector, bool $forUpdate): Product
+    {
+        $lockClause = $forUpdate ? ' FOR UPDATE' : '';
+
         $row = $this->connection->fetchAssociative(
-            'SELECT selector, price_cents, stock FROM machine_products WHERE selector = :selector',
+            sprintf('SELECT selector, price_cents, stock FROM machine_products WHERE selector = :selector%s', $lockClause),
             ['selector' => strtoupper($selector)],
         );
 
@@ -59,8 +71,26 @@ final readonly class DoctrineVendingMachineRepository implements VendingMachineR
      */
     public function getMachineCoins(): array
     {
+        return $this->fetchMachineCoins(false);
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    public function getMachineCoinsForUpdate(): array
+    {
+        return $this->fetchMachineCoins(true);
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    private function fetchMachineCoins(bool $forUpdate): array
+    {
+        $lockClause = $forUpdate ? ' FOR UPDATE' : '';
+
         $rows = $this->connection->fetchAllAssociative(
-            'SELECT coin_cents, coin_count FROM machine_coins ORDER BY coin_cents ASC',
+            sprintf('SELECT coin_cents, coin_count FROM machine_coins ORDER BY coin_cents ASC%s', $lockClause),
         );
 
         $coins = array_fill_keys(Money::ACCEPTED_VALUES, 0);

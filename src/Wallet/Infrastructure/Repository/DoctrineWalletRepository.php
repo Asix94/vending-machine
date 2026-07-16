@@ -20,8 +20,20 @@ final readonly class DoctrineWalletRepository implements WalletRepositoryInterfa
 
     public function findById(WalletId $walletId): Wallet
     {
+        return $this->findWalletById($walletId, false);
+    }
+
+    public function findByIdForUpdate(WalletId $walletId): Wallet
+    {
+        return $this->findWalletById($walletId, true);
+    }
+
+    private function findWalletById(WalletId $walletId, bool $forUpdate): Wallet
+    {
+        $lockClause = $forUpdate ? ' FOR UPDATE' : '';
+
         $row = $this->connection->fetchAssociative(
-            'SELECT id, inserted_balance_cents FROM wallets WHERE id = :id',
+            sprintf('SELECT id, inserted_balance_cents FROM wallets WHERE id = :id%s', $lockClause),
             ['id' => $walletId->value()],
         );
 
@@ -30,7 +42,7 @@ final readonly class DoctrineWalletRepository implements WalletRepositoryInterfa
         }
 
         $coinRows = $this->connection->fetchAllAssociative(
-            'SELECT coin_cents, coin_count FROM wallet_inserted_coins WHERE wallet_id = :wallet_id',
+            sprintf('SELECT coin_cents, coin_count FROM wallet_inserted_coins WHERE wallet_id = :wallet_id ORDER BY coin_cents ASC%s', $lockClause),
             ['wallet_id' => $walletId->value()],
         );
 
