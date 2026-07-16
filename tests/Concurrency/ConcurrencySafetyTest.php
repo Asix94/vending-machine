@@ -22,8 +22,6 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class ConcurrencySafetyTest extends KernelTestCase
 {
-    private const MACHINE_ID = '8cf752a6-6e5f-4b88-a531-d0e57dda61b3';
-
     private Connection $primary;
     private Connection $secondary;
 
@@ -57,12 +55,12 @@ final class ConcurrencySafetyTest extends KernelTestCase
         $buySecondary = $this->buyUseCase($this->secondary);
 
         $this->primary->beginTransaction();
-        $buyPrimary(new BuyProductRequest(self::MACHINE_ID, '11111111-1111-4111-8111-111111111111', 'JUICE'));
+        $buyPrimary(new BuyProductRequest('11111111-1111-4111-8111-111111111111', 'JUICE'));
 
         $this->secondary->executeStatement("SET lock_timeout TO '200ms'");
 
         try {
-            $buySecondary(new BuyProductRequest(self::MACHINE_ID, '22222222-2222-4222-8222-222222222222', 'JUICE'));
+            $buySecondary(new BuyProductRequest('22222222-2222-4222-8222-222222222222', 'JUICE'));
             self::fail('Expected lock wait timeout while first purchase transaction is open.');
         } catch (DriverException $exception) {
             self::assertStringContainsString('lock timeout', strtolower($exception->getMessage()));
@@ -71,7 +69,7 @@ final class ConcurrencySafetyTest extends KernelTestCase
         }
 
         try {
-            $buySecondary(new BuyProductRequest(self::MACHINE_ID, '22222222-2222-4222-8222-222222222222', 'JUICE'));
+            $buySecondary(new BuyProductRequest('22222222-2222-4222-8222-222222222222', 'JUICE'));
             self::fail('Expected out_of_stock after first purchase is committed.');
         } catch (OutOfStockException) {
             self::assertSame(0, $this->productStock('JUICE'));
@@ -120,7 +118,7 @@ final class ConcurrencySafetyTest extends KernelTestCase
         $returnSecondary = $this->returnCoinUseCase($this->secondary);
 
         $this->primary->beginTransaction();
-        $buyPrimary(new BuyProductRequest(self::MACHINE_ID, $walletId, 'JUICE'));
+        $buyPrimary(new BuyProductRequest($walletId, 'JUICE'));
 
         $this->secondary->executeStatement("SET lock_timeout TO '200ms'");
 

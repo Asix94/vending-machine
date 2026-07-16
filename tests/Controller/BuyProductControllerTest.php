@@ -10,8 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class BuyProductControllerTest extends WebTestCase
 {
-    private const MACHINE_ID = '8cf752a6-6e5f-4b88-a531-d0e57dda61b3';
-
     private Connection $connection;
     private KernelBrowser $client;
 
@@ -34,7 +32,7 @@ final class BuyProductControllerTest extends WebTestCase
         $walletId = $this->createWallet();
         $this->insertMoney($walletId, [1.0]);
 
-        $this->buy(self::MACHINE_ID, $walletId, 'JUICE');
+        $this->buy($walletId, 'JUICE');
 
         self::assertResponseStatusCodeSame(200);
 
@@ -60,7 +58,7 @@ final class BuyProductControllerTest extends WebTestCase
         $walletId = $this->createWallet();
         $this->insertMoney($walletId, [1.0]);
 
-        $this->buy(self::MACHINE_ID, $walletId, 'WATER');
+        $this->buy($walletId, 'WATER');
 
         self::assertResponseStatusCodeSame(200);
 
@@ -82,7 +80,7 @@ final class BuyProductControllerTest extends WebTestCase
         $walletId = $this->createWallet();
         $this->insertMoney($walletId, [0.25]);
 
-        $this->buy(self::MACHINE_ID, $walletId, 'SODA');
+        $this->buy($walletId, 'SODA');
 
         self::assertResponseStatusCodeSame(409);
         self::assertSame(
@@ -97,7 +95,7 @@ final class BuyProductControllerTest extends WebTestCase
         $walletId = $this->createWallet();
         $this->insertMoney($walletId, [1.0, 1.0]);
 
-        $this->buy(self::MACHINE_ID, $walletId, 'SODA');
+        $this->buy($walletId, 'SODA');
 
         self::assertResponseStatusCodeSame(409);
         self::assertSame(
@@ -113,7 +111,7 @@ final class BuyProductControllerTest extends WebTestCase
         $walletId = $this->createWallet();
         $this->insertMoney($walletId, [1.0]);
 
-        $this->buy(self::MACHINE_ID, $walletId, 'WATER');
+        $this->buy($walletId, 'WATER');
 
         self::assertResponseStatusCodeSame(409);
         self::assertSame(
@@ -159,11 +157,11 @@ final class BuyProductControllerTest extends WebTestCase
         $this->connection->update('machine_products', ['stock' => $stock], ['selector' => $selector]);
     }
 
-    private function buy(string $machineId, string $walletId, string $product): void
+    private function buy(string $walletId, string $product): void
     {
         $this->client->request(
             'POST',
-            '/vending-machine/'.$machineId.'/buy',
+            '/vending-machine/buy',
             server: ['CONTENT_TYPE' => 'application/json'],
             content: json_encode([
                 'wallet_id' => $walletId,

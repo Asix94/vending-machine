@@ -260,7 +260,7 @@ curl -X POST http://localhost:8080/vending-machine/service/coins \
 
 ## API Contract (Step 5 - Buy Product)
 
-### `POST /vending-machine/{machineId}/buy`
+### `POST /vending-machine/buy`
 
 Buys a product using the money inserted in the wallet and returns exact change when applicable.
 
@@ -291,7 +291,6 @@ Contract notes:
 - Wallet money is transferred to the machine on successful purchase.
 - Change is calculated from machine coin inventory and returned in `change`.
 - Wallet is reset to `0.0` after successful purchase (change is delivered by the machine).
-- `machineId` is validated as UUID and currently used at HTTP contract level (machine remains globally modeled internally).
 - If exact change is not available, purchase is rejected.
 
 Expected errors:
@@ -304,7 +303,6 @@ Expected errors:
   - `insufficient_funds`
   - `cannot_make_exact_change`
 - `400 Bad Request`:
-  - `invalid_machine_id`
   - `invalid_payload` (invalid JSON, missing `wallet_id`, missing `product`)
   - `invalid_selector` (invalid product)
 - `500 Internal Server Error`: unexpected persistence error.
@@ -312,7 +310,7 @@ Expected errors:
 Example call:
 
 ```bash
-curl -X POST http://localhost:8080/vending-machine/<machine_id>/buy \
+curl -X POST http://localhost:8080/vending-machine/buy \
   -H "Content-Type: application/json" \
   -d '{"wallet_id":"<wallet_id>","product":"water"}'
 ```
@@ -352,7 +350,7 @@ curl -X POST http://localhost:8080/wallets/<wallet_id>/insert-money \
   -d '{"coins":[1.0]}'
 
 # 4) Buy product
-curl -X POST http://localhost:8080/vending-machine/<machine_id>/buy \
+curl -X POST http://localhost:8080/vending-machine/buy \
   -H "Content-Type: application/json" \
   -d '{"wallet_id":"<wallet_id>","product":"water"}'
 

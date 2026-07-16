@@ -77,7 +77,6 @@ final class BuyProductUseCaseTest extends TestCase
         $useCase = new BuyProductUseCase($walletRepository, $machineRepository, $transactionManager, new ExactChangeCalculator());
 
         $response = $useCase(new BuyProductRequest(
-            '8cf752a6-6e5f-4b88-a531-d0e57dda61b3',
             $walletId,
             'water',
         ));
@@ -119,7 +118,6 @@ final class BuyProductUseCaseTest extends TestCase
 
         $this->expectException(InsufficientFundsException::class);
         $useCase(new BuyProductRequest(
-            '8cf752a6-6e5f-4b88-a531-d0e57dda61b3',
             $walletId,
             'soda',
         ));
@@ -156,7 +154,6 @@ final class BuyProductUseCaseTest extends TestCase
 
         $this->expectException(OutOfStockException::class);
         $useCase(new BuyProductRequest(
-            '8cf752a6-6e5f-4b88-a531-d0e57dda61b3',
             $walletId,
             'water',
         ));
@@ -203,7 +200,6 @@ final class BuyProductUseCaseTest extends TestCase
 
         $this->expectException(CannotMakeExactChangeException::class);
         $useCase(new BuyProductRequest(
-            '8cf752a6-6e5f-4b88-a531-d0e57dda61b3',
             $walletId,
             'water',
         ));
@@ -265,7 +261,6 @@ final class BuyProductUseCaseTest extends TestCase
         $useCase = new BuyProductUseCase($walletRepository, $machineRepository, $transactionManager, new ExactChangeCalculator());
 
         $response = $useCase(new BuyProductRequest(
-            '8cf752a6-6e5f-4b88-a531-d0e57dda61b3',
             $walletId,
             'water',
         ));

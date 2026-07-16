@@ -1,5 +1,5 @@
 vending_machine_buy_product:
-    path: /vending-machine/{machineId}/buy
+    path: /vending-machine/buy
     controller: App\Controller\BuyProductController
     methods: [POST]
 

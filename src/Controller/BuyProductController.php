@@ -13,7 +13,6 @@ use App\VendingMachine\Domain\Exception\ProductNotFoundException;
 use App\Wallet\Domain\Exception\WalletNotFoundException;
 use InvalidArgumentException;
 use JsonException;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,12 +24,8 @@ final readonly class BuyProductController
     {
     }
 
-    public function __invoke(string $machineId, Request $request): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
-        if (!Uuid::isValid($machineId)) {
-            return $this->errorResponse('invalid_machine_id', 'Machine ID must be a valid UUID.', 400);
-        }
-
         try {
             $payload = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException) {
@@ -52,7 +47,7 @@ final readonly class BuyProductController
         }
 
         try {
-            $response = ($this->buyProductUseCase)(new BuyProductRequest($machineId, $walletId, $product));
+            $response = ($this->buyProductUseCase)(new BuyProductRequest($walletId, $product));
         } catch (WalletNotFoundException) {
             return $this->errorResponse('wallet_not_found', 'Wallet not found.', 404);
         } catch (ProductNotFoundException) {
