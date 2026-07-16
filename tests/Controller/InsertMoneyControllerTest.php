@@ -31,7 +31,7 @@ final class InsertMoneyControllerTest extends WebTestCase
             'POST',
             '/wallets/'.$walletId.'/insert-money',
             server: ['CONTENT_TYPE' => 'application/json'],
-            content: json_encode(['coins' => [0.25, 1.0, 0.1]], JSON_THROW_ON_ERROR),
+            content: json_encode(['coins' => ['0.25', '1.00', '0.10']], JSON_THROW_ON_ERROR),
         );
 
         self::assertResponseStatusCodeSame(200);
@@ -79,7 +79,7 @@ final class InsertMoneyControllerTest extends WebTestCase
             'POST',
             '/wallets/00000000-0000-4000-8000-000000000000/insert-money',
             server: ['CONTENT_TYPE' => 'application/json'],
-            content: json_encode(['coins' => [0.25]], JSON_THROW_ON_ERROR),
+            content: json_encode(['coins' => ['0.25']], JSON_THROW_ON_ERROR),
         );
 
         self::assertResponseStatusCodeSame(404);
@@ -115,12 +115,47 @@ final class InsertMoneyControllerTest extends WebTestCase
             'POST',
             '/wallets/'.$walletId.'/insert-money',
             server: ['CONTENT_TYPE' => 'application/json'],
-            content: json_encode(['coins' => [0.2]], JSON_THROW_ON_ERROR),
+            content: json_encode(['coins' => ['0.20']], JSON_THROW_ON_ERROR),
         );
 
         self::assertResponseStatusCodeSame(400);
         self::assertSame(
-            ['error' => 'invalid_money_amount', 'message' => 'Invalid coin amount. Accepted values are 5, 10, 25, 100 cents.'],
+            ['error' => 'invalid_money_amount', 'message' => 'Invalid coin amount. Accepted values are 0.05, 0.10, 0.25, 1.00.'],
+            json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR),
+        );
+    }
+
+    public function testInsertMoneyRejectsNonCanonicalCoinFormats(): void
+    {
+        $walletId = $this->createWallet();
+
+        foreach (['0.049', '0.051', '0.099', '1.001'] as $coin) {
+            $this->client->request(
+                'POST',
+                '/wallets/'.$walletId.'/insert-money',
+                server: ['CONTENT_TYPE' => 'application/json'],
+                content: json_encode(['coins' => [$coin]], JSON_THROW_ON_ERROR),
+            );
+
+            self::assertResponseStatusCodeSame(400);
+            self::assertSame('invalid_money_amount', json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR)['error']);
+        }
+    }
+
+    public function testInsertMoneyRejectsNumericCoinValues(): void
+    {
+        $walletId = $this->createWallet();
+
+        $this->client->request(
+            'POST',
+            '/wallets/'.$walletId.'/insert-money',
+            server: ['CONTENT_TYPE' => 'application/json'],
+            content: json_encode(['coins' => [0.25]], JSON_THROW_ON_ERROR),
+        );
+
+        self::assertResponseStatusCodeSame(400);
+        self::assertSame(
+            ['error' => 'invalid_payload', 'message' => 'Each coin value must be a canonical string.'],
             json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR),
         );
     }

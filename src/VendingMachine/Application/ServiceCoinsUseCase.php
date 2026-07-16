@@ -7,6 +7,7 @@ namespace App\VendingMachine\Application;
 use App\VendingMachine\Application\Dto\ServiceCoinsRequest;
 use App\VendingMachine\Application\Dto\ServiceMachineResponse;
 use App\VendingMachine\Domain\Repository\VendingMachineRepositoryInterface;
+use App\Wallet\Domain\Exception\InvalidMoneyAmountException;
 use App\Wallet\Domain\ValueObject\Money;
 use InvalidArgumentException;
 
@@ -44,17 +45,18 @@ final readonly class ServiceCoinsUseCase
             $coin = $coinPayload['coin'] ?? null;
             $quantityToAdd = $coinPayload['quantity_to_add'] ?? null;
 
-            if (!is_string($coin) || !is_numeric($coin)) {
-                throw new InvalidArgumentException('coin must be numeric and use accepted denominations.');
+            if (!is_string($coin)) {
+                throw new InvalidArgumentException('coin must be a canonical string and use accepted denominations.');
             }
 
             if (!is_int($quantityToAdd) || $quantityToAdd <= 0) {
                 throw new InvalidArgumentException('quantity_to_add must be a positive integer for each coin.');
             }
 
-            $coinCents = (int) round(((float) $coin) * 100);
-            if (!in_array($coinCents, Money::ACCEPTED_VALUES, true)) {
-                throw new InvalidArgumentException('Invalid coin denomination. Allowed values are 0.05, 0.10, 0.25, 1.00.');
+            try {
+                $coinCents = Money::toCentsFromCanonicalDecimal($coin);
+            } catch (InvalidMoneyAmountException $exception) {
+                throw new InvalidArgumentException($exception->getMessage(), previous: $exception);
             }
 
             $increments[$coinCents] = ($increments[$coinCents] ?? 0) + $quantityToAdd;

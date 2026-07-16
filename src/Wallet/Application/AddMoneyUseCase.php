@@ -26,7 +26,7 @@ final readonly class AddMoneyUseCase
             $wallet = $this->walletRepository->findByIdForUpdate(new WalletId($request->walletId));
 
             foreach ($request->coins as $coin) {
-                $wallet->addMoney(Money::fromDecimal($coin));
+                $wallet->addMoney(Money::fromCanonicalDecimal($coin));
             }
 
             $this->walletRepository->update($wallet);

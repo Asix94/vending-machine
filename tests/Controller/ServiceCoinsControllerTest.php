@@ -64,6 +64,25 @@ final class ServiceCoinsControllerTest extends WebTestCase
         self::assertSame('invalid_payload', $this->errorCode());
     }
 
+    public function testServiceCoinsRejectsRoundedEdgeCoinValues(): void
+    {
+        foreach (['0.049', '0.051', '0.099', '1.001'] as $coin) {
+            $this->client->request(
+                'POST',
+                '/vending-machine/service/coins',
+                server: ['CONTENT_TYPE' => 'application/json'],
+                content: json_encode([
+                    'coins' => [
+                        ['coin' => $coin, 'quantity_to_add' => 1],
+                    ],
+                ], JSON_THROW_ON_ERROR),
+            );
+
+            self::assertResponseStatusCodeSame(400);
+            self::assertSame('invalid_payload', $this->errorCode());
+        }
+    }
+
     public function testServiceCoinsReturns400WhenQuantityToAddIsNotPositive(): void
     {
         $this->client->request(

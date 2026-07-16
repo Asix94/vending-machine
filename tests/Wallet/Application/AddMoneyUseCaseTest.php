@@ -40,7 +40,7 @@ final class AddMoneyUseCaseTest extends TestCase
 
         $useCase = new AddMoneyUseCase($walletRepository, $transactionManager);
 
-        $response = $useCase(new AddMoneyRequest($walletId, [0.25, 1.0, 0.1]));
+        $response = $useCase(new AddMoneyRequest($walletId, ['0.25', '1.00', '0.10']));
 
         self::assertSame($walletId, $response->walletId);
         self::assertSame(1.35, $response->insertedBalance);

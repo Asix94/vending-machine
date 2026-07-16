@@ -8,6 +8,7 @@ use App\Wallet\Application\AddMoneyUseCase;
 use App\Wallet\Application\Dto\AddMoneyRequest;
 use App\Wallet\Domain\Exception\InvalidMoneyAmountException;
 use App\Wallet\Domain\Exception\WalletNotFoundException;
+use App\Wallet\Domain\ValueObject\Money;
 use InvalidArgumentException;
 use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,11 +36,17 @@ final readonly class InsertMoneyController
 
         $coins = [];
         foreach ($payload['coins'] as $coin) {
-            if (!is_int($coin) && !is_float($coin)) {
-                return $this->errorResponse('invalid_payload', 'Each coin value must be numeric.', 400);
+            if (!is_string($coin)) {
+                return $this->errorResponse('invalid_payload', 'Each coin value must be a canonical string.', 400);
             }
 
-            $coins[] = (float) $coin;
+            try {
+                Money::toCentsFromCanonicalDecimal($coin);
+            } catch (InvalidMoneyAmountException $exception) {
+                return $this->errorResponse('invalid_money_amount', $exception->getMessage(), 400);
+            }
+
+            $coins[] = $coin;
         }
 
         try {

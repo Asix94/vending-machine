@@ -30,7 +30,7 @@ final class BuyProductControllerTest extends WebTestCase
     {
         $this->setProductStock('JUICE', 1);
         $walletId = $this->createWallet();
-        $this->insertMoney($walletId, [1.0]);
+        $this->insertMoney($walletId, ['1.00']);
 
         $this->buy($walletId, 'JUICE');
 
@@ -56,7 +56,7 @@ final class BuyProductControllerTest extends WebTestCase
         ]);
 
         $walletId = $this->createWallet();
-        $this->insertMoney($walletId, [1.0]);
+        $this->insertMoney($walletId, ['1.00']);
 
         $this->buy($walletId, 'WATER');
 
@@ -78,7 +78,7 @@ final class BuyProductControllerTest extends WebTestCase
     {
         $this->setProductStock('SODA', 1);
         $walletId = $this->createWallet();
-        $this->insertMoney($walletId, [0.25]);
+        $this->insertMoney($walletId, ['0.25']);
 
         $this->buy($walletId, 'SODA');
 
@@ -93,7 +93,7 @@ final class BuyProductControllerTest extends WebTestCase
     {
         $this->setProductStock('SODA', 0);
         $walletId = $this->createWallet();
-        $this->insertMoney($walletId, [1.0, 1.0]);
+        $this->insertMoney($walletId, ['1.00', '1.00']);
 
         $this->buy($walletId, 'SODA');
 
@@ -109,7 +109,7 @@ final class BuyProductControllerTest extends WebTestCase
         $this->setProductStock('WATER', 2);
 
         $walletId = $this->createWallet();
-        $this->insertMoney($walletId, [1.0]);
+        $this->insertMoney($walletId, ['1.00']);
 
         $this->buy($walletId, 'WATER');
 
@@ -138,7 +138,7 @@ final class BuyProductControllerTest extends WebTestCase
     }
 
     /**
-     * @param list<float> $coins
+     * @param list<string> $coins
      */
     private function insertMoney(string $walletId, array $coins): void
     {

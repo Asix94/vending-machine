@@ -87,12 +87,12 @@ final class ConcurrencySafetyTest extends KernelTestCase
         $addSecondary = $this->addMoneyUseCase($this->secondary);
 
         $this->primary->beginTransaction();
-        $addPrimary(new AddMoneyRequest($walletId, [1.0]));
+        $addPrimary(new AddMoneyRequest($walletId, ['1.00']));
 
         $this->secondary->executeStatement("SET lock_timeout TO '200ms'");
 
         try {
-            $addSecondary(new AddMoneyRequest($walletId, [0.25]));
+            $addSecondary(new AddMoneyRequest($walletId, ['0.25']));
             self::fail('Expected lock wait timeout while first insert-money transaction is open.');
         } catch (DriverException $exception) {
             self::assertStringContainsString('lock timeout', strtolower($exception->getMessage()));
@@ -100,7 +100,7 @@ final class ConcurrencySafetyTest extends KernelTestCase
             $this->primary->commit();
         }
 
-        $addSecondary(new AddMoneyRequest($walletId, [0.25]));
+        $addSecondary(new AddMoneyRequest($walletId, ['0.25']));
 
         self::assertSame(125, $this->walletBalance($walletId));
         self::assertSame(1, $this->walletCoinCount($walletId, 25));

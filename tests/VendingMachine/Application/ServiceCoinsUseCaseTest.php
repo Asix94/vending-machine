@@ -69,4 +69,26 @@ final class ServiceCoinsUseCaseTest extends TestCase
             ['coin' => '0.20', 'quantity_to_add' => 1],
         ]));
     }
+
+    public function testItRejectsRoundedEdgeCoinValues(): void
+    {
+        $repository = $this->createMock(VendingMachineRepositoryInterface::class);
+
+        $repository
+            ->expects(self::never())
+            ->method('incrementMachineCoins');
+
+        $useCase = new ServiceCoinsUseCase($repository);
+
+        foreach (['0.049', '0.051', '0.099', '1.001'] as $coin) {
+            try {
+                $useCase(new ServiceCoinsRequest([
+                    ['coin' => $coin, 'quantity_to_add' => 1],
+                ]));
+                self::fail('Expected InvalidArgumentException for invalid coin: '.$coin);
+            } catch (InvalidArgumentException) {
+                self::assertTrue(true);
+            }
+        }
+    }
 }

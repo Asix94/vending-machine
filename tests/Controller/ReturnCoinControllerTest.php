@@ -26,7 +26,7 @@ final class ReturnCoinControllerTest extends WebTestCase
     public function testReturnCoinReturnsInsertedCoinsAndResetsWalletState(): void
     {
         $walletId = $this->createWallet();
-        $this->insertCoins($walletId, [0.25, 1.0, 0.1]);
+        $this->insertCoins($walletId, ['0.25', '1.00', '0.10']);
 
         $this->client->request('POST', '/wallets/'.$walletId.'/return-coin');
 
@@ -74,7 +74,7 @@ final class ReturnCoinControllerTest extends WebTestCase
     public function testReturnCoinIsIdempotentAfterWalletHasBeenReset(): void
     {
         $walletId = $this->createWallet();
-        $this->insertCoins($walletId, [1.0, 0.25]);
+        $this->insertCoins($walletId, ['1.00', '0.25']);
 
         $this->client->request('POST', '/wallets/'.$walletId.'/return-coin');
         self::assertResponseStatusCodeSame(200);
@@ -124,7 +124,7 @@ final class ReturnCoinControllerTest extends WebTestCase
     }
 
     /**
-     * @param list<float> $coins
+     * @param list<string> $coins
      */
     private function insertCoins(string $walletId, array $coins): void
     {

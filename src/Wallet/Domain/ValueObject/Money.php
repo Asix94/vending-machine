@@ -9,6 +9,12 @@ use App\Wallet\Domain\Exception\InvalidMoneyAmountException;
 final class Money
 {
     public const ACCEPTED_VALUES = [5, 10, 25, 100];
+    private const ACCEPTED_DECIMALS = [
+        '0.05' => 5,
+        '0.10' => 10,
+        '0.25' => 25,
+        '1.00' => 100,
+    ];
 
     private int $amount;
 
@@ -26,11 +32,18 @@ final class Money
         return new self($amount);
     }
 
-    public static function fromDecimal(float $amount): self
+    public static function fromCanonicalDecimal(string $amount): self
     {
-        $cents = (int) round($amount * 100);
+        return new self(self::toCentsFromCanonicalDecimal($amount));
+    }
 
-        return new self($cents);
+    public static function toCentsFromCanonicalDecimal(string $amount): int
+    {
+        if (!array_key_exists($amount, self::ACCEPTED_DECIMALS)) {
+            throw new InvalidMoneyAmountException('Invalid coin amount. Accepted values are 0.05, 0.10, 0.25, 1.00.');
+        }
+
+        return self::ACCEPTED_DECIMALS[$amount];
     }
 
     public function cents(): int
