@@ -10,6 +10,7 @@ use App\VendingMachine\Application\Dto\BuyProductRequest;
 use App\VendingMachine\Domain\Exception\CannotMakeExactChangeException;
 use App\VendingMachine\Domain\Exception\InsufficientFundsException;
 use App\VendingMachine\Domain\Exception\OutOfStockException;
+use App\VendingMachine\Domain\Exception\ProductNotFoundException;
 use App\VendingMachine\Domain\Repository\VendingMachineRepositoryInterface;
 use App\VendingMachine\Domain\Service\ExactChangeCalculator;
 use App\VendingMachine\Domain\ValueObject\Product;
@@ -269,5 +270,41 @@ final class BuyProductUseCaseTest extends TestCase
         self::assertSame(0.7, $response->price);
         self::assertSame([0.1, 0.1, 0.1], $response->change);
         self::assertSame(0.0, $response->walletBalanceAfter);
+    }
+
+    public function testItThrowsWhenProductDoesNotExistInCatalog(): void
+    {
+        $walletId = 'fc599d0c-dc16-4c7b-bc39-ef67b8edbfd7';
+        $wallet = new Wallet(new WalletId($walletId), new Balance(100), [100 => 1]);
+
+        $walletRepository = $this->createMock(WalletRepositoryInterface::class);
+        $walletRepository
+            ->expects(self::once())
+            ->method('findByIdForUpdate')
+            ->willReturn($wallet);
+        $walletRepository->expects(self::never())->method('update');
+
+        $machineRepository = $this->createMock(VendingMachineRepositoryInterface::class);
+        $machineRepository
+            ->expects(self::once())
+            ->method('findProductBySelectorForUpdate')
+            ->with('TEA')
+            ->willThrowException(new ProductNotFoundException('TEA'));
+        $machineRepository->expects(self::never())->method('getMachineCoinsForUpdate');
+        $machineRepository->expects(self::never())->method('updateMachineState');
+
+        $transactionManager = $this->createMock(TransactionManagerInterface::class);
+        $transactionManager
+            ->expects(self::once())
+            ->method('run')
+            ->willReturnCallback(static fn (callable $callback): mixed => $callback());
+
+        $useCase = new BuyProductUseCase($walletRepository, $machineRepository, $transactionManager, new ExactChangeCalculator());
+
+        $this->expectException(ProductNotFoundException::class);
+        $useCase(new BuyProductRequest(
+            $walletId,
+            'tea',
+        ));
     }
 }

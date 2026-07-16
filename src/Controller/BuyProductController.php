@@ -11,7 +11,6 @@ use App\VendingMachine\Domain\Exception\InsufficientFundsException;
 use App\VendingMachine\Domain\Exception\OutOfStockException;
 use App\VendingMachine\Domain\Exception\ProductNotFoundException;
 use App\Wallet\Domain\Exception\WalletNotFoundException;
-use InvalidArgumentException;
 use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,8 +57,6 @@ final readonly class BuyProductController
             return $this->errorResponse('insufficient_funds', 'Insufficient funds to buy selected product.', 409);
         } catch (CannotMakeExactChangeException) {
             return $this->errorResponse('cannot_make_exact_change', 'Cannot complete purchase because exact change is not available.', 409);
-        } catch (InvalidArgumentException) {
-            return $this->errorResponse('invalid_selector', 'Invalid selector. Allowed values are WATER, JUICE, SODA.', 400);
         }
 
         $jsonResponse = new JsonResponse();

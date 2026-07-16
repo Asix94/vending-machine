@@ -17,8 +17,6 @@ use App\Wallet\Domain\ValueObject\WalletId;
 
 final readonly class BuyProductUseCase
 {
-    private const ALLOWED_SELECTORS = ['WATER', 'JUICE', 'SODA'];
-
     public function __construct(
         private WalletRepositoryInterface $walletRepository,
         private VendingMachineRepositoryInterface $vendingMachineRepository,
@@ -30,9 +28,6 @@ final readonly class BuyProductUseCase
     public function __invoke(BuyProductRequest $request): BuyProductResponse
     {
         $selector = strtoupper($request->product);
-        if (!in_array($selector, self::ALLOWED_SELECTORS, true)) {
-            throw new \InvalidArgumentException('Invalid selector. Allowed values are WATER, JUICE, SODA.');
-        }
 
         return $this->transactionManager->run(function () use ($request, $selector): BuyProductResponse {
             $wallet = $this->walletRepository->findByIdForUpdate(new WalletId($request->walletId));

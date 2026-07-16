@@ -304,7 +304,6 @@ Expected errors:
   - `cannot_make_exact_change`
 - `400 Bad Request`:
   - `invalid_payload` (invalid JSON, missing `wallet_id`, missing `product`)
-  - `invalid_selector` (invalid product)
 - `500 Internal Server Error`: unexpected persistence error.
 
 Example call:

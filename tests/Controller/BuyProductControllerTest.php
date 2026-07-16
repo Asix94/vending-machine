@@ -104,6 +104,20 @@ final class BuyProductControllerTest extends WebTestCase
         );
     }
 
+    public function testBuyProductReturns404WhenProductDoesNotExistInCatalog(): void
+    {
+        $walletId = $this->createWallet();
+        $this->insertMoney($walletId, ['1.00']);
+
+        $this->buy($walletId, 'TEA');
+
+        self::assertResponseStatusCodeSame(404);
+        self::assertSame(
+            ['error' => 'product_not_found', 'message' => 'Product not found.'],
+            json_decode((string) $this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR),
+        );
+    }
+
     public function testBuyProductReturns409AndRollsBackWhenCannotMakeExactChange(): void
     {
         $this->setProductStock('WATER', 2);
