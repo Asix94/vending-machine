@@ -15,16 +15,6 @@ final readonly class DbalTransactionManager implements TransactionManagerInterfa
 
     public function run(callable $callback): mixed
     {
-        $this->connection->beginTransaction();
-
-        try {
-            $result = $callback();
-            $this->connection->commit();
-
-            return $result;
-        } catch (\Throwable $exception) {
-            $this->connection->rollBack();
-            throw $exception;
-        }
+        return $this->connection->transactional($callback);
     }
 }
