@@ -2,69 +2,69 @@
 
 Backend API built with Symfony + Docker.
 
-## Reglas de negocio clave
+## Key Business Rules
 
-- La maquina es unica y global.
-- El usuario inserta monedas en su wallet (sesion actual).
-- En una compra exitosa:
-  - el stock del producto baja en 1,
-  - las monedas de la wallet pasan al inventario de la maquina,
-  - si hay sobrante, la maquina devuelve cambio exacto,
-  - la wallet queda en `0.0` despues de la compra (el cambio lo entrega la maquina).
-- Si no hay cambio exacto disponible, la compra se rechaza con `409` y no cambia estado (rollback).
-- Monedas permitidas: `0.05`, `0.10`, `0.25`, `1.00`.
-- Productos soportados: `WATER` (`0.65`), `JUICE` (`1.00`), `SODA` (`1.50`).
+- The vending machine is unique and global.
+- The user inserts coins into their wallet (current session).
+- On a successful purchase:
+  - product stock is reduced by 1,
+  - wallet coins are transferred to the machine inventory,
+  - if there is a remaining amount, the machine returns exact change,
+  - the wallet is reset to `0.0` after purchase (the machine gives the change).
+- If exact change is not available, the purchase is rejected with `409` and no state is changed (rollback).
+- Allowed coins: `0.05`, `0.10`, `0.25`, `1.00`.
+- Supported products: `WATER` (`0.65`), `JUICE` (`1.00`), `SODA` (`1.50`).
 
-## Requisitos
+## Requirements
 
 - Docker Desktop
 - Docker Compose
 
-## Levantar entorno
+## Start Environment
 
 ```bash
 docker compose up -d --build
 ```
 
-## Comandos utiles
+## Useful Commands
 
 ```bash
-# Ver estado de contenedores
+# Check container status
 docker compose ps
 
-# Ver logs de un servicio
+# Follow service logs
 docker compose logs -f nginx
 docker compose logs -f php
 
-# Ejecutar comandos de Symfony
+# Run Symfony commands
 docker compose exec php php bin/console about
 
-# Parar entorno
+# Stop environment
 docker compose down
 
-# Parar y borrar volumenes (reset completo)
+# Stop and remove volumes (full reset)
 docker compose down -v
 ```
 
-## Validacion rapida
+## Quick Validation
 
 ```bash
 curl http://localhost:8080/health
 ```
 
-Respuesta esperada:
+Expected response:
 
 ```json
 {"status":"ok"}
 ```
 
-## API Contract (Paso 1 - Create Wallet)
+## API Contract (Step 1 - Create Wallet)
 
 ### `POST /wallets`
 
-Crea una wallet vacia para la sesion del usuario.
+Creates an empty wallet for the user session.
 
-- Request body: vacio
+- Request body: empty
 - Response: `201 Created`
 
 ```json
@@ -74,25 +74,25 @@ Crea una wallet vacia para la sesion del usuario.
 }
 ```
 
-Notas de contrato:
+Contract notes:
 
-- `wallet_id`: UUID generado por backend.
-- `inserted_balance`: saldo actual insertado (en API decimal, internamente en centimos).
-- Error minimo esperado: `500 Internal Server Error` si falla persistencia.
+- `wallet_id`: backend-generated UUID.
+- `inserted_balance`: current inserted balance (decimal in API, cents internally).
+- Minimum expected error: `500 Internal Server Error` if persistence fails.
 
-Ejemplo de llamada:
+Example call:
 
 ```bash
 curl -X POST http://localhost:8080/wallets
 ```
 
-## API Contract (Paso 2 - Insert Money)
+## API Contract (Step 2 - Insert Money)
 
 ### `POST /wallets/{walletId}/insert-money`
 
-Inserta una o varias monedas en la wallet del usuario y acumula el saldo.
+Inserts one or more coins into the user wallet and accumulates balance.
 
-- Request body: obligatorio
+- Request body: required
 - Response: `200 OK`
 
 ```json
@@ -114,20 +114,20 @@ Inserta una o varias monedas en la wallet del usuario y acumula el saldo.
 }
 ```
 
-Notas de contrato:
+Contract notes:
 
-- `walletId`: UUID de la wallet.
-- `coins` debe ser un array no vacio.
-- Monedas permitidas: `0.05`, `0.10`, `0.25`, `1.00`.
-- El API trabaja con decimales y la logica/persistencia con centimos.
+- `walletId`: wallet UUID.
+- `coins` must be a non-empty array.
+- Allowed coins: `0.05`, `0.10`, `0.25`, `1.00`.
+- The API uses decimals; business logic/persistence uses cents.
 
-Errores esperados:
+Expected errors:
 
-- `400 Bad Request`: payload invalido, `coins` vacio o moneda invalida.
-- `404 Not Found`: wallet no existe.
-- `500 Internal Server Error`: error inesperado de persistencia.
+- `400 Bad Request`: invalid payload, empty `coins`, or invalid coin.
+- `404 Not Found`: wallet does not exist.
+- `500 Internal Server Error`: unexpected persistence error.
 
-Ejemplo de llamada:
+Example call:
 
 ```bash
 curl -X POST http://localhost:8080/wallets/<wallet_id>/insert-money \
@@ -135,13 +135,13 @@ curl -X POST http://localhost:8080/wallets/<wallet_id>/insert-money \
   -d '{"coins":[0.25,1.0,0.1]}'
 ```
 
-## API Contract (Paso 3 - Return Coin)
+## API Contract (Step 3 - Return Coin)
 
 ### `POST /wallets/{walletId}/return-coin`
 
-Devuelve todas las monedas insertadas en la wallet y la deja en saldo cero.
+Returns all inserted coins in the wallet and resets it to zero balance.
 
-- Request body: vacio
+- Request body: empty
 - Response: `200 OK`
 
 ```json
@@ -153,29 +153,29 @@ Devuelve todas las monedas insertadas en la wallet y la deja en saldo cero.
 }
 ```
 
-Notas de contrato:
+Contract notes:
 
-- La wallet no se elimina, solo se resetea su estado (`balance = 0`, sin monedas insertadas).
-- Si la wallet no tenia monedas, devuelve `returned_coins: []` y `returned_total: 0.0`.
+- The wallet is not deleted, only reset (`balance = 0`, no inserted coins).
+- If the wallet has no coins, response is `returned_coins: []` and `returned_total: 0.0`.
 
-Errores esperados:
+Expected errors:
 
-- `404 Not Found`: wallet no existe.
-- `500 Internal Server Error`: error inesperado de persistencia.
+- `404 Not Found`: wallet does not exist.
+- `500 Internal Server Error`: unexpected persistence error.
 
-Ejemplo de llamada:
+Example call:
 
 ```bash
 curl -X POST http://localhost:8080/wallets/<wallet_id>/return-coin
 ```
 
-## API Contract (Paso 4 - Service Vending Machine)
+## API Contract (Step 4 - Service Vending Machine)
 
 ### `POST /vending-machine/service/products`
 
-Suma stock a productos existentes de la maquina global.
+Adds stock to existing products in the global machine.
 
-- Request body: obligatorio
+- Request body: required
 - Response: `200 OK`
 
 ```json
@@ -199,9 +199,9 @@ Suma stock a productos existentes de la maquina global.
 
 ### `POST /vending-machine/service/coins`
 
-Suma monedas al inventario de cambio de la maquina global.
+Adds coins to the global machine change inventory.
 
-- Request body: obligatorio
+- Request body: required
 - Response: `200 OK`
 
 ```json
@@ -224,19 +224,19 @@ Suma monedas al inventario de cambio de la maquina global.
 }
 ```
 
-Notas de contrato:
+Contract notes:
 
-- La maquina es unica y global para toda la aplicacion.
-- `quantity_to_add` debe ser entero positivo (`> 0`).
-- `product` permitido: `WATER`, `JUICE`, `SODA`.
-- `coin` permitido: `0.05`, `0.10`, `0.25`, `1.00`.
+- The machine is unique and global for the whole application.
+- `quantity_to_add` must be a positive integer (`> 0`).
+- Allowed `product`: `WATER`, `JUICE`, `SODA`.
+- Allowed `coin`: `0.05`, `0.10`, `0.25`, `1.00`.
 
-Errores esperados:
+Expected errors:
 
-- `400 Bad Request`: payload invalido, selector/coin invalido o `quantity_to_add` invalido.
-- `500 Internal Server Error`: error inesperado de persistencia.
+- `400 Bad Request`: invalid payload, invalid selector/coin, or invalid `quantity_to_add`.
+- `500 Internal Server Error`: unexpected persistence error.
 
-Ejemplos de llamada:
+Example calls:
 
 ```bash
 curl -X POST http://localhost:8080/vending-machine/service/products \
@@ -258,13 +258,13 @@ curl -X POST http://localhost:8080/vending-machine/service/coins \
   }'
 ```
 
-## API Contract (Paso 5 - Buy Product)
+## API Contract (Step 5 - Buy Product)
 
 ### `POST /vending-machine/{machineId}/buy`
 
-Compra un producto usando el dinero insertado en la wallet y devuelve cambio exacto cuando aplique.
+Buys a product using the money inserted in the wallet and returns exact change when applicable.
 
-- Request body: obligatorio
+- Request body: required
 - Response: `200 OK`
 
 ```json
@@ -285,16 +285,16 @@ Compra un producto usando el dinero insertado en la wallet y devuelve cambio exa
 }
 ```
 
-Notas de contrato:
+Contract notes:
 
-- La compra es transaccional: si falla cualquier validacion, no se cambia estado.
-- El dinero de la wallet se transfiere a la maquina cuando la compra es exitosa.
-- El cambio se calcula con el inventario de monedas de la maquina y se informa en `change`.
-- La wallet queda en `0.0` despues de la compra exitosa (el cambio lo entrega la maquina).
-- `machineId` se valida como UUID y hoy se usa a nivel de contrato HTTP (la maquina sigue siendo global internamente).
-- Si no hay cambio exacto, se rechaza la compra.
+- Purchase is transactional: if any validation fails, no state is changed.
+- Wallet money is transferred to the machine on successful purchase.
+- Change is calculated from machine coin inventory and returned in `change`.
+- Wallet is reset to `0.0` after successful purchase (change is delivered by the machine).
+- `machineId` is validated as UUID and currently used at HTTP contract level (machine remains globally modeled internally).
+- If exact change is not available, purchase is rejected.
 
-Errores esperados:
+Expected errors:
 
 - `404 Not Found`:
   - `wallet_not_found`
@@ -305,11 +305,11 @@ Errores esperados:
   - `cannot_make_exact_change`
 - `400 Bad Request`:
   - `invalid_machine_id`
-  - `invalid_payload` (JSON invalido, falta `wallet_id`, falta `product`)
-  - `invalid_selector` (producto invalido)
-- `500 Internal Server Error`: error inesperado de persistencia.
+  - `invalid_payload` (invalid JSON, missing `wallet_id`, missing `product`)
+  - `invalid_selector` (invalid product)
+- `500 Internal Server Error`: unexpected persistence error.
 
-Ejemplo de llamada:
+Example call:
 
 ```bash
 curl -X POST http://localhost:8080/vending-machine/<machine_id>/buy \
@@ -317,10 +317,10 @@ curl -X POST http://localhost:8080/vending-machine/<machine_id>/buy \
   -d '{"wallet_id":"<wallet_id>","product":"water"}'
 ```
 
-## Flujo end-to-end (manual)
+## End-to-End Flow (manual)
 
 ```bash
-# 1) Sumar stock a productos
+# 1) Add stock to products
 curl -X POST http://localhost:8080/vending-machine/service/products \
   -H "Content-Type: application/json" \
   -d '{
@@ -331,7 +331,7 @@ curl -X POST http://localhost:8080/vending-machine/service/products \
     ]
   }'
 
-# 1.1) Sumar monedas para cambio
+# 1.1) Add machine coins for change
 curl -X POST http://localhost:8080/vending-machine/service/coins \
   -H "Content-Type: application/json" \
   -d '{
@@ -343,114 +343,30 @@ curl -X POST http://localhost:8080/vending-machine/service/coins \
     ]
   }'
 
-# 2) Crear wallet
+# 2) Create wallet
 curl -X POST http://localhost:8080/wallets
 
-# 3) Insertar dinero (reemplaza <wallet_id>)
+# 3) Insert money (replace <wallet_id>)
 curl -X POST http://localhost:8080/wallets/<wallet_id>/insert-money \
   -H "Content-Type: application/json" \
   -d '{"coins":[1.0]}'
 
-# 4) Comprar producto
+# 4) Buy product
 curl -X POST http://localhost:8080/vending-machine/<machine_id>/buy \
   -H "Content-Type: application/json" \
   -d '{"wallet_id":"<wallet_id>","product":"water"}'
 
-# 5) Devolver monedas (si no compraste o insertaste mas dinero)
+# 5) Return coins (if you did not buy or inserted extra money)
 curl -X POST http://localhost:8080/wallets/<wallet_id>/return-coin
 ```
 
 ## Tests
 
 ```bash
-# Crear y preparar base de datos de test
+# Create and prepare test database
 docker compose exec php php bin/console doctrine:database:create --env=test --if-not-exists
 docker compose exec php php bin/console doctrine:migrations:migrate --env=test --no-interaction
 
-# Ejecutar suite completa
+# Run full test suite
 docker compose exec php php bin/phpunit
-```
-
-## English Guide
-
-### Core business rules
-
-- The vending machine is currently a single global machine.
-- The user inserts coins into a session wallet.
-- On a successful purchase:
-  - product stock is reduced by 1,
-  - wallet coins are transferred to machine coins,
-  - exact change is calculated and reported,
-  - wallet balance is reset to `0.0` after the purchase.
-- If exact change cannot be made, the purchase fails with `409` and all DB state is rolled back.
-- Allowed coins: `0.05`, `0.10`, `0.25`, `1.00`.
-- Supported products: `WATER` (`0.65`), `JUICE` (`1.00`), `SODA` (`1.50`).
-
-### Quick start
-
-```bash
-docker compose up -d --build
-curl http://localhost:8080/health
-```
-
-Expected response:
-
-```json
-{"status":"ok"}
-```
-
-### API endpoints
-
-- `POST /wallets`
-- `POST /wallets/{walletId}/insert-money`
-- `POST /wallets/{walletId}/return-coin`
-- `POST /vending-machine/service/products`
-- `POST /vending-machine/service/coins`
-- `POST /vending-machine/{machineId}/buy`
-
-### Buy endpoint contract
-
-`POST /vending-machine/{machineId}/buy`
-
-Request:
-
-```json
-{
-  "wallet_id": "fc599d0c-dc16-4c7b-bc39-ef67b8edbfd7",
-  "product": "water"
-}
-```
-
-Response:
-
-```json
-{
-  "item": {
-    "selector": "WATER",
-    "price": 0.65
-  },
-  "change": [0.25, 0.1],
-  "wallet_balance_after": 0.0
-}
-```
-
-Notes:
-
-- `machineId` must be a valid UUID.
-- `wallet_id` and `product` are required in the JSON body.
-- `product` is case-insensitive (`water` and `WATER` are both accepted).
-- `machineId` is currently validated at HTTP contract level; internally the machine state is global.
-
-Expected buy errors:
-
-- `404 Not Found`: `wallet_not_found`, `product_not_found`
-- `409 Conflict`: `out_of_stock`, `insufficient_funds`, `cannot_make_exact_change`
-- `400 Bad Request`: `invalid_machine_id`, `invalid_payload`, `invalid_selector`
-
-Buy example:
-
-```bash
-curl -X POST http://localhost:8080/vending-machine/8cf752a6-6e5f-4b88-a531-d0e57dda61b3/buy \
-  -H "Content-Type: application/json" \
-  -d '{"wallet_id":"fc599d0c-dc16-4c7b-bc39-ef67b8edbfd7","product":"water"}'
 ```
