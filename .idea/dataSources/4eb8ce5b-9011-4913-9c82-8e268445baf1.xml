@@ -3,9 +3,9 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.52">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>874</IntrospectionStateNumber>
+      <IntrospectionStateNumber>4756</IntrospectionStateNumber>
       <ServerVersion>16.14</ServerVersion>
-      <StartupTime>1784029304</StartupTime>
+      <StartupTime>1784214719</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -807,7 +807,7 @@ true posixrules
 13310||10|C|G
 13310||-9223372036854775808|U|G
 13310||10|U|G</Grants>
-      <IntrospectionStateNumber>874</IntrospectionStateNumber>
+      <IntrospectionStateNumber>4756</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>vending</OwnerName>
     </database>
@@ -4226,8 +4226,8 @@ true posixrules
     <schema id="264" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>874</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2026-07-14.17:03:16</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>4756</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2026-07-16.16:11:35</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>524</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
@@ -4246,7 +4246,7 @@ true posixrules
     </table>
     <table id="267" parent="264" name="machine_products">
       <ObjectId>16442</ObjectId>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4754</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>vending</OwnerName>
     </table>
@@ -4351,39 +4351,33 @@ true posixrules
       <StateNumber>873</StateNumber>
       <UnderlyingIndexId>16452</UnderlyingIndexId>
     </key>
-    <check id="282" parent="267" name="machine_products_selector_allowed">
-      <ColNames>selector</ColNames>
-      <ObjectId>16454</ObjectId>
-      <Predicate>(selector)::text = ANY ((ARRAY[&apos;WATER&apos;::character varying, &apos;JUICE&apos;::character varying, &apos;SODA&apos;::character varying])::text[])</Predicate>
-      <StateNumber>873</StateNumber>
-    </check>
-    <check id="283" parent="267" name="machine_products_price_positive">
+    <check id="282" parent="267" name="machine_products_price_positive">
       <ColNames>price_cents</ColNames>
       <ObjectId>16455</ObjectId>
       <Predicate>price_cents &gt; 0</Predicate>
       <StateNumber>873</StateNumber>
     </check>
-    <check id="284" parent="267" name="machine_products_stock_non_negative">
+    <check id="283" parent="267" name="machine_products_stock_non_negative">
       <ColNames>stock</ColNames>
       <ObjectId>16456</ObjectId>
       <Predicate>stock &gt;= 0</Predicate>
       <StateNumber>873</StateNumber>
     </check>
-    <column id="285" parent="267" name="selector">
+    <column id="284" parent="267" name="selector">
       <DasType>varchar(16)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>873</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="286" parent="267" name="price_cents">
+    <column id="285" parent="267" name="price_cents">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>873</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="287" parent="267" name="stock">
+    <column id="286" parent="267" name="stock">
       <DasType>integer|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4391,14 +4385,14 @@ true posixrules
       <StateNumber>873</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="288" parent="267" name="updated_at">
+    <column id="287" parent="267" name="updated_at">
       <DasType>timestamp(0)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>873</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <index id="289" parent="267" name="machine_products_pkey">
+    <index id="288" parent="267" name="machine_products_pkey">
       <ColNames>selector</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16446</ObjectId>
@@ -4410,40 +4404,40 @@ true posixrules
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="290" parent="267" name="machine_products_pkey">
+    <key id="289" parent="267" name="machine_products_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16447</ObjectId>
       <Primary>1</Primary>
       <StateNumber>873</StateNumber>
       <UnderlyingIndexId>16446</UnderlyingIndexId>
     </key>
-    <check id="291" parent="268" name="wallet_inserted_coins_coin_allowed">
+    <check id="290" parent="268" name="wallet_inserted_coins_coin_allowed">
       <ColNames>coin_cents</ColNames>
       <ObjectId>16408</ObjectId>
       <Predicate>coin_cents = ANY (ARRAY[5, 10, 25, 100])</Predicate>
       <StateNumber>745</StateNumber>
     </check>
-    <check id="292" parent="268" name="wallet_inserted_coins_count_non_negative">
+    <check id="291" parent="268" name="wallet_inserted_coins_count_non_negative">
       <ColNames>coin_count</ColNames>
       <ObjectId>16409</ObjectId>
       <Predicate>coin_count &gt;= 0</Predicate>
       <StateNumber>745</StateNumber>
     </check>
-    <column id="293" parent="268" name="wallet_id">
+    <column id="292" parent="268" name="wallet_id">
       <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>745</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="294" parent="268" name="coin_cents">
+    <column id="293" parent="268" name="coin_cents">
       <DasType>smallint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>745</StateNumber>
       <TypeId>21</TypeId>
     </column>
-    <column id="295" parent="268" name="coin_count">
+    <column id="294" parent="268" name="coin_count">
       <DasType>integer|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4451,7 +4445,7 @@ true posixrules
       <StateNumber>745</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <foreign-key id="296" parent="268" name="fk_wallet_inserted_coins_wallet">
+    <foreign-key id="295" parent="268" name="fk_wallet_inserted_coins_wallet">
       <ColNames>wallet_id</ColNames>
       <ObjectId>16410</ObjectId>
       <OnDelete>cascade</OnDelete>
@@ -4459,7 +4453,7 @@ true posixrules
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16395</RefTableId>
     </foreign-key>
-    <index id="297" parent="268" name="wallet_inserted_coins_pkey">
+    <index id="296" parent="268" name="wallet_inserted_coins_pkey">
       <ColNames>wallet_id
 coin_cents</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -4469,27 +4463,27 @@ coin_cents</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="298" parent="268" name="wallet_inserted_coins_pkey">
+    <key id="297" parent="268" name="wallet_inserted_coins_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16406</ObjectId>
       <Primary>1</Primary>
       <StateNumber>745</StateNumber>
       <UnderlyingIndexId>16405</UnderlyingIndexId>
     </key>
-    <check id="299" parent="269" name="wallets_balance_non_negative">
+    <check id="298" parent="269" name="wallets_balance_non_negative">
       <ColNames>inserted_balance_cents</ColNames>
       <ObjectId>16407</ObjectId>
       <Predicate>inserted_balance_cents &gt;= 0</Predicate>
       <StateNumber>745</StateNumber>
     </check>
-    <column id="300" parent="269" name="id">
+    <column id="299" parent="269" name="id">
       <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>745</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="301" parent="269" name="inserted_balance_cents">
+    <column id="300" parent="269" name="inserted_balance_cents">
       <DasType>integer|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4497,21 +4491,21 @@ coin_cents</ColNames>
       <StateNumber>745</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="302" parent="269" name="created_at">
+    <column id="301" parent="269" name="created_at">
       <DasType>timestamp(0)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>745</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="303" parent="269" name="updated_at">
+    <column id="302" parent="269" name="updated_at">
       <DasType>timestamp(0)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>745</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <index id="304" parent="269" name="wallets_pkey">
+    <index id="303" parent="269" name="wallets_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16399</ObjectId>
@@ -4520,7 +4514,7 @@ coin_cents</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="305" parent="269" name="wallets_pkey">
+    <key id="304" parent="269" name="wallets_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16400</ObjectId>
       <Primary>1</Primary>

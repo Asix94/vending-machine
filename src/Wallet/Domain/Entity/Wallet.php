@@ -58,20 +58,6 @@ final class Wallet
     }
 
     /**
-     * @param array<int, int> $coins
-     */
-    public function withCoins(array $coins): self
-    {
-        $normalizedCoins = $this->normalizeInsertedCoins($coins);
-
-        return new self(
-            $this->walletId,
-            new Balance($this->calculateBalanceFromCoins($normalizedCoins)),
-            $normalizedCoins,
-        );
-    }
-
-    /**
      * @return list<float>
      */
     public function returnAllCoins(): array

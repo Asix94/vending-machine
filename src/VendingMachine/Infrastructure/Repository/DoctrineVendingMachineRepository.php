@@ -17,11 +17,6 @@ final readonly class DoctrineVendingMachineRepository implements VendingMachineR
     {
     }
 
-    public function findProductBySelector(string $selector): Product
-    {
-        return $this->findProductRowBySelector($selector, false);
-    }
-
     public function findProductBySelectorForUpdate(string $selector): Product
     {
         return $this->findProductRowBySelector($selector, true);
@@ -130,41 +125,6 @@ final readonly class DoctrineVendingMachineRepository implements VendingMachineR
                 [
                     'coin_cents' => $coinCents,
                 ],
-            );
-        }
-    }
-
-    /**
-     * @param array<string, int> $productStocks
-     * @param array<int, int> $machineCoins
-     */
-    public function replaceServiceState(array $productStocks, array $machineCoins): void
-    {
-        $now = (new DateTimeImmutable())->format('Y-m-d H:i:s');
-
-        foreach ($productStocks as $selector => $stock) {
-            $updatedRows = $this->connection->update(
-                'machine_products',
-                [
-                    'stock' => $stock,
-                    'updated_at' => $now,
-                ],
-                ['selector' => strtoupper($selector)],
-            );
-
-            if ($updatedRows === 0) {
-                throw new ProductNotFoundException($selector);
-            }
-        }
-
-        foreach ($machineCoins as $coinCents => $coinCount) {
-            $this->connection->update(
-                'machine_coins',
-                [
-                    'coin_count' => $coinCount,
-                    'updated_at' => $now,
-                ],
-                ['coin_cents' => $coinCents],
             );
         }
     }

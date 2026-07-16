@@ -24,17 +24,6 @@ final class Balance
         return new self($this->amount + $money->cents());
     }
 
-    public function subtract(int $amount): self
-    {
-        $newAmount = $this->amount - $amount;
-
-        if ($newAmount < 0) {
-            throw new InvalidArgumentException('Insufficient balance.');
-        }
-
-        return new self($newAmount);
-    }
-
     public function cents(): int
     {
         return $this->amount;

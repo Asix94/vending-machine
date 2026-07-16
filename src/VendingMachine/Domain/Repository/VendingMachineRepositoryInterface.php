@@ -8,8 +8,6 @@ use App\VendingMachine\Domain\ValueObject\Product;
 
 interface VendingMachineRepositoryInterface
 {
-    public function findProductBySelector(string $selector): Product;
-
     public function findProductBySelectorForUpdate(string $selector): Product;
 
     /**
@@ -31,12 +29,6 @@ interface VendingMachineRepositoryInterface
      * @param array<int, int> $machineCoins
      */
     public function updateMachineState(string $selector, int $newStock, array $machineCoins): void;
-
-    /**
-     * @param array<string, int> $productStocks
-     * @param array<int, int> $machineCoins
-     */
-    public function replaceServiceState(array $productStocks, array $machineCoins): void;
 
     /**
      * @param array<string, int> $productIncrements

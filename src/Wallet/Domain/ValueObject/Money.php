@@ -27,11 +27,6 @@ final class Money
         $this->amount = $amount;
     }
 
-    public static function fromCents(int $amount): self
-    {
-        return new self($amount);
-    }
-
     public static function fromCanonicalDecimal(string $amount): self
     {
         return new self(self::toCentsFromCanonicalDecimal($amount));
