@@ -3,9 +3,9 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.52">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>4756</IntrospectionStateNumber>
+      <IntrospectionStateNumber>4955</IntrospectionStateNumber>
       <ServerVersion>16.14</ServerVersion>
-      <StartupTime>1784214719</StartupTime>
+      <StartupTime>1784277503</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -807,56 +807,60 @@ true posixrules
 13310||10|C|G
 13310||-9223372036854775808|U|G
 13310||10|U|G</Grants>
-      <IntrospectionStateNumber>4756</IntrospectionStateNumber>
+      <IntrospectionStateNumber>4955</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>vending</OwnerName>
     </database>
-    <role id="4" parent="1" name="pg_checkpoint">
+    <database id="4" parent="1" name="vending_machine_test">
+      <ObjectId>16415</ObjectId>
+      <OwnerName>vending</OwnerName>
+    </database>
+    <role id="5" parent="1" name="pg_checkpoint">
       <ObjectId>4544</ObjectId>
     </role>
-    <role id="5" parent="1" name="pg_create_subscription">
+    <role id="6" parent="1" name="pg_create_subscription">
       <ObjectId>6304</ObjectId>
     </role>
-    <role id="6" parent="1" name="pg_database_owner">
+    <role id="7" parent="1" name="pg_database_owner">
       <ObjectId>6171</ObjectId>
     </role>
-    <role id="7" parent="1" name="pg_execute_server_program">
+    <role id="8" parent="1" name="pg_execute_server_program">
       <ObjectId>4571</ObjectId>
     </role>
-    <role id="8" parent="1" name="pg_monitor">
+    <role id="9" parent="1" name="pg_monitor">
       <ObjectId>3373</ObjectId>
       <RoleGrants>3374
 3375
 3377</RoleGrants>
     </role>
-    <role id="9" parent="1" name="pg_read_all_data">
+    <role id="10" parent="1" name="pg_read_all_data">
       <ObjectId>6181</ObjectId>
     </role>
-    <role id="10" parent="1" name="pg_read_all_settings">
+    <role id="11" parent="1" name="pg_read_all_settings">
       <ObjectId>3374</ObjectId>
     </role>
-    <role id="11" parent="1" name="pg_read_all_stats">
+    <role id="12" parent="1" name="pg_read_all_stats">
       <ObjectId>3375</ObjectId>
     </role>
-    <role id="12" parent="1" name="pg_read_server_files">
+    <role id="13" parent="1" name="pg_read_server_files">
       <ObjectId>4569</ObjectId>
     </role>
-    <role id="13" parent="1" name="pg_signal_backend">
+    <role id="14" parent="1" name="pg_signal_backend">
       <ObjectId>4200</ObjectId>
     </role>
-    <role id="14" parent="1" name="pg_stat_scan_tables">
+    <role id="15" parent="1" name="pg_stat_scan_tables">
       <ObjectId>3377</ObjectId>
     </role>
-    <role id="15" parent="1" name="pg_use_reserved_connections">
+    <role id="16" parent="1" name="pg_use_reserved_connections">
       <ObjectId>4550</ObjectId>
     </role>
-    <role id="16" parent="1" name="pg_write_all_data">
+    <role id="17" parent="1" name="pg_write_all_data">
       <ObjectId>6182</ObjectId>
     </role>
-    <role id="17" parent="1" name="pg_write_server_files">
+    <role id="18" parent="1" name="pg_write_server_files">
       <ObjectId>4570</ObjectId>
     </role>
-    <role id="18" parent="1" name="vending">
+    <role id="19" parent="1" name="vending">
       <BypassRls>1</BypassRls>
       <CanLogin>1</CanLogin>
       <CreateDb>1</CreateDb>
@@ -865,17 +869,17 @@ true posixrules
       <Replication>1</Replication>
       <SuperRole>1</SuperRole>
     </role>
-    <tablespace id="19" parent="1" name="pg_default">
+    <tablespace id="20" parent="1" name="pg_default">
       <ObjectId>1663</ObjectId>
       <StateNumber>1</StateNumber>
       <OwnerName>vending</OwnerName>
     </tablespace>
-    <tablespace id="20" parent="1" name="pg_global">
+    <tablespace id="21" parent="1" name="pg_global">
       <ObjectId>1664</ObjectId>
       <StateNumber>1</StateNumber>
       <OwnerName>vending</OwnerName>
     </tablespace>
-    <access-method id="21" parent="3" name="brin">
+    <access-method id="22" parent="3" name="brin">
       <Comment>block range index (BRIN) access method</Comment>
       <ObjectId>3580</ObjectId>
       <StateNumber>1</StateNumber>
@@ -884,7 +888,7 @@ true posixrules
       <HandlerName>brinhandler</HandlerName>
       <HandlerParentName>pg_catalog</HandlerParentName>
     </access-method>
-    <access-method id="22" parent="3" name="btree">
+    <access-method id="23" parent="3" name="btree">
       <Comment>b-tree index access method</Comment>
       <ObjectId>403</ObjectId>
       <StateNumber>1</StateNumber>
@@ -893,7 +897,7 @@ true posixrules
       <HandlerName>bthandler</HandlerName>
       <HandlerParentName>pg_catalog</HandlerParentName>
     </access-method>
-    <access-method id="23" parent="3" name="gin">
+    <access-method id="24" parent="3" name="gin">
       <Comment>GIN index access method</Comment>
       <ObjectId>2742</ObjectId>
       <StateNumber>1</StateNumber>
@@ -902,7 +906,7 @@ true posixrules
       <HandlerName>ginhandler</HandlerName>
       <HandlerParentName>pg_catalog</HandlerParentName>
     </access-method>
-    <access-method id="24" parent="3" name="gist">
+    <access-method id="25" parent="3" name="gist">
       <Comment>GiST index access method</Comment>
       <ObjectId>783</ObjectId>
       <StateNumber>1</StateNumber>
@@ -911,7 +915,7 @@ true posixrules
       <HandlerName>gisthandler</HandlerName>
       <HandlerParentName>pg_catalog</HandlerParentName>
     </access-method>
-    <access-method id="25" parent="3" name="hash">
+    <access-method id="26" parent="3" name="hash">
       <Comment>hash index access method</Comment>
       <ObjectId>405</ObjectId>
       <StateNumber>1</StateNumber>
@@ -920,7 +924,7 @@ true posixrules
       <HandlerName>hashhandler</HandlerName>
       <HandlerParentName>pg_catalog</HandlerParentName>
     </access-method>
-    <access-method id="26" parent="3" name="heap">
+    <access-method id="27" parent="3" name="heap">
       <Comment>heap table access method</Comment>
       <ObjectId>2</ObjectId>
       <StateNumber>1</StateNumber>
@@ -929,7 +933,7 @@ true posixrules
       <HandlerName>heap_tableam_handler</HandlerName>
       <HandlerParentName>pg_catalog</HandlerParentName>
     </access-method>
-    <access-method id="27" parent="3" name="spgist">
+    <access-method id="28" parent="3" name="spgist">
       <Comment>SP-GiST index access method</Comment>
       <ObjectId>4000</ObjectId>
       <StateNumber>1</StateNumber>
@@ -938,7 +942,7 @@ true posixrules
       <HandlerName>spghandler</HandlerName>
       <HandlerParentName>pg_catalog</HandlerParentName>
     </access-method>
-    <cast id="28" parent="3">
+    <cast id="29" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10035</ObjectId>
@@ -953,7 +957,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="29" parent="3">
+    <cast id="30" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10201</ObjectId>
@@ -968,7 +972,7 @@ true posixrules
       <TargetTypeName>bpchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="30" parent="3">
+    <cast id="31" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10191</ObjectId>
@@ -983,7 +987,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="31" parent="3">
+    <cast id="32" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10196</ObjectId>
@@ -998,7 +1002,7 @@ true posixrules
       <TargetTypeName>varchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="32" parent="3">
+    <cast id="33" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10143</ObjectId>
@@ -1013,7 +1017,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="33" parent="3">
+    <cast id="34" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10133</ObjectId>
@@ -1028,7 +1032,7 @@ true posixrules
       <TargetTypeName>varchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="34" parent="3">
+    <cast id="35" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10131</ObjectId>
@@ -1043,7 +1047,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="35" parent="3">
+    <cast id="36" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10132</ObjectId>
@@ -1058,7 +1062,7 @@ true posixrules
       <TargetTypeName>bpchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="36" parent="3">
+    <cast id="37" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10135</ObjectId>
@@ -1073,7 +1077,7 @@ true posixrules
       <TargetTypeName>bpchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="37" parent="3">
+    <cast id="38" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10134</ObjectId>
@@ -1088,7 +1092,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="38" parent="3">
+    <cast id="39" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10136</ObjectId>
@@ -1103,7 +1107,7 @@ true posixrules
       <TargetTypeName>varchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="39" parent="3">
+    <cast id="40" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10090</ObjectId>
@@ -1118,7 +1122,7 @@ true posixrules
       <TargetTypeName>regtype</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="40" parent="3">
+    <cast id="41" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10060</ObjectId>
@@ -1133,7 +1137,7 @@ true posixrules
       <TargetTypeName>regoper</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="41" parent="3">
+    <cast id="42" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10003</ObjectId>
@@ -1148,7 +1152,7 @@ true posixrules
       <TargetTypeName>float8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="42" parent="3">
+    <cast id="43" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10069</ObjectId>
@@ -1163,7 +1167,7 @@ true posixrules
       <TargetTypeName>regoperator</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="43" parent="3">
+    <cast id="44" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10001</ObjectId>
@@ -1178,7 +1182,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="44" parent="3">
+    <cast id="45" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10044</ObjectId>
@@ -1193,7 +1197,7 @@ true posixrules
       <TargetTypeName>regproc</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="45" parent="3">
+    <cast id="46" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10113</ObjectId>
@@ -1208,7 +1212,7 @@ true posixrules
       <TargetTypeName>regrole</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="46" parent="3">
+    <cast id="47" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10120</ObjectId>
@@ -1223,7 +1227,7 @@ true posixrules
       <TargetTypeName>regnamespace</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="47" parent="3">
+    <cast id="48" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10002</ObjectId>
@@ -1238,7 +1242,7 @@ true posixrules
       <TargetTypeName>float4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="48" parent="3">
+    <cast id="49" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10104</ObjectId>
@@ -1253,7 +1257,7 @@ true posixrules
       <TargetTypeName>regdictionary</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="49" parent="3">
+    <cast id="50" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10083</ObjectId>
@@ -1268,7 +1272,7 @@ true posixrules
       <TargetTypeName>regcollation</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="50" parent="3">
+    <cast id="51" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10033</ObjectId>
@@ -1283,7 +1287,7 @@ true posixrules
       <TargetTypeName>money</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="51" parent="3">
+    <cast id="52" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10037</ObjectId>
@@ -1298,7 +1302,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="52" parent="3">
+    <cast id="53" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10097</ObjectId>
@@ -1313,7 +1317,7 @@ true posixrules
       <TargetTypeName>regconfig</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="53" parent="3">
+    <cast id="54" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10000</ObjectId>
@@ -1328,7 +1332,7 @@ true posixrules
       <TargetTypeName>int2</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="54" parent="3">
+    <cast id="55" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10185</ObjectId>
@@ -1343,7 +1347,7 @@ true posixrules
       <TargetTypeName>bit</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="55" parent="3">
+    <cast id="56" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10004</ObjectId>
@@ -1358,7 +1362,7 @@ true posixrules
       <TargetTypeName>numeric</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="56" parent="3">
+    <cast id="57" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10053</ObjectId>
@@ -1373,7 +1377,7 @@ true posixrules
       <TargetTypeName>regprocedure</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="57" parent="3">
+    <cast id="58" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10076</ObjectId>
@@ -1388,7 +1392,7 @@ true posixrules
       <TargetTypeName>regclass</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="58" parent="3">
+    <cast id="59" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10045</ObjectId>
@@ -1403,7 +1407,7 @@ true posixrules
       <TargetTypeName>regproc</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="59" parent="3">
+    <cast id="60" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10091</ObjectId>
@@ -1418,7 +1422,7 @@ true posixrules
       <TargetTypeName>regtype</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="60" parent="3">
+    <cast id="61" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10084</ObjectId>
@@ -1433,7 +1437,7 @@ true posixrules
       <TargetTypeName>regcollation</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="61" parent="3">
+    <cast id="62" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10070</ObjectId>
@@ -1448,7 +1452,7 @@ true posixrules
       <TargetTypeName>regoperator</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="62" parent="3">
+    <cast id="63" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10038</ObjectId>
@@ -1463,7 +1467,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="63" parent="3">
+    <cast id="64" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10009</ObjectId>
@@ -1478,7 +1482,7 @@ true posixrules
       <TargetTypeName>numeric</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="64" parent="3">
+    <cast id="65" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10077</ObjectId>
@@ -1493,7 +1497,7 @@ true posixrules
       <TargetTypeName>regclass</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="65" parent="3">
+    <cast id="66" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10006</ObjectId>
@@ -1508,7 +1512,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="66" parent="3">
+    <cast id="67" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10054</ObjectId>
@@ -1523,7 +1527,7 @@ true posixrules
       <TargetTypeName>regprocedure</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="67" parent="3">
+    <cast id="68" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10007</ObjectId>
@@ -1538,7 +1542,7 @@ true posixrules
       <TargetTypeName>float4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="68" parent="3">
+    <cast id="69" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10005</ObjectId>
@@ -1553,7 +1557,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="69" parent="3">
+    <cast id="70" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10114</ObjectId>
@@ -1568,7 +1572,7 @@ true posixrules
       <TargetTypeName>regrole</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="70" parent="3">
+    <cast id="71" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10008</ObjectId>
@@ -1583,7 +1587,7 @@ true posixrules
       <TargetTypeName>float8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="71" parent="3">
+    <cast id="72" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10105</ObjectId>
@@ -1598,7 +1602,7 @@ true posixrules
       <TargetTypeName>regdictionary</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="72" parent="3">
+    <cast id="73" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10121</ObjectId>
@@ -1613,7 +1617,7 @@ true posixrules
       <TargetTypeName>regnamespace</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="73" parent="3">
+    <cast id="74" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10061</ObjectId>
@@ -1628,7 +1632,7 @@ true posixrules
       <TargetTypeName>regoper</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="74" parent="3">
+    <cast id="75" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10098</ObjectId>
@@ -1643,7 +1647,7 @@ true posixrules
       <TargetTypeName>regconfig</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="75" parent="3">
+    <cast id="76" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10078</ObjectId>
@@ -1655,7 +1659,7 @@ true posixrules
       <TargetTypeName>regclass</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="76" parent="3">
+    <cast id="77" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10085</ObjectId>
@@ -1667,7 +1671,7 @@ true posixrules
       <TargetTypeName>regcollation</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="77" parent="3">
+    <cast id="78" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10115</ObjectId>
@@ -1679,7 +1683,7 @@ true posixrules
       <TargetTypeName>regrole</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="78" parent="3">
+    <cast id="79" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10144</ObjectId>
@@ -1694,7 +1698,7 @@ true posixrules
       <TargetTypeName>char</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="79" parent="3">
+    <cast id="80" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10122</ObjectId>
@@ -1706,7 +1710,7 @@ true posixrules
       <TargetTypeName>regnamespace</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="80" parent="3">
+    <cast id="81" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10010</ObjectId>
@@ -1721,7 +1725,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="81" parent="3">
+    <cast id="82" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10106</ObjectId>
@@ -1733,7 +1737,7 @@ true posixrules
       <TargetTypeName>regdictionary</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="82" parent="3">
+    <cast id="83" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10099</ObjectId>
@@ -1745,7 +1749,7 @@ true posixrules
       <TargetTypeName>regconfig</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="83" parent="3">
+    <cast id="84" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10011</ObjectId>
@@ -1760,7 +1764,7 @@ true posixrules
       <TargetTypeName>int2</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="84" parent="3">
+    <cast id="85" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10092</ObjectId>
@@ -1772,7 +1776,7 @@ true posixrules
       <TargetTypeName>regtype</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="85" parent="3">
+    <cast id="86" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10071</ObjectId>
@@ -1784,7 +1788,7 @@ true posixrules
       <TargetTypeName>regoperator</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="86" parent="3">
+    <cast id="87" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10062</ObjectId>
@@ -1796,7 +1800,7 @@ true posixrules
       <TargetTypeName>regoper</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="87" parent="3">
+    <cast id="88" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10046</ObjectId>
@@ -1808,7 +1812,7 @@ true posixrules
       <TargetTypeName>regproc</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="88" parent="3">
+    <cast id="89" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10055</ObjectId>
@@ -1820,7 +1824,7 @@ true posixrules
       <TargetTypeName>regprocedure</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="89" parent="3">
+    <cast id="90" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10034</ObjectId>
@@ -1835,7 +1839,7 @@ true posixrules
       <TargetTypeName>bool</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="90" parent="3">
+    <cast id="91" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10014</ObjectId>
@@ -1850,7 +1854,7 @@ true posixrules
       <TargetTypeName>numeric</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="91" parent="3">
+    <cast id="92" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10039</ObjectId>
@@ -1862,7 +1866,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="92" parent="3">
+    <cast id="93" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10186</ObjectId>
@@ -1877,7 +1881,7 @@ true posixrules
       <TargetTypeName>bit</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="93" parent="3">
+    <cast id="94" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10012</ObjectId>
@@ -1892,7 +1896,7 @@ true posixrules
       <TargetTypeName>float4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="94" parent="3">
+    <cast id="95" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10013</ObjectId>
@@ -1907,7 +1911,7 @@ true posixrules
       <TargetTypeName>float8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="95" parent="3">
+    <cast id="96" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10032</ObjectId>
@@ -1922,7 +1926,7 @@ true posixrules
       <TargetTypeName>money</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="96" parent="3">
+    <cast id="97" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10048</ObjectId>
@@ -1934,7 +1938,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="97" parent="3">
+    <cast id="98" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10047</ObjectId>
@@ -1949,7 +1953,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="98" parent="3">
+    <cast id="99" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10043</ObjectId>
@@ -1961,7 +1965,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="99" parent="3">
+    <cast id="100" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10049</ObjectId>
@@ -1973,7 +1977,7 @@ true posixrules
       <TargetTypeName>regprocedure</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="100" parent="3">
+    <cast id="101" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10125</ObjectId>
@@ -1985,7 +1989,7 @@ true posixrules
       <TargetTypeName>bpchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="101" parent="3">
+    <cast id="102" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10140</ObjectId>
@@ -2000,7 +2004,7 @@ true posixrules
       <TargetTypeName>name</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="102" parent="3">
+    <cast id="103" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10137</ObjectId>
@@ -2015,7 +2019,7 @@ true posixrules
       <TargetTypeName>char</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="103" parent="3">
+    <cast id="104" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10126</ObjectId>
@@ -2027,7 +2031,7 @@ true posixrules
       <TargetTypeName>varchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="104" parent="3">
+    <cast id="105" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10193</ObjectId>
@@ -2042,7 +2046,7 @@ true posixrules
       <TargetTypeName>xml</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="105" parent="3">
+    <cast id="106" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10109</ObjectId>
@@ -2057,7 +2061,7 @@ true posixrules
       <TargetTypeName>regclass</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="106" parent="3">
+    <cast id="107" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10074</ObjectId>
@@ -2069,7 +2073,7 @@ true posixrules
       <TargetTypeName>regclass</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="107" parent="3">
+    <cast id="108" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10051</ObjectId>
@@ -2081,7 +2085,7 @@ true posixrules
       <TargetTypeName>regprocedure</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="108" parent="3">
+    <cast id="109" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10095</ObjectId>
@@ -2093,7 +2097,7 @@ true posixrules
       <TargetTypeName>regconfig</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="109" parent="3">
+    <cast id="110" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10058</ObjectId>
@@ -2105,7 +2109,7 @@ true posixrules
       <TargetTypeName>regoper</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="110" parent="3">
+    <cast id="111" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10081</ObjectId>
@@ -2117,7 +2121,7 @@ true posixrules
       <TargetTypeName>regcollation</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="111" parent="3">
+    <cast id="112" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10067</ObjectId>
@@ -2129,7 +2133,7 @@ true posixrules
       <TargetTypeName>regoperator</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="112" parent="3">
+    <cast id="113" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10042</ObjectId>
@@ -2141,7 +2145,7 @@ true posixrules
       <TargetTypeName>regproc</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="113" parent="3">
+    <cast id="114" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10040</ObjectId>
@@ -2156,7 +2160,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="114" parent="3">
+    <cast id="115" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10111</ObjectId>
@@ -2168,7 +2172,7 @@ true posixrules
       <TargetTypeName>regrole</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="115" parent="3">
+    <cast id="116" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10102</ObjectId>
@@ -2180,7 +2184,7 @@ true posixrules
       <TargetTypeName>regdictionary</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="116" parent="3">
+    <cast id="117" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10088</ObjectId>
@@ -2192,7 +2196,7 @@ true posixrules
       <TargetTypeName>regtype</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="117" parent="3">
+    <cast id="118" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10041</ObjectId>
@@ -2204,7 +2208,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="118" parent="3">
+    <cast id="119" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10118</ObjectId>
@@ -2216,7 +2220,7 @@ true posixrules
       <TargetTypeName>regnamespace</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="119" parent="3">
+    <cast id="120" parent="3">
       <Context>assignment</Context>
       <Method>io</Method>
       <ObjectId>10214</ObjectId>
@@ -2228,7 +2232,7 @@ true posixrules
       <TargetTypeName>jsonb</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="120" parent="3">
+    <cast id="121" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10202</ObjectId>
@@ -2240,7 +2244,7 @@ true posixrules
       <TargetTypeName>bpchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="121" parent="3">
+    <cast id="122" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10197</ObjectId>
@@ -2252,7 +2256,7 @@ true posixrules
       <TargetTypeName>varchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="122" parent="3">
+    <cast id="123" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10192</ObjectId>
@@ -2264,7 +2268,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="123" parent="3">
+    <cast id="124" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10145</ObjectId>
@@ -2276,7 +2280,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="124" parent="3">
+    <cast id="125" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10165</ObjectId>
@@ -2291,7 +2295,7 @@ true posixrules
       <TargetTypeName>box</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="125" parent="3">
+    <cast id="126" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10166</ObjectId>
@@ -2306,7 +2310,7 @@ true posixrules
       <TargetTypeName>point</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="126" parent="3">
+    <cast id="127" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10167</ObjectId>
@@ -2321,7 +2325,7 @@ true posixrules
       <TargetTypeName>polygon</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="127" parent="3">
+    <cast id="128" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10168</ObjectId>
@@ -2336,7 +2340,7 @@ true posixrules
       <TargetTypeName>point</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="128" parent="3">
+    <cast id="129" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10171</ObjectId>
@@ -2351,7 +2355,7 @@ true posixrules
       <TargetTypeName>circle</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="129" parent="3">
+    <cast id="130" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10169</ObjectId>
@@ -2366,7 +2370,7 @@ true posixrules
       <TargetTypeName>lseg</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="130" parent="3">
+    <cast id="131" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10170</ObjectId>
@@ -2381,7 +2385,7 @@ true posixrules
       <TargetTypeName>polygon</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="131" parent="3">
+    <cast id="132" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10172</ObjectId>
@@ -2396,7 +2400,7 @@ true posixrules
       <TargetTypeName>point</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="132" parent="3">
+    <cast id="133" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10175</ObjectId>
@@ -2411,7 +2415,7 @@ true posixrules
       <TargetTypeName>circle</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="133" parent="3">
+    <cast id="134" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10174</ObjectId>
@@ -2426,7 +2430,7 @@ true posixrules
       <TargetTypeName>box</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="134" parent="3">
+    <cast id="135" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10173</ObjectId>
@@ -2441,7 +2445,7 @@ true posixrules
       <TargetTypeName>path</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="135" parent="3">
+    <cast id="136" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10194</ObjectId>
@@ -2456,7 +2460,7 @@ true posixrules
       <TargetTypeName>varchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="136" parent="3">
+    <cast id="137" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10199</ObjectId>
@@ -2471,7 +2475,7 @@ true posixrules
       <TargetTypeName>bpchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="137" parent="3">
+    <cast id="138" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10189</ObjectId>
@@ -2486,7 +2490,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="138" parent="3">
+    <cast id="139" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10181</ObjectId>
@@ -2498,7 +2502,7 @@ true posixrules
       <TargetTypeName>inet</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="139" parent="3">
+    <cast id="140" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10016</ObjectId>
@@ -2513,7 +2517,7 @@ true posixrules
       <TargetTypeName>int2</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="140" parent="3">
+    <cast id="141" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10015</ObjectId>
@@ -2528,7 +2532,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="141" parent="3">
+    <cast id="142" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10018</ObjectId>
@@ -2543,7 +2547,7 @@ true posixrules
       <TargetTypeName>float8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="142" parent="3">
+    <cast id="143" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10019</ObjectId>
@@ -2558,7 +2562,7 @@ true posixrules
       <TargetTypeName>numeric</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="143" parent="3">
+    <cast id="144" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10017</ObjectId>
@@ -2573,7 +2577,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="144" parent="3">
+    <cast id="145" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10024</ObjectId>
@@ -2588,7 +2592,7 @@ true posixrules
       <TargetTypeName>numeric</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="145" parent="3">
+    <cast id="146" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10020</ObjectId>
@@ -2603,7 +2607,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="146" parent="3">
+    <cast id="147" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10021</ObjectId>
@@ -2618,7 +2622,7 @@ true posixrules
       <TargetTypeName>int2</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="147" parent="3">
+    <cast id="148" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10022</ObjectId>
@@ -2633,7 +2637,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="148" parent="3">
+    <cast id="149" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10023</ObjectId>
@@ -2648,7 +2652,7 @@ true posixrules
       <TargetTypeName>float4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="149" parent="3">
+    <cast id="150" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10178</ObjectId>
@@ -2663,7 +2667,7 @@ true posixrules
       <TargetTypeName>polygon</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="150" parent="3">
+    <cast id="151" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10176</ObjectId>
@@ -2678,7 +2682,7 @@ true posixrules
       <TargetTypeName>point</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="151" parent="3">
+    <cast id="152" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10177</ObjectId>
@@ -2693,7 +2697,7 @@ true posixrules
       <TargetTypeName>box</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="152" parent="3">
+    <cast id="153" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10180</ObjectId>
@@ -2708,7 +2712,7 @@ true posixrules
       <TargetTypeName>macaddr</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="153" parent="3">
+    <cast id="154" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10030</ObjectId>
@@ -2723,7 +2727,7 @@ true posixrules
       <TargetTypeName>numeric</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="154" parent="3">
+    <cast id="155" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10179</ObjectId>
@@ -2738,7 +2742,7 @@ true posixrules
       <TargetTypeName>macaddr8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="155" parent="3">
+    <cast id="156" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10195</ObjectId>
@@ -2753,7 +2757,7 @@ true posixrules
       <TargetTypeName>varchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="156" parent="3">
+    <cast id="157" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10190</ObjectId>
@@ -2768,7 +2772,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="157" parent="3">
+    <cast id="158" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10182</ObjectId>
@@ -2783,7 +2787,7 @@ true posixrules
       <TargetTypeName>cidr</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="158" parent="3">
+    <cast id="159" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10200</ObjectId>
@@ -2798,7 +2802,7 @@ true posixrules
       <TargetTypeName>bpchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="159" parent="3">
+    <cast id="160" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10204</ObjectId>
@@ -2813,7 +2817,7 @@ true posixrules
       <TargetTypeName>bpchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="160" parent="3">
+    <cast id="161" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10128</ObjectId>
@@ -2828,7 +2832,7 @@ true posixrules
       <TargetTypeName>varchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="161" parent="3">
+    <cast id="162" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10203</ObjectId>
@@ -2843,7 +2847,7 @@ true posixrules
       <TargetTypeName>xml</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="162" parent="3">
+    <cast id="163" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10127</ObjectId>
@@ -2858,7 +2862,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="163" parent="3">
+    <cast id="164" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10138</ObjectId>
@@ -2873,7 +2877,7 @@ true posixrules
       <TargetTypeName>char</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="164" parent="3">
+    <cast id="165" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10141</ObjectId>
@@ -2888,7 +2892,7 @@ true posixrules
       <TargetTypeName>name</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="165" parent="3">
+    <cast id="166" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10129</ObjectId>
@@ -2900,7 +2904,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="166" parent="3">
+    <cast id="167" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10142</ObjectId>
@@ -2915,7 +2919,7 @@ true posixrules
       <TargetTypeName>name</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="167" parent="3">
+    <cast id="168" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10130</ObjectId>
@@ -2927,7 +2931,7 @@ true posixrules
       <TargetTypeName>bpchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="168" parent="3">
+    <cast id="169" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10198</ObjectId>
@@ -2942,7 +2946,7 @@ true posixrules
       <TargetTypeName>xml</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="169" parent="3">
+    <cast id="170" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10110</ObjectId>
@@ -2957,7 +2961,7 @@ true posixrules
       <TargetTypeName>regclass</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="170" parent="3">
+    <cast id="171" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10205</ObjectId>
@@ -2972,7 +2976,7 @@ true posixrules
       <TargetTypeName>varchar</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="171" parent="3">
+    <cast id="172" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10139</ObjectId>
@@ -2987,7 +2991,7 @@ true posixrules
       <TargetTypeName>char</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="172" parent="3">
+    <cast id="173" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10152</ObjectId>
@@ -3002,7 +3006,7 @@ true posixrules
       <TargetTypeName>timestamp</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="173" parent="3">
+    <cast id="174" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10153</ObjectId>
@@ -3017,7 +3021,7 @@ true posixrules
       <TargetTypeName>timestamptz</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="174" parent="3">
+    <cast id="175" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10206</ObjectId>
@@ -3032,7 +3036,7 @@ true posixrules
       <TargetTypeName>time</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="175" parent="3">
+    <cast id="176" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10155</ObjectId>
@@ -3047,7 +3051,7 @@ true posixrules
       <TargetTypeName>timetz</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="176" parent="3">
+    <cast id="177" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10154</ObjectId>
@@ -3062,7 +3066,7 @@ true posixrules
       <TargetTypeName>interval</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="177" parent="3">
+    <cast id="178" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10158</ObjectId>
@@ -3077,7 +3081,7 @@ true posixrules
       <TargetTypeName>timestamptz</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="178" parent="3">
+    <cast id="179" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10156</ObjectId>
@@ -3092,7 +3096,7 @@ true posixrules
       <TargetTypeName>date</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="179" parent="3">
+    <cast id="180" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10157</ObjectId>
@@ -3107,7 +3111,7 @@ true posixrules
       <TargetTypeName>time</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="180" parent="3">
+    <cast id="181" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10207</ObjectId>
@@ -3122,7 +3126,7 @@ true posixrules
       <TargetTypeName>timestamp</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="181" parent="3">
+    <cast id="182" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10159</ObjectId>
@@ -3137,7 +3141,7 @@ true posixrules
       <TargetTypeName>date</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="182" parent="3">
+    <cast id="183" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10162</ObjectId>
@@ -3152,7 +3156,7 @@ true posixrules
       <TargetTypeName>timetz</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="183" parent="3">
+    <cast id="184" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10160</ObjectId>
@@ -3167,7 +3171,7 @@ true posixrules
       <TargetTypeName>time</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="184" parent="3">
+    <cast id="185" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10161</ObjectId>
@@ -3182,7 +3186,7 @@ true posixrules
       <TargetTypeName>timestamp</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="185" parent="3">
+    <cast id="186" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10208</ObjectId>
@@ -3197,7 +3201,7 @@ true posixrules
       <TargetTypeName>timestamptz</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="186" parent="3">
+    <cast id="187" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10209</ObjectId>
@@ -3212,7 +3216,7 @@ true posixrules
       <TargetTypeName>interval</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="187" parent="3">
+    <cast id="188" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10163</ObjectId>
@@ -3227,7 +3231,7 @@ true posixrules
       <TargetTypeName>time</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="188" parent="3">
+    <cast id="189" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10164</ObjectId>
@@ -3242,7 +3246,7 @@ true posixrules
       <TargetTypeName>time</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="189" parent="3">
+    <cast id="190" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10210</ObjectId>
@@ -3257,7 +3261,7 @@ true posixrules
       <TargetTypeName>timetz</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="190" parent="3">
+    <cast id="191" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10187</ObjectId>
@@ -3272,7 +3276,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="191" parent="3">
+    <cast id="192" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10211</ObjectId>
@@ -3287,7 +3291,7 @@ true posixrules
       <TargetTypeName>bit</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="192" parent="3">
+    <cast id="193" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10183</ObjectId>
@@ -3299,7 +3303,7 @@ true posixrules
       <TargetTypeName>varbit</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="193" parent="3">
+    <cast id="194" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10188</ObjectId>
@@ -3314,7 +3318,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="194" parent="3">
+    <cast id="195" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10184</ObjectId>
@@ -3326,7 +3330,7 @@ true posixrules
       <TargetTypeName>bit</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="195" parent="3">
+    <cast id="196" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10212</ObjectId>
@@ -3341,7 +3345,7 @@ true posixrules
       <TargetTypeName>varbit</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="196" parent="3">
+    <cast id="197" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10025</ObjectId>
@@ -3356,7 +3360,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="197" parent="3">
+    <cast id="198" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10026</ObjectId>
@@ -3371,7 +3375,7 @@ true posixrules
       <TargetTypeName>int2</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="198" parent="3">
+    <cast id="199" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10027</ObjectId>
@@ -3386,7 +3390,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="199" parent="3">
+    <cast id="200" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10213</ObjectId>
@@ -3401,7 +3405,7 @@ true posixrules
       <TargetTypeName>numeric</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="200" parent="3">
+    <cast id="201" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10029</ObjectId>
@@ -3416,7 +3420,7 @@ true posixrules
       <TargetTypeName>float8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="201" parent="3">
+    <cast id="202" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10031</ObjectId>
@@ -3431,7 +3435,7 @@ true posixrules
       <TargetTypeName>money</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="202" parent="3">
+    <cast id="203" parent="3">
       <Context>implicit</Context>
       <Method>function</Method>
       <ObjectId>10028</ObjectId>
@@ -3446,7 +3450,7 @@ true posixrules
       <TargetTypeName>float4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="203" parent="3">
+    <cast id="204" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10057</ObjectId>
@@ -3458,7 +3462,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="204" parent="3">
+    <cast id="205" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10052</ObjectId>
@@ -3470,7 +3474,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="205" parent="3">
+    <cast id="206" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10056</ObjectId>
@@ -3485,7 +3489,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="206" parent="3">
+    <cast id="207" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10050</ObjectId>
@@ -3497,7 +3501,7 @@ true posixrules
       <TargetTypeName>regproc</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="207" parent="3">
+    <cast id="208" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10065</ObjectId>
@@ -3509,7 +3513,7 @@ true posixrules
       <TargetTypeName>regoperator</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="208" parent="3">
+    <cast id="209" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10063</ObjectId>
@@ -3524,7 +3528,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="209" parent="3">
+    <cast id="210" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10059</ObjectId>
@@ -3536,7 +3540,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="210" parent="3">
+    <cast id="211" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10064</ObjectId>
@@ -3548,7 +3552,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="211" parent="3">
+    <cast id="212" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10073</ObjectId>
@@ -3560,7 +3564,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="212" parent="3">
+    <cast id="213" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10068</ObjectId>
@@ -3572,7 +3576,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="213" parent="3">
+    <cast id="214" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10072</ObjectId>
@@ -3587,7 +3591,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="214" parent="3">
+    <cast id="215" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10066</ObjectId>
@@ -3599,7 +3603,7 @@ true posixrules
       <TargetTypeName>regoper</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="215" parent="3">
+    <cast id="216" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10079</ObjectId>
@@ -3614,7 +3618,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="216" parent="3">
+    <cast id="217" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10075</ObjectId>
@@ -3626,7 +3630,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="217" parent="3">
+    <cast id="218" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10080</ObjectId>
@@ -3638,7 +3642,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="218" parent="3">
+    <cast id="219" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10093</ObjectId>
@@ -3653,7 +3657,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="219" parent="3">
+    <cast id="220" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10094</ObjectId>
@@ -3665,7 +3669,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="220" parent="3">
+    <cast id="221" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10089</ObjectId>
@@ -3677,7 +3681,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="221" parent="3">
+    <cast id="222" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10146</ObjectId>
@@ -3689,7 +3693,7 @@ true posixrules
       <TargetTypeName>bytea</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="222" parent="3">
+    <cast id="223" parent="3">
       <Context>implicit</Context>
       <Method>io</Method>
       <ObjectId>10147</ObjectId>
@@ -3701,7 +3705,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="223" parent="3">
+    <cast id="224" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10148</ObjectId>
@@ -3713,7 +3717,7 @@ true posixrules
       <TargetTypeName>bytea</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="224" parent="3">
+    <cast id="225" parent="3">
       <Context>implicit</Context>
       <Method>io</Method>
       <ObjectId>10149</ObjectId>
@@ -3725,7 +3729,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="225" parent="3">
+    <cast id="226" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10096</ObjectId>
@@ -3737,7 +3741,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="226" parent="3">
+    <cast id="227" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10100</ObjectId>
@@ -3752,7 +3756,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="227" parent="3">
+    <cast id="228" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10101</ObjectId>
@@ -3764,7 +3768,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="228" parent="3">
+    <cast id="229" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10103</ObjectId>
@@ -3776,7 +3780,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="229" parent="3">
+    <cast id="230" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10108</ObjectId>
@@ -3788,7 +3792,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="230" parent="3">
+    <cast id="231" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10107</ObjectId>
@@ -3803,7 +3807,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="231" parent="3">
+    <cast id="232" parent="3">
       <Context>assignment</Context>
       <Method>io</Method>
       <ObjectId>10215</ObjectId>
@@ -3815,7 +3819,7 @@ true posixrules
       <TargetTypeName>json</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="232" parent="3">
+    <cast id="233" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10218</ObjectId>
@@ -3830,7 +3834,7 @@ true posixrules
       <TargetTypeName>int2</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="233" parent="3">
+    <cast id="234" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10220</ObjectId>
@@ -3845,7 +3849,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="234" parent="3">
+    <cast id="235" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10219</ObjectId>
@@ -3860,7 +3864,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="235" parent="3">
+    <cast id="236" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10216</ObjectId>
@@ -3875,7 +3879,7 @@ true posixrules
       <TargetTypeName>bool</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="236" parent="3">
+    <cast id="237" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10221</ObjectId>
@@ -3890,7 +3894,7 @@ true posixrules
       <TargetTypeName>float4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="237" parent="3">
+    <cast id="238" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10217</ObjectId>
@@ -3905,7 +3909,7 @@ true posixrules
       <TargetTypeName>numeric</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="238" parent="3">
+    <cast id="239" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10222</ObjectId>
@@ -3920,7 +3924,7 @@ true posixrules
       <TargetTypeName>float8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="239" parent="3">
+    <cast id="240" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10223</ObjectId>
@@ -3935,7 +3939,7 @@ true posixrules
       <TargetTypeName>int4multirange</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="240" parent="3">
+    <cast id="241" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10225</ObjectId>
@@ -3950,7 +3954,7 @@ true posixrules
       <TargetTypeName>nummultirange</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="241" parent="3">
+    <cast id="242" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10227</ObjectId>
@@ -3965,7 +3969,7 @@ true posixrules
       <TargetTypeName>tsmultirange</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="242" parent="3">
+    <cast id="243" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10228</ObjectId>
@@ -3980,7 +3984,7 @@ true posixrules
       <TargetTypeName>tstzmultirange</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="243" parent="3">
+    <cast id="244" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10226</ObjectId>
@@ -3995,7 +3999,7 @@ true posixrules
       <TargetTypeName>datemultirange</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="244" parent="3">
+    <cast id="245" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10224</ObjectId>
@@ -4010,7 +4014,7 @@ true posixrules
       <TargetTypeName>int8multirange</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="245" parent="3">
+    <cast id="246" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10124</ObjectId>
@@ -4022,7 +4026,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="246" parent="3">
+    <cast id="247" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10123</ObjectId>
@@ -4037,7 +4041,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="247" parent="3">
+    <cast id="248" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10119</ObjectId>
@@ -4049,7 +4053,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="248" parent="3">
+    <cast id="249" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10117</ObjectId>
@@ -4061,7 +4065,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="249" parent="3">
+    <cast id="250" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10112</ObjectId>
@@ -4073,7 +4077,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="250" parent="3">
+    <cast id="251" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10116</ObjectId>
@@ -4088,7 +4092,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="251" parent="3">
+    <cast id="252" parent="3">
       <Context>assignment</Context>
       <Method>function</Method>
       <ObjectId>10086</ObjectId>
@@ -4103,7 +4107,7 @@ true posixrules
       <TargetTypeName>int8</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="252" parent="3">
+    <cast id="253" parent="3">
       <Context>assignment</Context>
       <Method>binary</Method>
       <ObjectId>10087</ObjectId>
@@ -4115,7 +4119,7 @@ true posixrules
       <TargetTypeName>int4</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="253" parent="3">
+    <cast id="254" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10082</ObjectId>
@@ -4127,7 +4131,7 @@ true posixrules
       <TargetTypeName>oid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="254" parent="3">
+    <cast id="255" parent="3">
       <Context>implicit</Context>
       <Method>binary</Method>
       <ObjectId>10150</ObjectId>
@@ -4139,7 +4143,7 @@ true posixrules
       <TargetTypeName>bytea</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="255" parent="3">
+    <cast id="256" parent="3">
       <Context>implicit</Context>
       <Method>io</Method>
       <ObjectId>10151</ObjectId>
@@ -4151,7 +4155,7 @@ true posixrules
       <TargetTypeName>text</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <cast id="256" parent="3">
+    <cast id="257" parent="3">
       <Context>explicit</Context>
       <Method>function</Method>
       <ObjectId>10036</ObjectId>
@@ -4166,7 +4170,7 @@ true posixrules
       <TargetTypeName>xid</TargetTypeName>
       <TargetTypeParentName>pg_catalog</TargetTypeParentName>
     </cast>
-    <extension id="257" parent="3" name="plpgsql">
+    <extension id="258" parent="3" name="plpgsql">
       <Comment>PL/pgSQL procedural language</Comment>
       <ObjectId>13662</ObjectId>
       <StateNumber>684</StateNumber>
@@ -4178,21 +4182,21 @@ true posixrules
 13665
 13666</MemberIds>
     </extension>
-    <language id="258" parent="3" name="c">
+    <language id="259" parent="3" name="c">
       <Comment>dynamically-loaded C functions</Comment>
       <ObjectId>13</ObjectId>
       <StateNumber>1</StateNumber>
       <ValidatorName>fmgr_c_validator</ValidatorName>
       <ValidatorSchema>pg_catalog</ValidatorSchema>
     </language>
-    <language id="259" parent="3" name="internal">
+    <language id="260" parent="3" name="internal">
       <Comment>built-in functions</Comment>
       <ObjectId>12</ObjectId>
       <StateNumber>1</StateNumber>
       <ValidatorName>fmgr_internal_validator</ValidatorName>
       <ValidatorSchema>pg_catalog</ValidatorSchema>
     </language>
-    <language id="260" parent="3" name="plpgsql">
+    <language id="261" parent="3" name="plpgsql">
       <Comment>PL/pgSQL procedural language</Comment>
       <HandlerName>plpgsql_call_handler</HandlerName>
       <HandlerSchema>pg_catalog</HandlerSchema>
@@ -4204,7 +4208,7 @@ true posixrules
       <ValidatorName>plpgsql_validator</ValidatorName>
       <ValidatorSchema>pg_catalog</ValidatorSchema>
     </language>
-    <language id="261" parent="3" name="sql">
+    <language id="262" parent="3" name="sql">
       <Comment>SQL-language functions</Comment>
       <ObjectId>14</ObjectId>
       <StateNumber>1</StateNumber>
@@ -4212,77 +4216,77 @@ true posixrules
       <ValidatorName>fmgr_sql_validator</ValidatorName>
       <ValidatorSchema>pg_catalog</ValidatorSchema>
     </language>
-    <schema id="262" parent="3" name="information_schema">
+    <schema id="263" parent="3" name="information_schema">
       <ObjectId>13310</ObjectId>
       <StateNumber>530</StateNumber>
       <OwnerName>vending</OwnerName>
     </schema>
-    <schema id="263" parent="3" name="pg_catalog">
+    <schema id="264" parent="3" name="pg_catalog">
       <Comment>system catalog schema</Comment>
       <ObjectId>11</ObjectId>
       <StateNumber>524</StateNumber>
       <OwnerName>vending</OwnerName>
     </schema>
-    <schema id="264" parent="3" name="public">
+    <schema id="265" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>4756</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2026-07-16.16:11:35</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>4955</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2026-07-17.10:52:00</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>524</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
     </schema>
-    <table id="265" parent="264" name="doctrine_migration_versions">
+    <table id="266" parent="265" name="doctrine_migration_versions">
       <ObjectId>16389</ObjectId>
       <StateNumber>744</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>vending</OwnerName>
     </table>
-    <table id="266" parent="264" name="machine_coins">
-      <ObjectId>16448</ObjectId>
-      <StateNumber>873</StateNumber>
+    <table id="267" parent="265" name="machine_coins">
+      <ObjectId>16502</ObjectId>
+      <StateNumber>4953</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>vending</OwnerName>
     </table>
-    <table id="267" parent="264" name="machine_products">
-      <ObjectId>16442</ObjectId>
-      <StateNumber>4754</StateNumber>
+    <table id="268" parent="265" name="machine_products">
+      <ObjectId>16496</ObjectId>
+      <StateNumber>4954</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>vending</OwnerName>
     </table>
-    <table id="268" parent="264" name="wallet_inserted_coins">
-      <ObjectId>16401</ObjectId>
-      <StateNumber>745</StateNumber>
+    <table id="269" parent="265" name="wallet_inserted_coins">
+      <ObjectId>16482</ObjectId>
+      <StateNumber>4952</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>vending</OwnerName>
     </table>
-    <table id="269" parent="264" name="wallets">
-      <ObjectId>16395</ObjectId>
-      <StateNumber>745</StateNumber>
+    <table id="270" parent="265" name="wallets">
+      <ObjectId>16476</ObjectId>
+      <StateNumber>4952</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>vending</OwnerName>
     </table>
-    <column id="270" parent="265" name="version">
+    <column id="271" parent="266" name="version">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>744</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="271" parent="265" name="executed_at">
+    <column id="272" parent="266" name="executed_at">
       <DasType>timestamp(0)|0s</DasType>
       <DefaultExpression>NULL::timestamp without time zone</DefaultExpression>
       <Position>2</Position>
       <StateNumber>744</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="272" parent="265" name="execution_time">
+    <column id="273" parent="266" name="execution_time">
       <DasType>integer|0s</DasType>
       <Position>3</Position>
       <StateNumber>744</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="273" parent="265" name="doctrine_migration_versions_pkey">
+    <index id="274" parent="266" name="doctrine_migration_versions_pkey">
       <ColNames>version</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16393</ObjectId>
@@ -4294,232 +4298,232 @@ true posixrules
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="274" parent="265" name="doctrine_migration_versions_pkey">
+    <key id="275" parent="266" name="doctrine_migration_versions_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16394</ObjectId>
       <Primary>1</Primary>
       <StateNumber>744</StateNumber>
       <UnderlyingIndexId>16393</UnderlyingIndexId>
     </key>
-    <check id="275" parent="266" name="machine_coins_coin_allowed">
+    <check id="276" parent="267" name="machine_coins_coin_allowed">
       <ColNames>coin_cents</ColNames>
-      <ObjectId>16457</ObjectId>
+      <ObjectId>16511</ObjectId>
       <Predicate>coin_cents = ANY (ARRAY[5, 10, 25, 100])</Predicate>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
     </check>
-    <check id="276" parent="266" name="machine_coins_count_non_negative">
+    <check id="277" parent="267" name="machine_coins_count_non_negative">
       <ColNames>coin_count</ColNames>
-      <ObjectId>16458</ObjectId>
+      <ObjectId>16512</ObjectId>
       <Predicate>coin_count &gt;= 0</Predicate>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
     </check>
-    <column id="277" parent="266" name="coin_cents">
+    <column id="278" parent="267" name="coin_cents">
       <DasType>smallint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
       <TypeId>21</TypeId>
     </column>
-    <column id="278" parent="266" name="coin_count">
+    <column id="279" parent="267" name="coin_count">
       <DasType>integer|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="279" parent="266" name="updated_at">
+    <column id="280" parent="267" name="updated_at">
       <DasType>timestamp(0)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <index id="280" parent="266" name="machine_coins_pkey">
+    <index id="281" parent="267" name="machine_coins_pkey">
       <ColNames>coin_cents</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16452</ObjectId>
+      <ObjectId>16506</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="281" parent="266" name="machine_coins_pkey">
+    <key id="282" parent="267" name="machine_coins_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16453</ObjectId>
+      <ObjectId>16507</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>873</StateNumber>
-      <UnderlyingIndexId>16452</UnderlyingIndexId>
+      <StateNumber>4953</StateNumber>
+      <UnderlyingIndexId>16506</UnderlyingIndexId>
     </key>
-    <check id="282" parent="267" name="machine_products_price_positive">
+    <check id="283" parent="268" name="machine_products_price_positive">
       <ColNames>price_cents</ColNames>
-      <ObjectId>16455</ObjectId>
+      <ObjectId>16509</ObjectId>
       <Predicate>price_cents &gt; 0</Predicate>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
     </check>
-    <check id="283" parent="267" name="machine_products_stock_non_negative">
+    <check id="284" parent="268" name="machine_products_stock_non_negative">
       <ColNames>stock</ColNames>
-      <ObjectId>16456</ObjectId>
+      <ObjectId>16510</ObjectId>
       <Predicate>stock &gt;= 0</Predicate>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
     </check>
-    <column id="284" parent="267" name="selector">
+    <column id="285" parent="268" name="selector">
       <DasType>varchar(16)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="285" parent="267" name="price_cents">
+    <column id="286" parent="268" name="price_cents">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="286" parent="267" name="stock">
+    <column id="287" parent="268" name="stock">
       <DasType>integer|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="287" parent="267" name="updated_at">
+    <column id="288" parent="268" name="updated_at">
       <DasType>timestamp(0)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <index id="288" parent="267" name="machine_products_pkey">
+    <index id="289" parent="268" name="machine_products_pkey">
       <ColNames>selector</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16446</ObjectId>
+      <ObjectId>16500</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>873</StateNumber>
+      <StateNumber>4953</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
       <CollationNames>default</CollationNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="289" parent="267" name="machine_products_pkey">
+    <key id="290" parent="268" name="machine_products_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16447</ObjectId>
+      <ObjectId>16501</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>873</StateNumber>
-      <UnderlyingIndexId>16446</UnderlyingIndexId>
+      <StateNumber>4953</StateNumber>
+      <UnderlyingIndexId>16500</UnderlyingIndexId>
     </key>
-    <check id="290" parent="268" name="wallet_inserted_coins_coin_allowed">
+    <check id="291" parent="269" name="wallet_inserted_coins_coin_allowed">
       <ColNames>coin_cents</ColNames>
-      <ObjectId>16408</ObjectId>
+      <ObjectId>16489</ObjectId>
       <Predicate>coin_cents = ANY (ARRAY[5, 10, 25, 100])</Predicate>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
     </check>
-    <check id="291" parent="268" name="wallet_inserted_coins_count_non_negative">
+    <check id="292" parent="269" name="wallet_inserted_coins_count_non_negative">
       <ColNames>coin_count</ColNames>
-      <ObjectId>16409</ObjectId>
+      <ObjectId>16490</ObjectId>
       <Predicate>coin_count &gt;= 0</Predicate>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
     </check>
-    <column id="292" parent="268" name="wallet_id">
+    <column id="293" parent="269" name="wallet_id">
       <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="293" parent="268" name="coin_cents">
+    <column id="294" parent="269" name="coin_cents">
       <DasType>smallint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
       <TypeId>21</TypeId>
     </column>
-    <column id="294" parent="268" name="coin_count">
+    <column id="295" parent="269" name="coin_count">
       <DasType>integer|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <foreign-key id="295" parent="268" name="fk_wallet_inserted_coins_wallet">
+    <foreign-key id="296" parent="269" name="fk_wallet_inserted_coins_wallet">
       <ColNames>wallet_id</ColNames>
-      <ObjectId>16410</ObjectId>
+      <ObjectId>16491</ObjectId>
       <OnDelete>cascade</OnDelete>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>16395</RefTableId>
+      <RefTableId>16476</RefTableId>
     </foreign-key>
-    <index id="296" parent="268" name="wallet_inserted_coins_pkey">
+    <index id="297" parent="269" name="wallet_inserted_coins_pkey">
       <ColNames>wallet_id
 coin_cents</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16405</ObjectId>
+      <ObjectId>16486</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="297" parent="268" name="wallet_inserted_coins_pkey">
+    <key id="298" parent="269" name="wallet_inserted_coins_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16406</ObjectId>
+      <ObjectId>16487</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>745</StateNumber>
-      <UnderlyingIndexId>16405</UnderlyingIndexId>
+      <StateNumber>4952</StateNumber>
+      <UnderlyingIndexId>16486</UnderlyingIndexId>
     </key>
-    <check id="298" parent="269" name="wallets_balance_non_negative">
+    <check id="299" parent="270" name="wallets_balance_non_negative">
       <ColNames>inserted_balance_cents</ColNames>
-      <ObjectId>16407</ObjectId>
+      <ObjectId>16488</ObjectId>
       <Predicate>inserted_balance_cents &gt;= 0</Predicate>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
     </check>
-    <column id="299" parent="269" name="id">
+    <column id="300" parent="270" name="id">
       <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="300" parent="269" name="inserted_balance_cents">
+    <column id="301" parent="270" name="inserted_balance_cents">
       <DasType>integer|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="301" parent="269" name="created_at">
+    <column id="302" parent="270" name="created_at">
       <DasType>timestamp(0)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="302" parent="269" name="updated_at">
+    <column id="303" parent="270" name="updated_at">
       <DasType>timestamp(0)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <index id="303" parent="269" name="wallets_pkey">
+    <index id="304" parent="270" name="wallets_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16399</ObjectId>
+      <ObjectId>16480</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>745</StateNumber>
+      <StateNumber>4952</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="304" parent="269" name="wallets_pkey">
+    <key id="305" parent="270" name="wallets_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16400</ObjectId>
+      <ObjectId>16481</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>745</StateNumber>
-      <UnderlyingIndexId>16399</UnderlyingIndexId>
+      <StateNumber>4952</StateNumber>
+      <UnderlyingIndexId>16480</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>
